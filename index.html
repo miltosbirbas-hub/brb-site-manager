@@ -357,6 +357,40 @@ tr:hover td { background: var(--surface2); }
 }
 .wa-contact-row:hover { background: var(--surface2); }
 
+
+/* PHOTO & VOICE */
+.photo-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.photo-thumb {
+  width: 72px; height: 72px; border-radius: 8px;
+  object-fit: cover; cursor: pointer; border: 2px solid var(--border);
+  transition: all 0.15s;
+}
+.photo-thumb:hover { border-color: var(--accent); transform: scale(1.05); }
+.photo-upload-btn {
+  width: 72px; height: 72px; border-radius: 8px;
+  border: 2px dashed var(--border); background: var(--surface2);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; cursor: pointer; color: var(--text2);
+  font-size: 22px; transition: all 0.15s; gap: 2px;
+}
+.photo-upload-btn:hover { border-color: var(--accent); color: var(--accent); }
+.photo-upload-btn span { font-size: 10px; font-weight: 600; }
+.voice-btn {
+  width: 100%; padding: 10px; border-radius: 8px;
+  border: 2px dashed var(--border); background: var(--surface2);
+  color: var(--text2); cursor: pointer; font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; transition: all 0.15s; font-family: 'DM Sans', sans-serif;
+}
+.voice-btn:hover { border-color: #ef4444; color: #ef4444; }
+.voice-btn.recording { border-color: #ef4444; color: #ef4444; background: rgba(239,68,68,0.1); animation: pulse-rec 1s infinite; }
+@keyframes pulse-rec { 0%,100%{opacity:1} 50%{opacity:0.6} }
+.voice-transcript { background: var(--surface2); border-radius: 8px; padding: 10px 12px; font-size:12px; color:var(--text2); margin-top:6px; min-height:36px; border:1px solid var(--border); }
+.lightbox { position:fixed; inset:0; background:rgba(0,0,0,0.95); display:flex; align-items:center; justify-content:center; z-index:400; padding:20px; }
+.lightbox.hidden { display:none; }
+.lightbox img { max-width:100%; max-height:90vh; border-radius:8px; object-fit:contain; }
+.lightbox-close { position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.2); border:none; color:white; border-radius:50%; width:40px; height:40px; font-size:20px; cursor:pointer; }
+
 /* SCROLLBAR */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -457,9 +491,22 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
       <label class="form-label">Deadline</label>
       <input class="form-input" type="date" id="entry-deadline">
     </div>
+    <div class="form-group">
+      <label class="form-label">🎙️ Φωνητική Καταγραφή</label>
+      <button type="button" id="live-voice-btn" class="voice-btn" onclick="startSpeechRecognition()">🎙️ Ζωντανή αναγνώριση φωνής (Chrome)</button>
+      <div id="voice-transcript" class="voice-transcript">Πάτα το κουμπί και μίλα — το κείμενο εμφανίζεται αυτόματα παραπάνω.</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">📸 Φωτογραφίες</label>
+      <div class="photo-grid" id="photo-preview-grid"></div>
+      <label style="cursor:pointer;display:inline-block;margin-top:8px">
+        <div class="photo-upload-btn">📷<span>Φωτό</span></div>
+        <input type="file" accept="image/*" multiple capture="environment" style="display:none" onchange="handlePhotoSelect(this)">
+      </label>
+    </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModals()">Ακύρωση</button>
-      <button class="btn btn-primary" onclick="saveEntry()">Αποθήκευση</button>
+      <button class="btn btn-primary" id="save-entry-btn" onclick="saveEntry()">Αποθήκευση</button>
     </div>
   </div>
 </div>
@@ -549,7 +596,7 @@ async function loadFromDB() {
     appData.entries = (eRes.data||[]).map(e => ({
       id:e.id, type:e.type, project:e.project_id, sub:e.sub,
       desc:e.description, person:e.person, deadline:e.deadline,
-      status:e.status, engineer:e.engineer, date:e.created_at
+      status:e.status, engineer:e.engineer, date:e.created_at, photos:e.photos||[]
     }));
     appData.phases = (pRes.data||[]).map(p => ({
       id:p.id, project:p.project_id, name:p.name, cat:p.cat,
@@ -562,7 +609,8 @@ async function insertEntry(entry) {
   const {error} = await sb.from('entries').insert({
     id:entry.id, type:entry.type, project_id:entry.project,
     sub:entry.sub, description:entry.desc, person:entry.person,
-    deadline:entry.deadline||null, status:entry.status, engineer:entry.engineer
+    deadline:entry.deadline||null, status:entry.status, engineer:entry.engineer,
+    photos:entry.photos||[]
   });
   return !error;
 }
@@ -1316,6 +1364,99 @@ function sendWACustom() {
   closeModals();
 }
 
+
+// ─── PHOTOS & VOICE ───────────────────────────────────────────────────
+const STORAGE_URL = 'https://tntjatgjwenvvqzlhlfi.supabase.co/storage/v1/object/public/brb-photos/';
+let pendingPhotos = [];
+let isRecording = false;
+let _recognition = null;
+
+async function uploadPhoto(file, entryId) {
+  const filename = Date.now() + '_' + Math.random().toString(36).slice(2) + '.' + (file.name.split('.').pop() || 'jpg');
+  const path = entryId + '/' + filename;
+  const { error } = await sb.storage.from('brb-photos').upload(path, file, {
+    contentType: file.type, upsert: false
+  });
+  if (error) { console.error('Upload error:', error); return null; }
+  return path;
+}
+
+function getPhotoUrl(path) {
+  return STORAGE_URL + path;
+}
+
+function handlePhotoSelect(input) {
+  const files = Array.from(input.files);
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      pendingPhotos.push({ file, preview: e.target.result });
+      renderPhotoPreview();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderPhotoPreview() {
+  const grid = document.getElementById('photo-preview-grid');
+  if (!grid) return;
+  grid.innerHTML = pendingPhotos.map((p, i) =>
+    '<div style="position:relative"><img src="' + p.preview + '" class="photo-thumb"><button onclick="removePendingPhoto(' + i + ')" style="position:absolute;top:-6px;right:-6px;background:#ef4444;border:none;color:white;border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:11px">✕</button></div>'
+  ).join('');
+}
+
+function removePendingPhoto(idx) {
+  pendingPhotos.splice(idx, 1);
+  renderPhotoPreview();
+}
+
+function startSpeechRecognition() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { alert('Η φωνητική αναγνώριση λειτουργεί μόνο στο Chrome.'); return; }
+  
+  const btn = document.getElementById('live-voice-btn');
+  const desc = document.getElementById('entry-desc');
+  const transcript = document.getElementById('voice-transcript');
+  
+  if (_recognition) { _recognition.stop(); _recognition = null; return; }
+  
+  const recognition = new SR();
+  recognition.lang = 'el-GR';
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  _recognition = recognition;
+  
+  recognition.onstart = () => {
+    if (btn) { btn.classList.add('recording'); btn.innerHTML = '⏹️ Σταμάτα εγγραφή'; }
+    if (transcript) transcript.textContent = '🎙️ Μιλάς...';
+  };
+  recognition.onresult = e => {
+    let final = '', interim = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      if (e.results[i].isFinal) final += e.results[i][0].transcript;
+      else interim += e.results[i][0].transcript;
+    }
+    if (transcript) transcript.textContent = interim || '🎙️ Μιλάς...';
+    if (final && desc) desc.value += (desc.value ? ' ' : '') + final;
+  };
+  recognition.onerror = e => {
+    if (btn) { btn.classList.remove('recording'); btn.innerHTML = '🎙️ Ζωντανή αναγνώριση φωνής'; }
+    _recognition = null;
+  };
+  recognition.onend = () => {
+    if (btn) { btn.classList.remove('recording'); btn.innerHTML = '🎙️ Ζωντανή αναγνώριση φωνής'; }
+    _recognition = null;
+  };
+  recognition.start();
+}
+
+function openLightbox(url) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  if (lb && img) { img.src = url; lb.classList.remove('hidden'); }
+}
+function closeLightbox() { document.getElementById('lightbox').classList.add('hidden'); }
+
 // ─── INIT ─────────────────────────────────────────────────────────────
 if (currentEngineer) {
   initApp();
@@ -1385,6 +1526,13 @@ if (currentEngineer) {
       <button class="btn btn-ghost" onclick="closeModals()">Κλείσιμο</button>
     </div>
   </div>
+</div>
+
+
+<!-- LIGHTBOX -->
+<div class="lightbox hidden" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
 </div>
 
 </body>
