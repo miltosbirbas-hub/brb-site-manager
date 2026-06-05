@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HEXIS — Οδηγός Χρήσης</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #383E42; color: #e8e4df; }
+
+.cover {
+  background: #383E42;
+  padding: 48px 32px;
+  text-align: center;
+  border-bottom: 3px solid #8c7b6e;
+}
+.hex-logo {
+  margin: 0 auto 20px;
+  width: 72px; height: 72px;
+}
+.cover h1 {
+  font-size: 42px; font-weight: 900;
+  letter-spacing: 6px; color: #8c7b6e;
+  font-family: 'Segoe UI', sans-serif;
+}
+.cover .sub {
+  font-size: 13px; color: #6e6660; margin-top: 6px;
+  letter-spacing: 1px;
+}
+.cover .version {
+  display: inline-block; margin-top: 16px;
+  background: rgba(232,160,32,0.15); color: #8c7b6e;
+  border: 1px solid rgba(232,160,32,0.3);
+  border-radius: 20px; padding: 4px 14px; font-size: 12px;
+}
+
+.container { max-width: 800px; margin: 0 auto; padding: 32px 20px; }
+
+.section-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: #8c7b6e;
+  margin: 40px 0 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-title::after {
+  content: ''; flex: 1; height: 1px; background: rgba(232,160,32,0.3);
+}
+
+.step-card {
+  background: #2e3338;
+  border: 1px solid #4a5158;
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.step-num {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: #8c7b6e; color: #0e0f13;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 14px; flex-shrink: 0;
+}
+.step-body h4 { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+.step-body p { font-size: 13px; color: #a09890; line-height: 1.6; }
+.step-body code {
+  background: #252a2e; color: #8c7b6e;
+  padding: 2px 7px; border-radius: 4px; font-size: 12px;
+}
+
+.feature-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-bottom: 12px;
+}
+.feature-card {
+  background: #2e3338; border: 1px solid #4a5158;
+  border-radius: 10px; padding: 16px;
+}
+.feature-icon { font-size: 28px; margin-bottom: 8px; }
+.feature-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+.feature-card p { font-size: 12px; color: #a09890; line-height: 1.5; }
+
+.tab-list {
+  background: #2e3338; border: 1px solid #4a5158;
+  border-radius: 10px; overflow: hidden;
+}
+.tab-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #2a2d38;
+  font-size: 13px;
+}
+.tab-row:last-child { border-bottom: none; }
+.tab-icon { font-size: 18px; width: 28px; text-align: center; flex-shrink: 0; }
+.tab-name { font-weight: 600; min-width: 120px; }
+.tab-desc { color: #a09890; font-size: 12px; }
+
+.color-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); gap: 10px;
+}
+.color-card {
+  border-radius: 8px; padding: 12px;
+  font-size: 12px; font-weight: 600;
+}
+
+.tip-box {
+  background: rgba(232,160,32,0.08);
+  border: 1px solid rgba(232,160,32,0.25);
+  border-radius: 10px; padding: 14px 18px;
+  font-size: 13px; color: #c8a060; line-height: 1.6;
+  margin: 12px 0;
+}
+.tip-box strong { color: #8c7b6e; }
+
+.install-steps {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+.install-card {
+  background: #2e3338; border: 1px solid #4a5158; border-radius: 10px; padding: 16px;
+}
+.install-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.install-card ol { padding-left: 18px; }
+.install-card li { font-size: 12px; color: #a09890; line-height: 1.8; }
+
+.engineers-table {
+  background: #2e3338; border: 1px solid #4a5158;
+  border-radius: 10px; overflow: hidden; width: 100%;
+}
+.engineers-table th {
+  background: #252a2e; padding: 10px 14px;
+  font-size: 11px; text-transform: uppercase;
+  letter-spacing: 1px; color: #a09890; text-align: left;
+}
+.engineers-table td { padding: 10px 14px; font-size: 13px; border-top: 1px solid #2a2d38; }
+.eng-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #8c7b6e; color: #0e0f13;
+  font-weight: 700; font-size: 13px; margin-right: 8px;
+}
+
+.footer {
+  margin-top: 48px;
+  border-top: 1px solid #2a2d38;
+  padding: 24px 0;
+  text-align: center;
+  color: #a09890; font-size: 12px;
+}
+.footer strong { color: #8c7b6e; }
+
+@media (max-width: 600px) {
+  .feature-grid, .install-steps { grid-template-columns: 1fr; }
+  .cover h1 { font-size: 32px; }
+  .tab-name { min-width: 90px; }
+}
+
+@media print {
+  body { background: white; color: black; }
+  .cover { #383E42; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <svg class="hex-logo" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="36,4 64,20 64,52 36,68 8,52 8,20" fill="none" stroke="#8c7b6e" stroke-width="3"/>
+    <polygon points="36,16 54,26 54,46 36,56 18,46 18,26" fill="none" stroke="#8c7b6e" stroke-width="2" opacity="0.5"/>
+    <circle cx="36" cy="36" r="6" fill="#8c7b6e"/>
+    <line x1="36" y1="4" x2="36" y2="16" stroke="#8c7b6e" stroke-width="1.5" opacity="0.4"/>
+    <line x1="64" y1="20" x2="54" y2="26" stroke="#8c7b6e" stroke-width="1.5" opacity="0.4"/>
+    <line x1="64" y1="52" x2="54" y2="46" stroke="#8c7b6e" stroke-width="1.5" opacity="0.4"/>
+    <line x1="36" y1="68" x2="36" y2="56" stroke="#8c7b6e" stroke-width="1.5" opacity="0.4"/>
+    <line x1="8" y1="52" x2="18" y2="46" stroke="#8c7b6e" stroke-width="1.5" opacity="0.4"/>
+    <line x1="8" y1="20" x2="18" y2="26" stroke="#8c7b6e" stroke-width="1.5" opacity="0.4"/>
+  </svg>
+  <h1>HEXIS</h1>
+  <div class="sub">powered by BRB Development MON IKE</div>
+  <div class="version">Οδηγός Χρήσης v1.0</div>
+</div>
+
+<div class="container">
+
+  <!-- ΕΓΚΑΤΑΣΤΑΣΗ -->
+  <div class="section-title">📲 Εγκατάσταση στο Κινητό</div>
+  <div class="install-steps">
+    <div class="install-card">
+      <h4>🤖 Android (Chrome)</h4>
+      <ol>
+        <li>Άνοιξε το Chrome</li>
+        <li>Πήγαινε στο link της εφαρμογής</li>
+        <li>Πάτα τις <strong>3 τελείες ⋮</strong> πάνω δεξιά</li>
+        <li>Επίλεξε <strong>"Προσθήκη στην αρχική οθόνη"</strong></li>
+        <li>Πάτα <strong>"Προσθήκη"</strong> ✓</li>
+      </ol>
+    </div>
+    <div class="install-card">
+      <h4>🍎 iPhone (Safari)</h4>
+      <ol>
+        <li>Άνοιξε το Safari</li>
+        <li>Πήγαινε στο link της εφαρμογής</li>
+        <li>Πάτα το <strong>κουμπί κοινοποίησης □↑</strong></li>
+        <li>Επίλεξε <strong>"Προσθήκη στην Αρχική Οθόνη"</strong></li>
+        <li>Πάτα <strong>"Προσθήκη"</strong> ✓</li>
+      </ol>
+    </div>
+  </div>
+  <div class="tip-box">
+    <strong>🔗 Link εφαρμογής:</strong> https://miltosbirbas-hub.github.io/brb-site-manager<br>
+    <strong>⚠️ Απαιτείται σύνδεση internet</strong> για συγχρονισμό δεδομένων με τους υπόλοιπους μηχανικούς.
+  </div>
+
+  <!-- ΠΡΩΤΗ ΧΡΗΣΗ -->
+  <div class="section-title">🚀 Πρώτη Είσοδος</div>
+  <div class="step-card">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h4>Επίλεξε το όνομά σου</h4>
+      <p>Μόλις ανοίξεις την εφαρμογή εμφανίζεται το παράθυρο <strong>"Ποιος είσαι;"</strong>. Πάτα το όνομά σου. Η εφαρμογή το θυμάται για τις επόμενες φορές.</p>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h4>Επίλεξε εργοτάξιο από το sidebar</h4>
+      <p>Πάτα <code>☰</code> πάνω αριστερά για να ανοίξεις τη λίστα εργοταξίων. Κάθε εργοτάξιο έχει <strong>διαφορετικό χρώμα</strong> για να αποφεύγονται λάθη.</p>
+    </div>
+  </div>
+  <div class="step-card">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h4>Καταχώρησε ό,τι έγινε στο εργοτάξιο</h4>
+      <p>Πάτα <code>+ Καταγραφή</code> και συμπλήρωσε τον τύπο (εντολή / παραγγελία / έλλειψη), περιγραφή, υπεύθυνο και deadline. Μπορείς να μιλάς <strong>φωνητικά</strong> ή να επισυνάπτεις <strong>φωτογραφίες</strong>.</p>
+    </div>
+  </div>
+
+  <!-- ΚΑΡΤΕΛΕΣ -->
+  <div class="section-title">📑 Καρτέλες ανά Εργοτάξιο</div>
+  <div class="tab-list">
+    <div class="tab-row">
+      <div class="tab-icon">📊</div>
+      <div class="tab-name">Επισκόπηση</div>
+      <div class="tab-desc">Σύνοψη κτιρίων, εκκρεμοτήτων, πρόσφατων καταγραφών και προόδου φάσεων</div>
+    </div>
+    <div class="tab-row">
+      <div class="tab-icon">📅</div>
+      <div class="tab-name">Gantt</div>
+      <div class="tab-desc">Χρονοδιάγραμμα φάσεων. Εναλλαγή μεταξύ γραφήματος και λίστας. Κόκκινη γραμμή = σήμερα</div>
+    </div>
+    <div class="tab-row">
+      <div class="tab-icon">🔧</div>
+      <div class="tab-name">Εντολές</div>
+      <div class="tab-desc">Εντολές που δόθηκαν σε εργολάβους. Αλλαγή κατάστασης: Εκκρεμεί / Επείγον / Εκτελέστηκε</div>
+    </div>
+    <div class="tab-row">
+      <div class="tab-icon">🛒</div>
+      <div class="tab-name">Παραγγελίες</div>
+      <div class="tab-desc">Παραγγελίες υλικών και υπηρεσιών. Παρακολούθηση κατάστασης παράδοσης</div>
+    </div>
+    <div class="tab-row">
+      <div class="tab-icon">⚠️</div>
+      <div class="tab-name">Snag List</div>
+      <div class="tab-desc">Ελλείψεις και ατέλειες. Ανοιχτό → Σε Εξέλιξη → Διορθώθηκε</div>
+    </div>
+    <div class="tab-row">
+      <div class="tab-icon">📋</div>
+      <div class="tab-name">Επαφές</div>
+      <div class="tab-desc">Εργολάβοι και προμηθευτές. Άμεση επικοινωνία μέσω 📲 WhatsApp</div>
+    </div>
+    <div class="tab-row">
+      <div class="tab-icon">📁</div>
+      <div class="tab-name">Αρχεία</div>
+      <div class="tab-desc">PDF, DXF, DWG, Excel. Upload ή link από Google Drive / Dropbox</div>
+    </div>
+    <div class="tab-row">
+      <div class="tab-icon">📍</div>
+      <div class="tab-name">Χάρτης</div>
+      <div class="tab-desc">Τοποθεσία εργοταξίου σε satellite view. Κουμπί οδηγιών Google Maps</div>
+    </div>
+    <div class="tab-row">
+      <div class="tab-icon">📊</div>
+      <div class="tab-name">BOQ</div>
+      <div class="tab-desc"><strong>Μόνο για Μίλτο & Βαγγέλη.</strong> Προϋπολογισμός, εκτελεσθέν, πρόοδος ανά εργασία</div>
+    </div>
+  </div>
+
+  <!-- ΚΑΤΑΓΡΑΦΗ -->
+  <div class="section-title">✏️ Καταγραφή από Εργοτάξιο</div>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🎙️</div>
+      <h4>Φωνητική Καταγραφή</h4>
+      <p>Πάτα <strong>"+ Καταγραφή"</strong> → κουμπί <strong>"🎙️ Ζωντανή αναγνώριση"</strong> → μίλα. Το κείμενο εμφανίζεται αυτόματα. Λειτουργεί με Chrome.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📸</div>
+      <h4>Φωτογραφία</h4>
+      <p>Στο modal καταγραφής πάτα <strong>"📷 Φωτό"</strong> για κάμερα ή gallery. Αποθηκεύεται online και φαίνεται σε όλους.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📲</div>
+      <h4>WhatsApp Εντολή</h4>
+      <p>Κουμπί <strong>"📲"</strong> δίπλα σε κάθε καταγραφή. Επιλέγεις επαφή από λίστα και ανοίγει το WhatsApp με έτοιμο μήνυμα.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📅</div>
+      <h4>Google Calendar</h4>
+      <p>Κουμπί <strong>"📅"</strong> δίπλα σε κάθε καταγραφή ή <strong>"📅 Εξαγωγή .ics"</strong> για όλες τις φάσεις του έργου ταυτόχρονα.</p>
+    </div>
+  </div>
+
+  <!-- ΕΙΔΟΠΟΙΗΣΕΙΣ -->
+  <div class="section-title">🔔 Ειδοποιήσεις</div>
+  <div class="tab-list">
+    <div class="tab-row">
+      <div class="tab-icon">🚨</div>
+      <div class="tab-name">Κόκκινο Banner</div>
+      <div class="tab-desc">Εκπρόθεσμες ή "Επείγον" καταγραφές — έντονος ήχος 4 beeps κατά το άνοιγμα</div>
+    </div>
+    <div class="tab-row">
+      <div class="tab-icon">⏰</div>
+      <div class="tab-name">Πορτοκαλί Banner</div>
+      <div class="tab-desc">Καταγραφές με deadline σήμερα — ήπιος ήχος 2 beeps</div>
+    </div>
+    <div class="tab-row">
+      <div class="tab-icon">🔢</div>
+      <div class="tab-name">Μετρητής Καρτέλας</div>
+      <div class="tab-desc">Ο τίτλος της καρτέλας δείχνει <strong>(3) HEXIS</strong> όταν υπάρχουν εκκρεμότητες</div>
+    </div>
+  </div>
+
+  <!-- ΧΡΩΜΑΤΑ ΕΡΓΟΤΑΞΙΩΝ -->
+  <div class="section-title">🎨 Χρωματική Κωδικοποίηση Εργοταξίων</div>
+  <div class="color-grid">
+    <div class="color-card" style="background:rgba(232,160,32,0.15);border:1px solid rgba(232,160,32,0.4)">
+      <div style="font-size:16px;margin-bottom:4px">🟠</div>
+      <div style="font-size:12px;font-weight:700;color:#8c7b6e">Hoffim Δεσίμι</div>
+      <div style="font-size:11px;color:#888">Villa A / B / C / D</div>
+    </div>
+    <div class="color-card" style="background:rgba(6,182,212,0.15);border:1px solid rgba(6,182,212,0.4)">
+      <div style="font-size:16px;margin-bottom:4px">🔵</div>
+      <div style="font-size:12px;font-weight:700;color:#06b6d4">Σύβοτα</div>
+      <div style="font-size:11px;color:#888">Yovav Meydad</div>
+    </div>
+    <div class="color-card" style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.4)">
+      <div style="font-size:16px;margin-bottom:4px">🟢</div>
+      <div style="font-size:12px;font-weight:700;color:#22c55e">Αμμούσω Adi</div>
+      <div style="font-size:11px;color:#888">Villa 1 / 2 / 3</div>
+    </div>
+    <div class="color-card" style="background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.4)">
+      <div style="font-size:16px;margin-bottom:4px">🟣</div>
+      <div style="font-size:12px;font-weight:700;color:#a855f7">Αμμούσω Ilan</div>
+      <div style="font-size:11px;color:#888">Ilan Ofer</div>
+    </div>
+    <div class="color-card" style="background:rgba(244,63,94,0.15);border:1px solid rgba(244,63,94,0.4)">
+      <div style="font-size:16px;margin-bottom:4px">🔴</div>
+      <div style="font-size:12px;font-weight:700;color:#f43f5e">Αφτέλι Erez</div>
+      <div style="font-size:11px;color:#888">Erez & Zina</div>
+    </div>
+    <div class="color-card" style="background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.4)">
+      <div style="font-size:16px;margin-bottom:4px">🟧</div>
+      <div style="font-size:12px;font-weight:700;color:#f97316">Αφτέλι Haim</div>
+      <div style="font-size:11px;color:#888">Β1 / Β2</div>
+    </div>
+    <div class="color-card" style="background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.4)">
+      <div style="font-size:16px;margin-bottom:4px">🔷</div>
+      <div style="font-size:12px;font-weight:700;color:#3b82f6">Πάλαιρος</div>
+      <div style="font-size:11px;color:#888">Χρυσούλης</div>
+    </div>
+  </div>
+
+  <!-- ΟΜΑΔΑ -->
+  <div class="section-title">👥 Ομάδα Μηχανικών</div>
+  <table class="engineers-table">
+    <tr><th>Μηχανικός</th><th>Ρόλος</th><th>Πρόσβαση BOQ</th></tr>
+    <tr>
+      <td><span class="eng-badge">Μ</span>Μίλτος Μπίρμπας</td>
+      <td style="color:#9095a8;font-size:12px">Πολιτικός Μηχανικός ΤΕ MSc Environmental Design</td>
+      <td><span style="color:#22c55e;font-size:12px">✅ Πλήρης</span></td>
+    </tr>
+    <tr>
+      <td><span class="eng-badge" style="background:#06b6d4">Β</span>Βαγγέλης Θέρμος</td>
+      <td style="color:#9095a8;font-size:12px">Contractor Lefkada</td>
+      <td><span style="color:#22c55e;font-size:12px">✅ Πλήρης</span></td>
+    </tr>
+    <tr>
+      <td><span class="eng-badge" style="background:#a855f7">Α</span>Αντώνης Λαφαζάνης</td>
+      <td style="color:#9095a8;font-size:12px">Αρχιτέκτων</td>
+      <td><span style="color:#9095a8;font-size:12px">— Καταγραφή μόνο</span></td>
+    </tr>
+    <tr>
+      <td><span class="eng-badge" style="background:#3b82f6">Δ</span>Δημήτρης Λογοθέτης</td>
+      <td style="color:#9095a8;font-size:12px">Μηχανικός</td>
+      <td><span style="color:#9095a8;font-size:12px">— Καταγραφή μόνο</span></td>
+    </tr>
+  </table>
+
+  <!-- ΝΕΟΣ ΜΗΧΑΝΙΚΟΣ -->
+  <div class="section-title">⚙️ Διαχείριση</div>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">👤</div>
+      <h4>Προσθήκη Μηχανικού</h4>
+      <p>Πάτα το όνομά σου πάνω → <strong>"+ Προσθήκη"</strong> → συμπλήρωσε όνομα, ρόλο, τηλέφωνο. Εμφανίζεται αμέσως για όλους.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏗️</div>
+      <h4>Νέο Project</h4>
+      <p>Κουμπί <strong>"+ ΝΕΟ PROJECT"</strong> στο sidebar. Συμπλήρωσε στοιχεία και βάλε πινέζα στον χάρτη.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏢</div>
+      <h4>Προσθήκη Κτιρίου</h4>
+      <p>Κουμπί <strong>"🏢 + Κτίριο"</strong> στον τίτλο κάθε έργου. Ορισμός ορόφων και κατηγοριών εργασιών.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📄</div>
+      <h4>Εβδομαδιαία Αναφορά</h4>
+      <p>Κουμπί <strong>"📄 Αναφορά PDF"</strong> σε κάθε έργο. Ανοίγει σελίδα με όλες τις καταγραφές εβδομάδας ανά μηχανικό. Πάτα 🖨️ για PDF.</p>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <strong>💡 Σημαντικό:</strong> Κάθε καταγραφή αποθηκεύεται αυτόματα στο cloud και εμφανίζεται <strong>άμεσα</strong> σε όλους τους μηχανικούς. Δεν χρειάζεται να κάνεις τίποτα επιπλέον.
+  </div>
+
+  <div class="footer">
+    <strong>HEXIS</strong> — powered by BRB Development MON IKE<br>
+    Μιλτιάδης Μπίρμπας · Πολιτικός Μηχανικός ΤΕ MSc Environmental Design
+  </div>
+
+</div>
+</body>
+</html>
