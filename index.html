@@ -391,6 +391,90 @@ tr:hover td { background: var(--surface2); }
 .lightbox img { max-width:100%; max-height:90vh; border-radius:8px; object-fit:contain; }
 .lightbox-close { position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.2); border:none; color:white; border-radius:50%; width:40px; height:40px; font-size:20px; cursor:pointer; }
 
+
+/* BOQ */
+.boq-summary { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+.boq-bar-wrap { background: var(--border); border-radius: 4px; height: 8px; margin-top: 6px; overflow: hidden; }
+.boq-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), #f59e0b); transition: width 0.4s; }
+.boq-table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; }
+.boq-section-header { background: var(--surface2); padding: 8px 14px; font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--border); }
+.boq-row { display: grid; grid-template-columns: 1fr 70px 90px 90px 90px 80px; padding: 8px 14px; border-bottom: 1px solid var(--border); font-size: 12px; align-items: center; gap: 8px; }
+.boq-row:last-child { border-bottom: none; }
+.boq-row:hover { background: var(--surface2); }
+.boq-header-row { background: var(--surface2); font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; }
+.boq-progress { width: 60px; }
+.boq-progress input[type=range] { width: 100%; accent-color: var(--accent); }
+.boq-upload-area { border: 2px dashed var(--border); border-radius: 10px; padding: 28px; text-align: center; color: var(--text2); cursor: pointer; transition: all 0.15s; margin-bottom: 16px; }
+.boq-upload-area:hover { border-color: var(--accent); color: var(--accent); }
+
+/* PDF REPORT */
+@media print {
+  .sidebar, .topbar, .tabs, .header-actions, .btn, select, .alert-banner, #eng-modal, .modal-overlay { display: none !important; }
+  body { background: white !important; color: black !important; }
+  .main { padding: 0 !important; }
+  .report-header { display: block !important; }
+  * { color: black !important; background: white !important; border-color: #ccc !important; }
+}
+.report-header { display: none; }
+
+
+/* TEAM BUTTON */
+.team-modal-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+.team-card {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px; text-align: center;
+}
+.team-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--accent); color: #0e0f13;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne',sans-serif; font-weight: 700; font-size: 16px;
+  margin: 0 auto 8px;
+}
+.team-name { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+.team-actions { display: flex; gap: 6px; justify-content: center; }
+.team-wa { background: #25D366; color: white; border: none; border-radius: 6px; padding: 5px 10px; cursor: pointer; font-size: 12px; font-weight: 600; }
+.team-call { background: var(--accent2); color: white; border: none; border-radius: 6px; padding: 5px 10px; cursor: pointer; font-size: 12px; font-weight: 600; }
+
+
+/* PROJECT EDITOR & MAP */
+.map-container { height: 280px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); margin-top: 8px; }
+.project-type-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 6px; }
+.type-btn {
+  padding: 10px 6px; border-radius: 8px; cursor: pointer;
+  border: 2px solid var(--border); background: var(--surface2);
+  text-align: center; font-size: 12px; font-weight: 600; color: var(--text2);
+  transition: all 0.15s;
+}
+.type-btn:hover, .type-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(232,160,32,0.1); }
+.type-btn .type-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+
+/* FILES TAB */
+.file-row {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 14px; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 12px;
+}
+.file-icon { font-size: 24px; flex-shrink: 0; }
+.file-info { flex: 1; min-width: 0; }
+.file-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.file-meta { font-size: 11px; color: var(--text2); margin-top: 2px; }
+.file-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+/* MAP MARKER POPUP */
+.map-info-window { font-family: Arial, sans-serif; min-width: 160px; }
+.map-info-window h4 { margin: 0 0 4px; font-size: 13px; }
+.map-info-window p { margin: 0; font-size: 11px; color: #666; }
+
+/* SIDEBAR PROJECT EDIT BUTTON */
+.site-edit-btn {
+  display: none; background: transparent; border: none;
+  color: var(--text3); cursor: pointer; font-size: 12px; padding: 2px 4px;
+  border-radius: 4px; flex-shrink: 0;
+}
+.site-item:hover .site-edit-btn { display: inline-block; }
+.site-edit-btn:hover { color: var(--accent); }
+
 /* SCROLLBAR */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -428,6 +512,7 @@ Option 2: Install and provide the "ws" package:
 Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/auth-js: Invalid SIWE message field "resources". Every resource must be a valid string. Provided value: ${t}`);e+=`\n- ${t}`}m+=e}return`${p}\n${m}`}var $=class extends Error{constructor({message:e,code:t,cause:n,name:r}){super(e,{cause:n}),this.__isWebAuthnError=!0,this.name=r??(n instanceof Error?n.name:void 0)??`Unknown Error`,this.code=t}toJSON(){return{name:this.name,message:this.message,code:this.code}}},Yr=class extends ${constructor(e,t){super({code:`ERROR_PASSTHROUGH_SEE_CAUSE_PROPERTY`,cause:t,message:e}),this.name=`WebAuthnUnknownError`,this.originalError=t}};function Xr({error:e,options:t}){let{publicKey:n}=t;if(!n)throw Error(`options was missing required publicKey property`);if(e.name===`AbortError`){if(t.signal instanceof AbortSignal)return new $({message:`Registration ceremony was sent an abort signal`,code:`ERROR_CEREMONY_ABORTED`,cause:e})}else if(e.name===`ConstraintError`){if(n.authenticatorSelection?.requireResidentKey===!0)return new $({message:`Discoverable credentials were required but no available authenticator supported it`,code:`ERROR_AUTHENTICATOR_MISSING_DISCOVERABLE_CREDENTIAL_SUPPORT`,cause:e});if(t.mediation===`conditional`&&n.authenticatorSelection?.userVerification===`required`)return new $({message:`User verification was required during automatic registration but it could not be performed`,code:`ERROR_AUTO_REGISTER_USER_VERIFICATION_FAILURE`,cause:e});if(n.authenticatorSelection?.userVerification===`required`)return new $({message:`User verification was required but no available authenticator supported it`,code:`ERROR_AUTHENTICATOR_MISSING_USER_VERIFICATION_SUPPORT`,cause:e})}else if(e.name===`InvalidStateError`)return new $({message:`The authenticator was previously registered`,code:`ERROR_AUTHENTICATOR_PREVIOUSLY_REGISTERED`,cause:e});else if(e.name===`NotAllowedError`)return new $({message:e.message,code:`ERROR_PASSTHROUGH_SEE_CAUSE_PROPERTY`,cause:e});else if(e.name===`NotSupportedError`)return n.pubKeyCredParams.filter(e=>e.type===`public-key`).length===0?new $({message:`No entry in pubKeyCredParams was of type "public-key"`,code:`ERROR_MALFORMED_PUBKEYCREDPARAMS`,cause:e}):new $({message:`No available authenticator supported any of the specified pubKeyCredParams algorithms`,code:`ERROR_AUTHENTICATOR_NO_SUPPORTED_PUBKEYCREDPARAMS_ALG`,cause:e});else if(e.name===`SecurityError`){let t=window.location.hostname;if(ri(t)){if(n.rp.id!==t)return new $({message:`The RP ID "${n.rp.id}" is invalid for this domain`,code:`ERROR_INVALID_RP_ID`,cause:e})}else return new $({message:`${window.location.hostname} is an invalid domain`,code:`ERROR_INVALID_DOMAIN`,cause:e})}else if(e.name===`TypeError`){if(n.user.id.byteLength<1||n.user.id.byteLength>64)return new $({message:`User ID was not between 1 and 64 characters`,code:`ERROR_INVALID_USER_ID_LENGTH`,cause:e})}else if(e.name===`UnknownError`)return new $({message:`The authenticator was unable to process the specified options, or could not create a new credential`,code:`ERROR_AUTHENTICATOR_GENERAL_ERROR`,cause:e});return new $({message:`a Non-Webauthn related error has occurred`,code:`ERROR_PASSTHROUGH_SEE_CAUSE_PROPERTY`,cause:e})}function Zr({error:e,options:t}){let{publicKey:n}=t;if(!n)throw Error(`options was missing required publicKey property`);if(e.name===`AbortError`){if(t.signal instanceof AbortSignal)return new $({message:`Authentication ceremony was sent an abort signal`,code:`ERROR_CEREMONY_ABORTED`,cause:e})}else if(e.name===`NotAllowedError`)return new $({message:e.message,code:`ERROR_PASSTHROUGH_SEE_CAUSE_PROPERTY`,cause:e});else if(e.name===`SecurityError`){let t=window.location.hostname;if(ri(t)){if(n.rpId!==t)return new $({message:`The RP ID "${n.rpId}" is invalid for this domain`,code:`ERROR_INVALID_RP_ID`,cause:e})}else return new $({message:`${window.location.hostname} is an invalid domain`,code:`ERROR_INVALID_DOMAIN`,cause:e})}else if(e.name===`UnknownError`)return new $({message:`The authenticator was unable to process the specified options, or could not create a new assertion signature`,code:`ERROR_AUTHENTICATOR_GENERAL_ERROR`,cause:e});return new $({message:`a Non-Webauthn related error has occurred`,code:`ERROR_PASSTHROUGH_SEE_CAUSE_PROPERTY`,cause:e})}let Qr=new class{createNewAbortSignal(){if(this.controller){let e=Error(`Cancelling existing WebAuthn API call for new one`);e.name=`AbortError`,this.controller.abort(e)}let e=new AbortController;return this.controller=e,e.signal}cancelCeremony(){if(this.controller){let e=Error(`Manually cancelling existing WebAuthn API call`);e.name=`AbortError`,this.controller.abort(e),this.controller=void 0}}};function $r(e){if(!e)throw Error(`Credential creation options are required`);if(typeof PublicKeyCredential<`u`&&`parseCreationOptionsFromJSON`in PublicKeyCredential&&typeof PublicKeyCredential.parseCreationOptionsFromJSON==`function`)return PublicKeyCredential.parseCreationOptionsFromJSON(e);let{challenge:n,user:r,excludeCredentials:i}=e,a=t(e,[`challenge`,`user`,`excludeCredentials`]),o=z(n).buffer,s=Object.assign(Object.assign({},r),{id:z(r.id).buffer}),c=Object.assign(Object.assign({},a),{challenge:o,user:s});if(i&&i.length>0){c.excludeCredentials=Array(i.length);for(let e=0;e<i.length;e++){let t=i[e];c.excludeCredentials[e]=Object.assign(Object.assign({},t),{id:z(t.id).buffer,type:t.type||`public-key`,transports:t.transports})}}return c}function ei(e){if(!e)throw Error(`Credential request options are required`);if(typeof PublicKeyCredential<`u`&&`parseRequestOptionsFromJSON`in PublicKeyCredential&&typeof PublicKeyCredential.parseRequestOptionsFromJSON==`function`)return PublicKeyCredential.parseRequestOptionsFromJSON(e);let{challenge:n,allowCredentials:r}=e,i=t(e,[`challenge`,`allowCredentials`]),a=z(n).buffer,o=Object.assign(Object.assign({},i),{challenge:a});if(r&&r.length>0){o.allowCredentials=Array(r.length);for(let e=0;e<r.length;e++){let t=r[e];o.allowCredentials[e]=Object.assign(Object.assign({},t),{id:z(t.id).buffer,type:t.type||`public-key`,transports:t.transports})}}return o}function ti(e){if(`toJSON`in e&&typeof e.toJSON==`function`)return e.toJSON();let t=e;return{id:e.id,rawId:e.id,response:{attestationObject:B(new Uint8Array(e.response.attestationObject)),clientDataJSON:B(new Uint8Array(e.response.clientDataJSON))},type:`public-key`,clientExtensionResults:e.getClientExtensionResults(),authenticatorAttachment:t.authenticatorAttachment??void 0}}function ni(e){if(`toJSON`in e&&typeof e.toJSON==`function`)return e.toJSON();let t=e,n=e.getClientExtensionResults(),r=e.response;return{id:e.id,rawId:e.id,response:{authenticatorData:B(new Uint8Array(r.authenticatorData)),clientDataJSON:B(new Uint8Array(r.clientDataJSON)),signature:B(new Uint8Array(r.signature)),userHandle:r.userHandle?B(new Uint8Array(r.userHandle)):void 0},type:`public-key`,clientExtensionResults:n,authenticatorAttachment:t.authenticatorAttachment??void 0}}function ri(e){return e===`localhost`||/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/i.test(e)}function ii(){return!!(V()&&`PublicKeyCredential`in window&&window.PublicKeyCredential&&`credentials`in navigator&&typeof(navigator==null?void 0:navigator.credentials)?.create==`function`&&typeof(navigator==null?void 0:navigator.credentials)?.get==`function`)}async function ai(e){try{let t=await navigator.credentials.create(e);return t?t instanceof PublicKeyCredential?{data:t,error:null}:{data:null,error:new Yr(`Browser returned unexpected credential type`,t)}:{data:null,error:new Yr(`Empty credential response`,t)}}catch(t){return{data:null,error:Xr({error:t,options:e})}}}async function oi(e){try{let t=await navigator.credentials.get(e);return t?t instanceof PublicKeyCredential?{data:t,error:null}:{data:null,error:new Yr(`Browser returned unexpected credential type`,t)}:{data:null,error:new Yr(`Empty credential response`,t)}}catch(t){return{data:null,error:Zr({error:t,options:e})}}}let si={hints:[`security-key`],authenticatorSelection:{authenticatorAttachment:`cross-platform`,requireResidentKey:!1,userVerification:`preferred`,residentKey:`discouraged`},attestation:`direct`},ci={userVerification:`preferred`,hints:[`security-key`],attestation:`direct`};function li(...e){let t=e=>typeof e==`object`&&!!e&&!Array.isArray(e),n=e=>e instanceof ArrayBuffer||ArrayBuffer.isView(e),r={};for(let i of e)if(i)for(let e in i){let a=i[e];if(a!==void 0)if(Array.isArray(a))r[e]=a;else if(n(a))r[e]=a;else if(t(a)){let n=r[e];t(n)?r[e]=li(n,a):r[e]=li(a)}else r[e]=a}return r}function ui(e,t){return li(si,e,t||{})}function di(e,t){return li(ci,e,t||{})}var fi=class{constructor(e){this.client=e,this.enroll=this._enroll.bind(this),this.challenge=this._challenge.bind(this),this.verify=this._verify.bind(this),this.authenticate=this._authenticate.bind(this),this.register=this._register.bind(this)}async _enroll(e){return this.client.mfa.enroll(Object.assign(Object.assign({},e),{factorType:`webauthn`}))}async _challenge({factorId:e,webauthn:t,friendlyName:n,signal:r},i){try{let{data:a,error:o}=await this.client.mfa.challenge({factorId:e,webauthn:t});if(!a)return{data:null,error:o};let s=r??Qr.createNewAbortSignal();if(a.webauthn.type===`create`){let{user:e}=a.webauthn.credential_options.publicKey;if(!e.name){let t=n;if(t)e.name=`${e.id}:${t}`;else{let t=(await this.client.getUser()).data.user,n=t?.user_metadata?.name||t?.email||t?.id||`User`;e.name=`${e.id}:${n}`}}e.displayName||=e.name}switch(a.webauthn.type){case`create`:{let{data:t,error:n}=await ai({publicKey:ui(a.webauthn.credential_options.publicKey,i?.create),signal:s});return t?{data:{factorId:e,challengeId:a.id,webauthn:{type:a.webauthn.type,credential_response:t}},error:null}:{data:null,error:n}}case`request`:{let t=di(a.webauthn.credential_options.publicKey,i?.request),{data:n,error:r}=await oi(Object.assign(Object.assign({},a.webauthn.credential_options),{publicKey:t,signal:s}));return n?{data:{factorId:e,challengeId:a.id,webauthn:{type:a.webauthn.type,credential_response:n}},error:null}:{data:null,error:r}}}}catch(e){return P(e)?{data:null,error:e}:{data:null,error:new F(`Unexpected error in challenge`,e)}}}async _verify({challengeId:e,factorId:t,webauthn:n}){return this.client.mfa.verify({factorId:t,challengeId:e,webauthn:n})}async _authenticate({factorId:e,webauthn:{rpId:t=typeof window<`u`?window.location.hostname:void 0,rpOrigins:n=typeof window<`u`?[window.location.origin]:void 0,signal:r}={}},i){if(!t)return{data:null,error:new N(`rpId is required for WebAuthn authentication`)};try{if(!ii())return{data:null,error:new F(`Browser does not support WebAuthn`,null)};let{data:a,error:o}=await this.challenge({factorId:e,webauthn:{rpId:t,rpOrigins:n},signal:r},{request:i});if(!a)return{data:null,error:o};let{webauthn:s}=a;return this._verify({factorId:e,challengeId:a.challengeId,webauthn:{type:s.type,rpId:t,rpOrigins:n,credential_response:s.credential_response}})}catch(e){return P(e)?{data:null,error:e}:{data:null,error:new F(`Unexpected error in authenticate`,e)}}}async _register({friendlyName:e,webauthn:{rpId:t=typeof window<`u`?window.location.hostname:void 0,rpOrigins:n=typeof window<`u`?[window.location.origin]:void 0,signal:r}={}},i){if(!t)return{data:null,error:new N(`rpId is required for WebAuthn registration`)};try{if(!ii())return{data:null,error:new F(`Browser does not support WebAuthn`,null)};let{data:a,error:o}=await this._enroll({friendlyName:e});if(!a)return await this.client.mfa.listFactors().then(t=>t.data?.all.find(t=>t.factor_type===`webauthn`&&t.friendly_name===e&&t.status!==`unverified`)).then(e=>e?this.client.mfa.unenroll({factorId:e?.id}):void 0),{data:null,error:o};let{data:s,error:c}=await this._challenge({factorId:a.id,friendlyName:a.friendly_name,webauthn:{rpId:t,rpOrigins:n},signal:r},{create:i});return s?this._verify({factorId:a.id,challengeId:s.challengeId,webauthn:{rpId:t,rpOrigins:n,type:s.webauthn.type,credential_response:s.webauthn.credential_response}}):{data:null,error:c}}catch(e){return P(e)?{data:null,error:e}:{data:null,error:new F(`Unexpected error in register`,e)}}}};Wr();let pi={url:`http://localhost:9999`,storageKey:`supabase.auth.token`,autoRefreshToken:!0,persistSession:!0,detectSessionInUrl:!0,headers:Dn,flowType:`implicit`,debug:!1,hasCustomAuthorizationHeader:!1,throwOnError:!1,lockAcquireTimeout:5e3,skipAutoInitialize:!1,experimental:{}},mi={};var hi=class e{get jwks(){return mi[this.storageKey]?.jwks??{keys:[]}}set jwks(e){mi[this.storageKey]=Object.assign(Object.assign({},mi[this.storageKey]),{jwks:e})}get jwks_cached_at(){return mi[this.storageKey]?.cachedAt??-(2**53-1)}set jwks_cached_at(e){mi[this.storageKey]=Object.assign(Object.assign({},mi[this.storageKey]),{cachedAt:e})}constructor(t){var n;this.userStorage=null,this.memoryStorage=null,this.stateChangeEmitters=new Map,this.autoRefreshTicker=null,this.autoRefreshTickTimeout=null,this.visibilityChangedCallback=null,this.refreshingDeferred=null,this._sessionRemovalEpoch=0,this.initializePromise=null,this.detectSessionInUrl=!0,this.hasCustomAuthorizationHeader=!1,this.suppressGetSessionWarning=!1,this.lock=null,this.lockAcquired=!1,this.pendingInLock=[],this.broadcastChannel=null,this.logger=console.log;let r=Object.assign(Object.assign({},pi),t);if(this.storageKey=r.storageKey,this.instanceID=e.nextInstanceID[this.storageKey]??0,e.nextInstanceID[this.storageKey]=this.instanceID+1,this.logDebugMessages=!!r.debug,typeof r.debug==`function`&&(this.logger=r.debug),this.instanceID>0&&V()){let e=`${this._logPrefix()} Multiple GoTrueClient instances detected in the same browser context. It is not an error, but this should be avoided as it may produce undefined behavior when used concurrently under the same storage key.`;console.warn(e),this.logDebugMessages&&console.trace(e)}if(this.persistSession=r.persistSession,this.autoRefreshToken=r.autoRefreshToken,this.experimental=r.experimental??{},this.admin=new Ir({url:r.url,headers:r.headers,fetch:r.fetch,experimental:this.experimental}),this.url=r.url,this.headers=r.headers,this.fetch=sr(r.fetch),this.detectSessionInUrl=r.detectSessionInUrl,this.flowType=r.flowType,this.hasCustomAuthorizationHeader=r.hasCustomAuthorizationHeader,this.throwOnError=r.throwOnError,this.lockAcquireTimeout=r.lockAcquireTimeout,r.lock!=null&&(this.lock=r.lock),this.jwks||(this.jwks={keys:[]},this.jwks_cached_at=-(2**53-1)),this.mfa={verify:this._verify.bind(this),enroll:this._enroll.bind(this),unenroll:this._unenroll.bind(this),challenge:this._challenge.bind(this),listFactors:this._listFactors.bind(this),challengeAndVerify:this._challengeAndVerify.bind(this),getAuthenticatorAssuranceLevel:this._getAuthenticatorAssuranceLevel.bind(this),webauthn:new fi(this)},this.oauth={getAuthorizationDetails:this._getAuthorizationDetails.bind(this),approveAuthorization:this._approveAuthorization.bind(this),denyAuthorization:this._denyAuthorization.bind(this),listGrants:this._listOAuthGrants.bind(this),revokeGrant:this._revokeOAuthGrant.bind(this)},this.passkey={startRegistration:this._startPasskeyRegistration.bind(this),verifyRegistration:this._verifyPasskeyRegistration.bind(this),startAuthentication:this._startPasskeyAuthentication.bind(this),verifyAuthentication:this._verifyPasskeyAuthentication.bind(this),list:this._listPasskeys.bind(this),update:this._updatePasskey.bind(this),delete:this._deletePasskey.bind(this)},this.persistSession?(r.storage?this.storage=r.storage:ar()?this.storage=globalThis.localStorage:(this.memoryStorage={},this.storage=Lr(this.memoryStorage)),r.userStorage&&(this.userStorage=r.userStorage)):(this.memoryStorage={},this.storage=Lr(this.memoryStorage)),V()&&globalThis.BroadcastChannel&&this.persistSession&&this.storageKey){try{this.broadcastChannel=new globalThis.BroadcastChannel(this.storageKey)}catch(e){console.error(`Failed to create a new BroadcastChannel, multi-tab state changes will not be available`,e)}(n=this.broadcastChannel)==null||n.addEventListener(`message`,async e=>{this._debug(`received broadcast notification from other tab or client`,e);try{await this._notifyAllSubscribers(e.data.event,e.data.session,!1)}catch(e){this._debug(`#broadcastChannel`,`error`,e)}})}r.skipAutoInitialize||this.initialize().catch(e=>{this._debug(`#initialize()`,`error`,e)})}isThrowOnErrorEnabled(){return this.throwOnError}_returnResult(e){if(this.throwOnError&&e&&e.error)throw e.error;return e}_logPrefix(){return`GoTrueClient@${this.storageKey}:${this.instanceID} (${Tn}) ${new Date().toISOString()}`}_debug(...e){return this.logDebugMessages&&this.logger(this._logPrefix(),...e),this}async initialize(){return this.initializePromise||=(async()=>this.lock==null?await this._initialize():await this._acquireLock(this.lockAcquireTimeout,async()=>await this._initialize()))(),await this.initializePromise}async _initialize(){try{let e={},t=`none`;if(V()&&(e=or(window.location.href),this._isImplicitGrantCallback(e)?t=`implicit`:await this._isPKCECallback(e)&&(t=`pkce`)),V()&&this.detectSessionInUrl&&t!==`none`){let{data:n,error:r}=await this._getSessionFromURL(e,t);if(r){if(this._debug(`#_initialize()`,`error detecting session from URL`,r),In(r)){let e=r.details?.code;if(e===`identity_already_exists`||e===`identity_not_found`||e===`single_identity_not_deletable`)return{error:r}}return{error:r}}let{session:i,redirectType:a}=n;return this._debug(`#_initialize()`,`detected session in URL`,i,`redirect type`,a),await this._saveSession(i),setTimeout(async()=>{a===`recovery`?await this._notifyAllSubscribers(`PASSWORD_RECOVERY`,i):await this._notifyAllSubscribers(`SIGNED_IN`,i)},0),{error:null}}return await this._recoverAndRefresh(),{error:null}}catch(e){return P(e)?this._returnResult({error:e}):this._returnResult({error:new F(`Unexpected error during initialization`,e)})}finally{await this._handleVisibilityChange(),this._debug(`#_initialize()`,`end`)}}async signInAnonymously(e){try{let{data:t,error:n}=await Y(this.fetch,`POST`,`${this.url}/signup`,{headers:this.headers,body:{data:e?.options?.data??{},gotrue_meta_security:{captcha_token:e?.options?.captchaToken}},xform:X});if(n||!t)return this._returnResult({data:{user:null,session:null},error:n});let r=t.session,i=t.user;return t.session&&(await this._saveSession(t.session),await this._notifyAllSubscribers(`SIGNED_IN`,r)),this._returnResult({data:{user:i,session:r},error:null})}catch(e){if(P(e))return this._returnResult({data:{user:null,session:null},error:e});throw e}}async signUp(e){try{let t;if(`email`in e){let{email:n,password:r,options:i}=e,a=null,o=null;this.flowType===`pkce`&&([a,o]=await _r(this.storage,this.storageKey)),t=await Y(this.fetch,`POST`,`${this.url}/signup`,{headers:this.headers,redirectTo:i?.emailRedirectTo,body:{email:n,password:r,data:i?.data??{},gotrue_meta_security:{captcha_token:i?.captchaToken},code_challenge:a,code_challenge_method:o},xform:X})}else if(`phone`in e){let{phone:n,password:r,options:i}=e;t=await Y(this.fetch,`POST`,`${this.url}/signup`,{headers:this.headers,body:{phone:n,password:r,data:i?.data??{},channel:i?.channel??`sms`,gotrue_meta_security:{captcha_token:i?.captchaToken}},xform:X})}else throw new Pn(`You must provide either an email or phone number and a password`);let{data:n,error:r}=t;if(r||!n)return await G(this.storage,`${this.storageKey}-code-verifier`),this._returnResult({data:{user:null,session:null},error:r});let i=n.session,a=n.user;return n.session&&(await this._saveSession(n.session),await this._notifyAllSubscribers(`SIGNED_IN`,i)),this._returnResult({data:{user:a,session:i},error:null})}catch(e){if(await G(this.storage,`${this.storageKey}-code-verifier`),P(e))return this._returnResult({data:{user:null,session:null},error:e});throw e}}async signInWithPassword(e){try{let t;if(`email`in e){let{email:n,password:r,options:i}=e;t=await Y(this.fetch,`POST`,`${this.url}/token?grant_type=password`,{headers:this.headers,body:{email:n,password:r,gotrue_meta_security:{captcha_token:i?.captchaToken}},xform:Ar})}else if(`phone`in e){let{phone:n,password:r,options:i}=e;t=await Y(this.fetch,`POST`,`${this.url}/token?grant_type=password`,{headers:this.headers,body:{phone:n,password:r,gotrue_meta_security:{captcha_token:i?.captchaToken}},xform:Ar})}else throw new Pn(`You must provide either an email or phone number and a password`);let{data:n,error:r}=t;if(r)return this._returnResult({data:{user:null,session:null},error:r});if(!n||!n.session||!n.user){let e=new R;return this._returnResult({data:{user:null,session:null},error:e})}return n.session&&(await this._saveSession(n.session),await this._notifyAllSubscribers(`SIGNED_IN`,n.session)),this._returnResult({data:Object.assign({user:n.user,session:n.session},n.weak_password?{weakPassword:n.weak_password}:null),error:r})}catch(e){if(P(e))return this._returnResult({data:{user:null,session:null},error:e});throw e}}async signInWithOAuth(e){return await this._handleProviderSignIn(e.provider,{redirectTo:e.options?.redirectTo,scopes:e.options?.scopes,queryParams:e.options?.queryParams,skipBrowserRedirect:e.options?.skipBrowserRedirect})}async exchangeCodeForSession(e){return await this.initializePromise,this.lock==null?this._exchangeCodeForSession(e):this._acquireLock(this.lockAcquireTimeout,async()=>this._exchangeCodeForSession(e))}async signInWithWeb3(e){let{chain:t}=e;switch(t){case`ethereum`:return await this.signInWithEthereum(e);case`solana`:return await this.signInWithSolana(e);default:throw Error(`@supabase/auth-js: Unsupported chain "${t}"`)}}async signInWithEthereum(e){let t,n;if(`message`in e)t=e.message,n=e.signature;else{let{chain:r,wallet:i,statement:a,options:o}=e,s;if(V())if(typeof i==`object`)s=i;else{let e=window;if(`ethereum`in e&&typeof e.ethereum==`object`&&`request`in e.ethereum&&typeof e.ethereum.request==`function`)s=e.ethereum;else throw Error(`@supabase/auth-js: No compatible Ethereum wallet interface on the window object (window.ethereum) detected. Make sure the user already has a wallet installed and connected for this app. Prefer passing the wallet interface object directly to signInWithWeb3({ chain: 'ethereum', wallet: resolvedUserWallet }) instead.`)}else{if(typeof i!=`object`||!o?.url)throw Error(`@supabase/auth-js: Both wallet and url must be specified in non-browser environments.`);s=i}let c=new URL(o?.url??window.location.href),l=await s.request({method:`eth_requestAccounts`}).then(e=>e).catch(()=>{throw Error(`@supabase/auth-js: Wallet method eth_requestAccounts is missing or invalid`)});if(!l||l.length===0)throw Error(`@supabase/auth-js: No accounts available. Please ensure the wallet is connected.`);let u=Gr(l[0]),d=o?.signInWithEthereum?.chainId;d||=Kr(await s.request({method:`eth_chainId`})),t=Jr({domain:c.host,address:u,statement:a,uri:c.href,version:`1`,chainId:d,nonce:o?.signInWithEthereum?.nonce,issuedAt:o?.signInWithEthereum?.issuedAt??new Date,expirationTime:o?.signInWithEthereum?.expirationTime,notBefore:o?.signInWithEthereum?.notBefore,requestId:o?.signInWithEthereum?.requestId,resources:o?.signInWithEthereum?.resources}),n=await s.request({method:`personal_sign`,params:[qr(t),u]})}try{let{data:r,error:i}=await Y(this.fetch,`POST`,`${this.url}/token?grant_type=web3`,{headers:this.headers,body:Object.assign({chain:`ethereum`,message:t,signature:n},e.options?.captchaToken?{gotrue_meta_security:{captcha_token:e.options?.captchaToken}}:null),xform:X});if(i)throw i;if(!r||!r.session||!r.user){let e=new R;return this._returnResult({data:{user:null,session:null},error:e})}return r.session&&(await this._saveSession(r.session),await this._notifyAllSubscribers(`SIGNED_IN`,r.session)),this._returnResult({data:Object.assign({},r),error:i})}catch(e){if(P(e))return this._returnResult({data:{user:null,session:null},error:e});throw e}}async signInWithSolana(e){let t,n;if(`message`in e)t=e.message,n=e.signature;else{let{chain:r,wallet:i,statement:a,options:o}=e,s;if(V())if(typeof i==`object`)s=i;else{let e=window;if(`solana`in e&&typeof e.solana==`object`&&(`signIn`in e.solana&&typeof e.solana.signIn==`function`||`signMessage`in e.solana&&typeof e.solana.signMessage==`function`))s=e.solana;else throw Error(`@supabase/auth-js: No compatible Solana wallet interface on the window object (window.solana) detected. Make sure the user already has a wallet installed and connected for this app. Prefer passing the wallet interface object directly to signInWithWeb3({ chain: 'solana', wallet: resolvedUserWallet }) instead.`)}else{if(typeof i!=`object`||!o?.url)throw Error(`@supabase/auth-js: Both wallet and url must be specified in non-browser environments.`);s=i}let c=new URL(o?.url??window.location.href);if(`signIn`in s&&s.signIn){let e=await s.signIn(Object.assign(Object.assign(Object.assign({issuedAt:new Date().toISOString()},o?.signInWithSolana),{version:`1`,domain:c.host,uri:c.href}),a?{statement:a}:null)),r;if(Array.isArray(e)&&e[0]&&typeof e[0]==`object`)r=e[0];else if(e&&typeof e==`object`&&`signedMessage`in e&&`signature`in e)r=e;else throw Error(`@supabase/auth-js: Wallet method signIn() returned unrecognized value`);if(`signedMessage`in r&&`signature`in r&&(typeof r.signedMessage==`string`||r.signedMessage instanceof Uint8Array)&&r.signature instanceof Uint8Array)t=typeof r.signedMessage==`string`?r.signedMessage:new TextDecoder().decode(r.signedMessage),n=r.signature;else throw Error(`@supabase/auth-js: Wallet method signIn() API returned object without signedMessage and signature fields`)}else{if(!(`signMessage`in s)||typeof s.signMessage!=`function`||!(`publicKey`in s)||typeof s!=`object`||!s.publicKey||!(`toBase58`in s.publicKey)||typeof s.publicKey.toBase58!=`function`)throw Error(`@supabase/auth-js: Wallet does not have a compatible signMessage() and publicKey.toBase58() API`);t=[`${c.host} wants you to sign in with your Solana account:`,s.publicKey.toBase58(),...a?[``,a,``]:[``],`Version: 1`,`URI: ${c.href}`,`Issued At: ${o?.signInWithSolana?.issuedAt??new Date().toISOString()}`,...o?.signInWithSolana?.notBefore?[`Not Before: ${o.signInWithSolana.notBefore}`]:[],...o?.signInWithSolana?.expirationTime?[`Expiration Time: ${o.signInWithSolana.expirationTime}`]:[],...o?.signInWithSolana?.chainId?[`Chain ID: ${o.signInWithSolana.chainId}`]:[],...o?.signInWithSolana?.nonce?[`Nonce: ${o.signInWithSolana.nonce}`]:[],...o?.signInWithSolana?.requestId?[`Request ID: ${o.signInWithSolana.requestId}`]:[],...o?.signInWithSolana?.resources?.length?[`Resources`,...o.signInWithSolana.resources.map(e=>`- ${e}`)]:[]].join(`
 `);let e=await s.signMessage(new TextEncoder().encode(t),`utf8`);if(!e||!(e instanceof Uint8Array))throw Error(`@supabase/auth-js: Wallet signMessage() API returned an recognized value`);n=e}}try{let{data:r,error:i}=await Y(this.fetch,`POST`,`${this.url}/token?grant_type=web3`,{headers:this.headers,body:Object.assign({chain:`solana`,message:t,signature:B(n)},e.options?.captchaToken?{gotrue_meta_security:{captcha_token:e.options?.captchaToken}}:null),xform:X});if(i)throw i;if(!r||!r.session||!r.user){let e=new R;return this._returnResult({data:{user:null,session:null},error:e})}return r.session&&(await this._saveSession(r.session),await this._notifyAllSubscribers(`SIGNED_IN`,r.session)),this._returnResult({data:Object.assign({},r),error:i})}catch(e){if(P(e))return this._returnResult({data:{user:null,session:null},error:e});throw e}}async _exchangeCodeForSession(e){let[t,n]=(await W(this.storage,`${this.storageKey}-code-verifier`)??``).split(`/`);try{if(!t&&this.flowType===`pkce`)throw new Rn;let{data:r,error:i}=await Y(this.fetch,`POST`,`${this.url}/token?grant_type=pkce`,{headers:this.headers,body:{auth_code:e,code_verifier:t},xform:X});if(await G(this.storage,`${this.storageKey}-code-verifier`),i)throw i;if(!r||!r.session||!r.user){let e=new R;return this._returnResult({data:{user:null,session:null,redirectType:null},error:e})}return r.session&&(await this._saveSession(r.session),await this._notifyAllSubscribers(n===`recovery`?`PASSWORD_RECOVERY`:`SIGNED_IN`,r.session)),this._returnResult({data:Object.assign(Object.assign({},r),{redirectType:n??null}),error:i})}catch(e){if(await G(this.storage,`${this.storageKey}-code-verifier`),P(e))return this._returnResult({data:{user:null,session:null,redirectType:null},error:e});throw e}}async signInWithIdToken(e){try{let{options:t,provider:n,token:r,access_token:i,nonce:a}=e,{data:o,error:s}=await Y(this.fetch,`POST`,`${this.url}/token?grant_type=id_token`,{headers:this.headers,body:{provider:n,id_token:r,access_token:i,nonce:a,gotrue_meta_security:{captcha_token:t?.captchaToken}},xform:X});if(s)return this._returnResult({data:{user:null,session:null},error:s});if(!o||!o.session||!o.user){let e=new R;return this._returnResult({data:{user:null,session:null},error:e})}return o.session&&(await this._saveSession(o.session),await this._notifyAllSubscribers(`SIGNED_IN`,o.session)),this._returnResult({data:o,error:s})}catch(e){if(P(e))return this._returnResult({data:{user:null,session:null},error:e});throw e}}async signInWithOtp(e){try{if(`email`in e){let{email:t,options:n}=e,r=null,i=null;this.flowType===`pkce`&&([r,i]=await _r(this.storage,this.storageKey));let{error:a}=await Y(this.fetch,`POST`,`${this.url}/otp`,{headers:this.headers,body:{email:t,data:n?.data??{},create_user:n?.shouldCreateUser??!0,gotrue_meta_security:{captcha_token:n?.captchaToken},code_challenge:r,code_challenge_method:i},redirectTo:n?.emailRedirectTo});return this._returnResult({data:{user:null,session:null},error:a})}if(`phone`in e){let{phone:t,options:n}=e,{data:r,error:i}=await Y(this.fetch,`POST`,`${this.url}/otp`,{headers:this.headers,body:{phone:t,data:n?.data??{},create_user:n?.shouldCreateUser??!0,gotrue_meta_security:{captcha_token:n?.captchaToken},channel:n?.channel??`sms`}});return this._returnResult({data:{user:null,session:null,messageId:r?.message_id},error:i})}throw new Pn(`You must provide either an email or phone number.`)}catch(e){if(await G(this.storage,`${this.storageKey}-code-verifier`),P(e))return this._returnResult({data:{user:null,session:null},error:e});throw e}}async verifyOtp(e){try{let t,n;`options`in e&&(t=e.options?.redirectTo,n=e.options?.captchaToken);let{data:r,error:i}=await Y(this.fetch,`POST`,`${this.url}/verify`,{headers:this.headers,body:Object.assign(Object.assign({},e),{gotrue_meta_security:{captcha_token:n}}),redirectTo:t,xform:X});if(i)throw i;if(!r)throw Error(`An error occurred on token verification.`);let a=r.session,o=r.user;return a?.access_token&&(await this._saveSession(a),await this._notifyAllSubscribers(e.type==`recovery`?`PASSWORD_RECOVERY`:`SIGNED_IN`,a)),this._returnResult({data:{user:o,session:a},error:null})}catch(e){if(P(e))return this._returnResult({data:{user:null,session:null},error:e});throw e}}async signInWithSSO(e){try{let t=null,n=null;this.flowType===`pkce`&&([t,n]=await _r(this.storage,this.storageKey));let r=await Y(this.fetch,`POST`,`${this.url}/sso`,{body:Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({},`providerId`in e?{provider_id:e.providerId}:null),`domain`in e?{domain:e.domain}:null),{redirect_to:e.options?.redirectTo??void 0}),e?.options?.captchaToken?{gotrue_meta_security:{captcha_token:e.options.captchaToken}}:null),{skip_http_redirect:!0,code_challenge:t,code_challenge_method:n}),headers:this.headers,xform:jr});return r.data?.url&&V()&&!e.options?.skipBrowserRedirect&&window.location.assign(r.data.url),this._returnResult(r)}catch(e){if(await G(this.storage,`${this.storageKey}-code-verifier`),P(e))return this._returnResult({data:null,error:e});throw e}}async reauthenticate(){return await this.initializePromise,this.lock==null?await this._reauthenticate():await this._acquireLock(this.lockAcquireTimeout,async()=>await this._reauthenticate())}async _reauthenticate(){try{return await this._useSession(async e=>{let{data:{session:t},error:n}=e;if(n)throw n;if(!t)throw new L;let{error:r}=await Y(this.fetch,`GET`,`${this.url}/reauthenticate`,{headers:this.headers,jwt:t.access_token});return this._returnResult({data:{user:null,session:null},error:r})})}catch(e){if(P(e))return this._returnResult({data:{user:null,session:null},error:e});throw e}}async resend(e){try{let t=`${this.url}/resend`;if(`email`in e){let{email:n,type:r,options:i}=e,{error:a}=await Y(this.fetch,`POST`,t,{headers:this.headers,body:{email:n,type:r,gotrue_meta_security:{captcha_token:i?.captchaToken}},redirectTo:i?.emailRedirectTo});return this._returnResult({data:{user:null,session:null},error:a})}else if(`phone`in e){let{phone:n,type:r,options:i}=e,{data:a,error:o}=await Y(this.fetch,`POST`,t,{headers:this.headers,body:{phone:n,type:r,gotrue_meta_security:{captcha_token:i?.captchaToken}}});return this._returnResult({data:{user:null,session:null,messageId:a?.message_id},error:o})}throw new Pn(`You must provide either an email or phone number and a type`)}catch(e){if(P(e))return this._returnResult({data:{user:null,session:null},error:e});throw e}}async getSession(){return await this.initializePromise,this.lock==null?await this._useSession(async e=>e):await this._acquireLock(this.lockAcquireTimeout,async()=>this._useSession(async e=>e))}async _acquireLock(e,t){this._debug(`#_acquireLock`,`begin`,e);try{if(this.lockAcquired){let e=this.pendingInLock.length?this.pendingInLock[this.pendingInLock.length-1]:Promise.resolve(),n=(async()=>(await e,await t()))();return this.pendingInLock.push((async()=>{try{await n}catch{}})()),n}return await this.lock(`lock:${this.storageKey}`,e,async()=>{this._debug(`#_acquireLock`,`lock acquired for storage key`,this.storageKey);try{this.lockAcquired=!0;let e=t();for(this.pendingInLock.push((async()=>{try{await e}catch{}})()),await e;this.pendingInLock.length;){let e=[...this.pendingInLock];await Promise.all(e),this.pendingInLock.splice(0,e.length)}return await e}finally{this._debug(`#_acquireLock`,`lock released for storage key`,this.storageKey),this.lockAcquired=!1}})}finally{this._debug(`#_acquireLock`,`end`)}}async _useSession(e){this._debug(`#_useSession`,`begin`);try{return await e(await this.__loadSession())}finally{this._debug(`#_useSession`,`end`)}}async __loadSession(){this._debug(`#__loadSession()`,`begin`),this.lock!=null&&!this.lockAcquired&&this._debug(`#__loadSession()`,`used outside of an acquired lock!`,Error().stack);try{let e=null,t=await W(this.storage,this.storageKey);if(this._debug(`#getSession()`,`session from storage`,t),t!==null&&(this._isValidSession(t)?e=t:(this._debug(`#getSession()`,`session from storage is not valid`),await this._removeSession())),!e)return{data:{session:null},error:null};let n=e.expires_at?e.expires_at*1e3-Date.now()<En:!1;if(this._debug(`#__loadSession()`,`session has${n?``:` not`} expired`,`expires_at`,e.expires_at),!n){if(this.userStorage){let t=await W(this.userStorage,this.storageKey+`-user`);t?.user?e.user=t.user:e.user=Cr()}if(this.storage.isServer&&e.user&&!e.user.__isUserNotAvailableProxy){let t={value:this.suppressGetSessionWarning};e.user=wr(e.user,t),t.value&&(this.suppressGetSessionWarning=!0)}return{data:{session:e},error:null}}let{data:r,error:i}=await this._callRefreshToken(e.refresh_token);return i?this._returnResult({data:{session:null},error:i}):this._returnResult({data:{session:r},error:null})}finally{this._debug(`#__loadSession()`,`end`)}}async getUser(e){if(e)return await this._getUser(e);await this.initializePromise;let t;return t=this.lock==null?await this._getUser():await this._acquireLock(this.lockAcquireTimeout,async()=>await this._getUser()),t.data.user&&(this.suppressGetSessionWarning=!0),t}async _getUser(e){try{return e?await Y(this.fetch,`GET`,`${this.url}/user`,{headers:this.headers,jwt:e,xform:Z}):await this._useSession(async e=>{let{data:t,error:n}=e;if(n)throw n;return!t.session?.access_token&&!this.hasCustomAuthorizationHeader?{data:{user:null},error:new L}:await Y(this.fetch,`GET`,`${this.url}/user`,{headers:this.headers,jwt:t.session?.access_token??void 0,xform:Z})})}catch(e){if(P(e))return Nn(e)&&(await this._removeSession(),await G(this.storage,`${this.storageKey}-code-verifier`)),this._returnResult({data:{user:null},error:e});throw e}}async updateUser(e,t={}){return await this.initializePromise,this.lock==null?await this._updateUser(e,t):await this._acquireLock(this.lockAcquireTimeout,async()=>await this._updateUser(e,t))}async _updateUser(e,t={}){try{return await this._useSession(async n=>{let{data:r,error:i}=n;if(i)throw i;if(!r.session)throw new L;let a=r.session,o=null,s=null;this.flowType===`pkce`&&e.email!=null&&([o,s]=await _r(this.storage,this.storageKey));let{data:c,error:l}=await Y(this.fetch,`PUT`,`${this.url}/user`,{headers:this.headers,redirectTo:t?.emailRedirectTo,body:Object.assign(Object.assign({},e),{code_challenge:o,code_challenge_method:s}),jwt:a.access_token,xform:Z});if(l)throw l;return a.user=c.user,await this._saveSession(a),await this._notifyAllSubscribers(`USER_UPDATED`,a),this._returnResult({data:{user:a.user},error:null})})}catch(e){if(await G(this.storage,`${this.storageKey}-code-verifier`),P(e))return this._returnResult({data:{user:null},error:e});throw e}}async setSession(e){return await this.initializePromise,this.lock==null?await this._setSession(e):await this._acquireLock(this.lockAcquireTimeout,async()=>await this._setSession(e))}async _setSession(e){try{if(!e.access_token||!e.refresh_token)throw new L;let t=Date.now()/1e3,n=t,r=!0,i=null,{payload:a}=ur(e.access_token);if(a.exp&&(n=a.exp,r=n<=t),r){let{data:t,error:n}=await this._callRefreshToken(e.refresh_token);if(n)return this._returnResult({data:{user:null,session:null},error:n});if(!t)return{data:{user:null,session:null},error:null};i=t}else{let{data:r,error:a}=await this._getUser(e.access_token);if(a)return this._returnResult({data:{user:null,session:null},error:a});i={access_token:e.access_token,refresh_token:e.refresh_token,user:r.user,token_type:`bearer`,expires_in:n-t,expires_at:n},await this._saveSession(i),await this._notifyAllSubscribers(`SIGNED_IN`,i)}return this._returnResult({data:{user:i.user,session:i},error:null})}catch(e){if(P(e))return this._returnResult({data:{session:null,user:null},error:e});throw e}}async refreshSession(e){return await this.initializePromise,this.lock==null?await this._refreshSession(e):await this._acquireLock(this.lockAcquireTimeout,async()=>await this._refreshSession(e))}async _refreshSession(e){try{return await this._useSession(async t=>{if(!e){let{data:n,error:r}=t;if(r)throw r;e=n.session??void 0}if(!e?.refresh_token)throw new L;let{data:n,error:r}=await this._callRefreshToken(e.refresh_token);return r?this._returnResult({data:{user:null,session:null},error:r}):n?this._returnResult({data:{user:n.user,session:n},error:null}):this._returnResult({data:{user:null,session:null},error:null})})}catch(e){if(P(e))return this._returnResult({data:{user:null,session:null},error:e});throw e}}async _getSessionFromURL(e,t){try{if(!V())throw new Fn(`No browser detected.`);if(e.error||e.error_description||e.error_code)throw new Fn(e.error_description||`Error in URL with unspecified error_description`,{error:e.error||`unspecified_error`,code:e.error_code||`unspecified_code`});switch(t){case`implicit`:if(this.flowType===`pkce`)throw new Ln(`Not a valid PKCE flow url.`);break;case`pkce`:if(this.flowType===`implicit`)throw new Fn(`Not a valid implicit grant flow url.`);break;default:}if(t===`pkce`){if(this._debug(`#_initialize()`,`begin`,`is PKCE flow`,!0),!e.code)throw new Ln(`No code detected.`);let{data:t,error:n}=await this._exchangeCodeForSession(e.code);if(n)throw n;let r=new URL(window.location.href);return r.searchParams.delete(`code`),window.history.replaceState(window.history.state,``,r.toString()),{data:{session:t.session,redirectType:t.redirectType??null},error:null}}let{provider_token:n,provider_refresh_token:r,access_token:i,refresh_token:a,expires_in:o,expires_at:s,token_type:c}=e;if(!i||!o||!a||!c)throw new Fn(`No session defined in URL`);let l=Math.round(Date.now()/1e3),u=parseInt(o),d=l+u;s&&(d=parseInt(s));let f=d-l;f*1e3<=M&&console.warn(`@supabase/gotrue-js: Session as retrieved from URL expires in ${f}s, should have been closer to ${u}s`);let p=d-u;l-p>=120?console.warn(`@supabase/gotrue-js: Session as retrieved from URL was issued over 120s ago, URL could be stale`,p,d,l):l-p<0&&console.warn(`@supabase/gotrue-js: Session as retrieved from URL was issued in the future? Check the device clock for skew`,p,d,l);let{data:m,error:h}=await this._getUser(i);if(h)throw h;let ee={provider_token:n,provider_refresh_token:r,access_token:i,expires_in:u,expires_at:d,refresh_token:a,token_type:c,user:m.user};return window.location.hash=``,this._debug(`#_getSessionFromURL()`,`clearing window.location.hash`),this._returnResult({data:{session:ee,redirectType:e.type},error:null})}catch(e){if(P(e))return this._returnResult({data:{session:null,redirectType:null},error:e});throw e}}_isImplicitGrantCallback(e){return typeof this.detectSessionInUrl==`function`?this.detectSessionInUrl(new URL(window.location.href),e):!!(e.access_token||e.error||e.error_description||e.error_code)}async _isPKCECallback(e){let t=await W(this.storage,`${this.storageKey}-code-verifier`);return!!(e.code&&t)}async signOut(e={scope:`global`}){return await this.initializePromise,this.lock==null?await this._signOut(e):await this._acquireLock(this.lockAcquireTimeout,async()=>await this._signOut(e))}async _signOut({scope:e}={scope:`global`}){return await this._useSession(async t=>{let{data:n,error:r}=t;if(r&&!Nn(r))return this._returnResult({error:r});let i=n.session?.access_token;if(i){let{error:t}=await this.admin.signOut(i,e);if(t&&!(Mn(t)&&(t.status===404||t.status===401||t.status===403)||Nn(t)))return this._returnResult({error:t})}return e!==`others`&&(await this._removeSession(),await G(this.storage,`${this.storageKey}-code-verifier`)),this._returnResult({error:null})})}onAuthStateChange(e){let t=ir(),n={id:t,callback:e,unsubscribe:()=>{this._debug(`#unsubscribe()`,`state change callback with id removed`,t),this.stateChangeEmitters.delete(t)}};return this._debug(`#onAuthStateChange()`,`registered callback with id`,t),this.stateChangeEmitters.set(t,n),(async()=>{await this.initializePromise,this.lock==null?await this._emitInitialSession(t):await this._acquireLock(this.lockAcquireTimeout,async()=>{this._emitInitialSession(t)})})(),{data:{subscription:n}}}async _emitInitialSession(e){return await this._useSession(async t=>{try{let{data:{session:n},error:r}=t;if(r)throw r;await this.stateChangeEmitters.get(e)?.callback(`INITIAL_SESSION`,n),this._debug(`INITIAL_SESSION`,`callback id`,e,`session`,n)}catch(t){await this.stateChangeEmitters.get(e)?.callback(`INITIAL_SESSION`,null),this._debug(`INITIAL_SESSION`,`callback id`,e,`error`,t),Nn(t)?console.warn(t):console.error(t)}})}async resetPasswordForEmail(e,t={}){let n=null,r=null;this.flowType===`pkce`&&([n,r]=await _r(this.storage,this.storageKey,!0));try{return await Y(this.fetch,`POST`,`${this.url}/recover`,{body:{email:e,code_challenge:n,code_challenge_method:r,gotrue_meta_security:{captcha_token:t.captchaToken}},headers:this.headers,redirectTo:t.redirectTo})}catch(e){if(await G(this.storage,`${this.storageKey}-code-verifier`),P(e))return this._returnResult({data:null,error:e});throw e}}async getUserIdentities(){try{let{data:e,error:t}=await this.getUser();if(t)throw t;return this._returnResult({data:{identities:e.user.identities??[]},error:null})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async linkIdentity(e){return`token`in e?this.linkIdentityIdToken(e):this.linkIdentityOAuth(e)}async linkIdentityOAuth(e){try{let{data:t,error:n}=await this._useSession(async t=>{let{data:n,error:r}=t;if(r)throw r;let i=await this._getUrlForProvider(`${this.url}/user/identities/authorize`,e.provider,{redirectTo:e.options?.redirectTo,scopes:e.options?.scopes,queryParams:e.options?.queryParams,skipBrowserRedirect:!0});return await Y(this.fetch,`GET`,i,{headers:this.headers,jwt:n.session?.access_token??void 0})});if(n)throw n;return V()&&!e.options?.skipBrowserRedirect&&window.location.assign(t?.url),this._returnResult({data:{provider:e.provider,url:t?.url},error:null})}catch(t){if(P(t))return this._returnResult({data:{provider:e.provider,url:null},error:t});throw t}}async linkIdentityIdToken(e){return await this._useSession(async t=>{try{let{error:n,data:{session:r}}=t;if(n)throw n;let{options:i,provider:a,token:o,access_token:s,nonce:c}=e,{data:l,error:u}=await Y(this.fetch,`POST`,`${this.url}/token?grant_type=id_token`,{headers:this.headers,jwt:r?.access_token??void 0,body:{provider:a,id_token:o,access_token:s,nonce:c,link_identity:!0,gotrue_meta_security:{captcha_token:i?.captchaToken}},xform:X});return u?this._returnResult({data:{user:null,session:null},error:u}):!l||!l.session||!l.user?this._returnResult({data:{user:null,session:null},error:new R}):(l.session&&(await this._saveSession(l.session),await this._notifyAllSubscribers(`USER_UPDATED`,l.session)),this._returnResult({data:l,error:u}))}catch(e){if(await G(this.storage,`${this.storageKey}-code-verifier`),P(e))return this._returnResult({data:{user:null,session:null},error:e});throw e}})}async unlinkIdentity(e){try{return await this._useSession(async t=>{let{data:n,error:r}=t;if(r)throw r;return await Y(this.fetch,`DELETE`,`${this.url}/user/identities/${e.identity_id}`,{headers:this.headers,jwt:n.session?.access_token??void 0})})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async _refreshAccessToken(e){let t=`#_refreshAccessToken()`;this._debug(t,`begin`);try{let n=Date.now();return await fr(async n=>(n>0&&await dr(200*2**(n-1)),this._debug(t,`refreshing attempt`,n),await Y(this.fetch,`POST`,`${this.url}/token?grant_type=refresh_token`,{body:{refresh_token:e},headers:this.headers,xform:X})),(e,t)=>{let r=200*2**e;return t&&Vn(t)&&Date.now()+r-n<M})}catch(e){if(this._debug(t,`error`,e),P(e))return this._returnResult({data:{session:null,user:null},error:e});throw e}finally{this._debug(t,`end`)}}_isValidSession(e){return typeof e==`object`&&!!e&&`access_token`in e&&`refresh_token`in e&&`expires_at`in e}async _handleProviderSignIn(e,t){let n=await this._getUrlForProvider(`${this.url}/authorize`,e,{redirectTo:t.redirectTo,scopes:t.scopes,queryParams:t.queryParams});return this._debug(`#_handleProviderSignIn()`,`provider`,e,`options`,t,`url`,n),V()&&!t.skipBrowserRedirect&&window.location.assign(n),{data:{provider:e,url:n},error:null}}async _recoverAndRefresh(){let e=`#_recoverAndRefresh()`;this._debug(e,`begin`);try{let t=await W(this.storage,this.storageKey);if(t&&this.userStorage){let e=await W(this.userStorage,this.storageKey+`-user`);!this.storage.isServer&&Object.is(this.storage,this.userStorage)&&!e&&(e={user:t.user},await U(this.userStorage,this.storageKey+`-user`,e)),t.user=e?.user??Cr()}else if(t&&!t.user&&!t.user){let e=await W(this.storage,this.storageKey+`-user`);e&&e?.user?(t.user=e.user,await G(this.storage,this.storageKey+`-user`),await U(this.storage,this.storageKey,t)):t.user=Cr()}if(this._debug(e,`session from storage`,t),!this._isValidSession(t)){this._debug(e,`session is not valid`),t!==null&&await this._removeSession();return}let n=(t.expires_at??1/0)*1e3-Date.now()<En;if(this._debug(e,`session has${n?``:` not`} expired with margin of ${En}s`),n){if(this.autoRefreshToken&&t.refresh_token){let{error:n}=await this._callRefreshToken(t.refresh_token);n&&(Un(n)?this._debug(e,`refresh discarded by commit guard`,n):(console.error(n),Vn(n)||(this._debug(e,`refresh failed with a non-retryable error, removing the session`,n),await this._removeSession())))}}else if(t.user&&t.user.__isUserNotAvailableProxy===!0)try{let{data:n,error:r}=await this._getUser(t.access_token);!r&&n?.user?(t.user=n.user,await this._saveSession(t),await this._notifyAllSubscribers(`SIGNED_IN`,t)):this._debug(e,`could not get user data, skipping SIGNED_IN notification`)}catch(t){console.error(`Error getting user data:`,t),this._debug(e,`error getting user data, skipping SIGNED_IN notification`,t)}else await this._notifyAllSubscribers(`SIGNED_IN`,t)}catch(t){this._debug(e,`error`,t),console.error(t);return}finally{this._debug(e,`end`)}}async _callRefreshToken(e){var t,n;if(!e)throw new L;if(this.refreshingDeferred)return this.refreshingDeferred.promise;let r=`#_callRefreshToken()`;this._debug(r,`begin`);try{this.refreshingDeferred=new lr;let t=await W(this.storage,this.storageKey),{data:n,error:i}=await this._refreshAccessToken(e);if(i)throw i;if(!n.session)throw new L;let a=await W(this.storage,this.storageKey);if(t!==null&&(a===null||a.refresh_token!==t.refresh_token)){this._debug(r,`commit guard: storage changed since refresh started, discarding rotated tokens`,{startedWith:`present`,nowHolds:a?`replaced`:`cleared`});let e={data:null,error:new Hn};return this.refreshingDeferred.resolve(e),e}let o=this._sessionRemovalEpoch;if(await this._saveSession(n.session),this._sessionRemovalEpoch!==o){this._debug(r,`commit guard (post-save): _removeSession ran during _saveSession, undoing write`),await G(this.storage,this.storageKey),this.userStorage&&await G(this.userStorage,this.storageKey+`-user`);let e={data:null,error:new Hn};return this.refreshingDeferred.resolve(e),e}await this._notifyAllSubscribers(`TOKEN_REFRESHED`,n.session);let s={data:n.session,error:null};return this.refreshingDeferred.resolve(s),s}catch(e){if(this._debug(r,`error`,e),P(e)){let n={data:null,error:e};return Vn(e)||await this._removeSession(),(t=this.refreshingDeferred)==null||t.resolve(n),n}throw(n=this.refreshingDeferred)==null||n.reject(e),e}finally{this.refreshingDeferred=null,this._debug(r,`end`)}}async _notifyAllSubscribers(e,t,n=!0){let r=`#_notifyAllSubscribers(${e})`;this._debug(r,`begin`,t,`broadcast = ${n}`);try{this.broadcastChannel&&n&&this.broadcastChannel.postMessage({event:e,session:t});let r=[],i=Array.from(this.stateChangeEmitters.values()).map(async n=>{try{await n.callback(e,t)}catch(e){r.push(e)}});if(await Promise.all(i),r.length>0){for(let e=0;e<r.length;e+=1)console.error(r[e]);throw r[0]}}finally{this._debug(r,`end`)}}async _saveSession(e){this._debug(`#_saveSession()`,e),this.suppressGetSessionWarning=!0,await G(this.storage,`${this.storageKey}-code-verifier`);let t=Object.assign({},e),n=t.user&&t.user.__isUserNotAvailableProxy===!0;if(this.userStorage){!n&&t.user&&await U(this.userStorage,this.storageKey+`-user`,{user:t.user});let e=Object.assign({},t);delete e.user;let r=Tr(e);await U(this.storage,this.storageKey,r)}else{let e=Tr(t);await U(this.storage,this.storageKey,e)}}async _removeSession(){this._sessionRemovalEpoch+=1,this._debug(`#_removeSession()`),this.suppressGetSessionWarning=!1,await G(this.storage,this.storageKey),await G(this.storage,this.storageKey+`-code-verifier`),await G(this.storage,this.storageKey+`-user`),this.userStorage&&await G(this.userStorage,this.storageKey+`-user`),await this._notifyAllSubscribers(`SIGNED_OUT`,null)}_removeVisibilityChangedCallback(){this._debug(`#_removeVisibilityChangedCallback()`);let e=this.visibilityChangedCallback;this.visibilityChangedCallback=null;try{e&&V()&&window!=null&&window.removeEventListener&&window.removeEventListener(`visibilitychange`,e)}catch(e){console.error(`removing visibilitychange callback failed`,e)}}async _startAutoRefresh(){await this._stopAutoRefresh(),this._debug(`#_startAutoRefresh()`);let e=setInterval(()=>this._autoRefreshTokenTick(),M);this.autoRefreshTicker=e,e&&typeof e==`object`&&typeof e.unref==`function`?e.unref():typeof Deno<`u`&&typeof Deno.unrefTimer==`function`&&Deno.unrefTimer(e);let t=setTimeout(async()=>{await this.initializePromise,await this._autoRefreshTokenTick()},0);this.autoRefreshTickTimeout=t,t&&typeof t==`object`&&typeof t.unref==`function`?t.unref():typeof Deno<`u`&&typeof Deno.unrefTimer==`function`&&Deno.unrefTimer(t)}async _stopAutoRefresh(){this._debug(`#_stopAutoRefresh()`);let e=this.autoRefreshTicker;this.autoRefreshTicker=null,e&&clearInterval(e);let t=this.autoRefreshTickTimeout;this.autoRefreshTickTimeout=null,t&&clearTimeout(t)}async startAutoRefresh(){this._removeVisibilityChangedCallback(),await this._startAutoRefresh()}async stopAutoRefresh(){this._removeVisibilityChangedCallback(),await this._stopAutoRefresh()}async dispose(){var e;this._removeVisibilityChangedCallback(),await this._stopAutoRefresh(),(e=this.broadcastChannel)==null||e.close(),this.broadcastChannel=null,this.stateChangeEmitters.clear()}async _autoRefreshTokenTick(){if(this._debug(`#_autoRefreshTokenTick()`,`begin`),this.lock!=null){try{await this._acquireLock(0,async()=>{try{let e=Date.now();try{return await this._useSession(async t=>{let{data:{session:n}}=t;if(!n||!n.refresh_token||!n.expires_at){this._debug(`#_autoRefreshTokenTick()`,`no session`);return}let r=Math.floor((n.expires_at*1e3-e)/M);this._debug(`#_autoRefreshTokenTick()`,`access token expires in ${r} ticks, a tick lasts ${M}ms, refresh threshold is 3 ticks`),r<=3&&await this._callRefreshToken(n.refresh_token)})}catch(e){console.error(`Auto refresh tick failed with error. This is likely a transient error.`,e)}}finally{this._debug(`#_autoRefreshTokenTick()`,`end`)}})}catch(e){if(e instanceof Rr)this._debug(`auto refresh token tick lock not available`);else throw e}return}if(this.refreshingDeferred!==null){this._debug(`#_autoRefreshTokenTick()`,`refresh already in flight, skipping`);return}try{let e=Date.now();try{await this._useSession(async t=>{let{data:{session:n}}=t;if(!n||!n.refresh_token||!n.expires_at){this._debug(`#_autoRefreshTokenTick()`,`no session`);return}let r=Math.floor((n.expires_at*1e3-e)/M);this._debug(`#_autoRefreshTokenTick()`,`access token expires in ${r} ticks, a tick lasts ${M}ms, refresh threshold is 3 ticks`),r<=3&&await this._callRefreshToken(n.refresh_token)})}catch(e){console.error(`Auto refresh tick failed with error. This is likely a transient error.`,e)}}finally{this._debug(`#_autoRefreshTokenTick()`,`end`)}}async _handleVisibilityChange(){if(this._debug(`#_handleVisibilityChange()`),!V()||!(window!=null&&window.addEventListener))return this.autoRefreshToken&&this.startAutoRefresh(),!1;try{this.visibilityChangedCallback=async()=>{try{await this._onVisibilityChanged(!1)}catch(e){this._debug(`#visibilityChangedCallback`,`error`,e)}},window==null||window.addEventListener(`visibilitychange`,this.visibilityChangedCallback),await this._onVisibilityChanged(!0)}catch(e){console.error(`_handleVisibilityChange`,e)}}async _onVisibilityChanged(e){let t=`#_onVisibilityChanged(${e})`;if(this._debug(t,`visibilityState`,document.visibilityState),document.visibilityState===`visible`){if(this.autoRefreshToken&&this._startAutoRefresh(),!e)if(await this.initializePromise,this.lock!=null)await this._acquireLock(this.lockAcquireTimeout,async()=>{if(document.visibilityState!==`visible`){this._debug(t,`acquired the lock to recover the session, but the browser visibilityState is no longer visible, aborting`);return}await this._recoverAndRefresh()});else{if(document.visibilityState!==`visible`){this._debug(t,`visibilityState is no longer visible, skipping recovery`);return}await this._recoverAndRefresh()}}else document.visibilityState===`hidden`&&this.autoRefreshToken&&this._stopAutoRefresh()}async _getUrlForProvider(e,t,n){let r=[`provider=${encodeURIComponent(t)}`];if(n?.redirectTo&&r.push(`redirect_to=${encodeURIComponent(n.redirectTo)}`),n?.scopes&&r.push(`scopes=${encodeURIComponent(n.scopes)}`),this.flowType===`pkce`){let[e,t]=await _r(this.storage,this.storageKey),n=new URLSearchParams({code_challenge:`${encodeURIComponent(e)}`,code_challenge_method:`${encodeURIComponent(t)}`});r.push(n.toString())}if(n?.queryParams){let e=new URLSearchParams(n.queryParams);r.push(e.toString())}return n?.skipBrowserRedirect&&r.push(`skip_http_redirect=${n.skipBrowserRedirect}`),`${e}?${r.join(`&`)}`}async _unenroll(e){try{return await this._useSession(async t=>{let{data:n,error:r}=t;return r?this._returnResult({data:null,error:r}):await Y(this.fetch,`DELETE`,`${this.url}/factors/${e.factorId}`,{headers:this.headers,jwt:n?.session?.access_token})})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async _enroll(e){try{return await this._useSession(async t=>{let{data:n,error:r}=t;if(r)return this._returnResult({data:null,error:r});let i=Object.assign({friendly_name:e.friendlyName,factor_type:e.factorType},e.factorType===`phone`?{phone:e.phone}:e.factorType===`totp`?{issuer:e.issuer}:{}),{data:a,error:o}=await Y(this.fetch,`POST`,`${this.url}/factors`,{body:i,headers:this.headers,jwt:n?.session?.access_token});return o?this._returnResult({data:null,error:o}):(e.factorType===`totp`&&a.type===`totp`&&a?.totp?.qr_code&&(a.totp.qr_code=`data:image/svg+xml;utf-8,${a.totp.qr_code}`),this._returnResult({data:a,error:null}))})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async _verify(e){let t=async()=>{try{return await this._useSession(async t=>{let{data:n,error:r}=t;if(r)return this._returnResult({data:null,error:r});let i=Object.assign({challenge_id:e.challengeId},`webauthn`in e?{webauthn:Object.assign(Object.assign({},e.webauthn),{credential_response:e.webauthn.type===`create`?ti(e.webauthn.credential_response):ni(e.webauthn.credential_response)})}:{code:e.code}),{data:a,error:o}=await Y(this.fetch,`POST`,`${this.url}/factors/${e.factorId}/verify`,{body:i,headers:this.headers,jwt:n?.session?.access_token});return o?this._returnResult({data:null,error:o}):(await this._saveSession(Object.assign({expires_at:Math.round(Date.now()/1e3)+a.expires_in},a)),await this._notifyAllSubscribers(`MFA_CHALLENGE_VERIFIED`,a),this._returnResult({data:a,error:o}))})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}};return this.lock==null?t():this._acquireLock(this.lockAcquireTimeout,t)}async _challenge(e){let t=async()=>{try{return await this._useSession(async t=>{let{data:n,error:r}=t;if(r)return this._returnResult({data:null,error:r});let i=await Y(this.fetch,`POST`,`${this.url}/factors/${e.factorId}/challenge`,{body:e,headers:this.headers,jwt:n?.session?.access_token});if(i.error)return i;let{data:a}=i;if(a.type!==`webauthn`)return{data:a,error:null};switch(a.webauthn.type){case`create`:return{data:Object.assign(Object.assign({},a),{webauthn:Object.assign(Object.assign({},a.webauthn),{credential_options:Object.assign(Object.assign({},a.webauthn.credential_options),{publicKey:$r(a.webauthn.credential_options.publicKey)})})}),error:null};case`request`:return{data:Object.assign(Object.assign({},a),{webauthn:Object.assign(Object.assign({},a.webauthn),{credential_options:Object.assign(Object.assign({},a.webauthn.credential_options),{publicKey:ei(a.webauthn.credential_options.publicKey)})})}),error:null}}})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}};return this.lock==null?t():this._acquireLock(this.lockAcquireTimeout,t)}async _challengeAndVerify(e){let{data:t,error:n}=await this._challenge({factorId:e.factorId});return n?this._returnResult({data:null,error:n}):await this._verify({factorId:e.factorId,challengeId:t.id,code:e.code})}async _listFactors(){let{data:{user:e},error:t}=await this.getUser();if(t)return{data:null,error:t};let n={all:[],phone:[],totp:[],webauthn:[]};for(let t of e?.factors??[])n.all.push(t),t.status===`verified`&&n[t.factor_type].push(t);return{data:n,error:null}}async _getAuthenticatorAssuranceLevel(e){if(e)try{let{payload:t}=ur(e),n=null;t.aal&&(n=t.aal);let r=n,{data:{user:i},error:a}=await this.getUser(e);if(a)return this._returnResult({data:null,error:a});((i?.factors)?.filter(e=>e.status===`verified`)??[]).length>0&&(r=`aal2`);let o=t.amr||[];return{data:{currentLevel:n,nextLevel:r,currentAuthenticationMethods:o},error:null}}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}let{data:{session:t},error:n}=await this.getSession();if(n)return this._returnResult({data:null,error:n});if(!t)return{data:{currentLevel:null,nextLevel:null,currentAuthenticationMethods:[]},error:null};let{payload:r}=ur(t.access_token),i=null;r.aal&&(i=r.aal);let a=i;(t.user.factors?.filter(e=>e.status===`verified`)??[]).length>0&&(a=`aal2`);let o=r.amr||[];return{data:{currentLevel:i,nextLevel:a,currentAuthenticationMethods:o},error:null}}async _getAuthorizationDetails(e){try{return await this._useSession(async t=>{let{data:{session:n},error:r}=t;return r?this._returnResult({data:null,error:r}):n?await Y(this.fetch,`GET`,`${this.url}/oauth/authorizations/${e}`,{headers:this.headers,jwt:n.access_token,xform:e=>({data:e,error:null})}):this._returnResult({data:null,error:new L})})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async _approveAuthorization(e,t){try{return await this._useSession(async n=>{let{data:{session:r},error:i}=n;if(i)return this._returnResult({data:null,error:i});if(!r)return this._returnResult({data:null,error:new L});let a=await Y(this.fetch,`POST`,`${this.url}/oauth/authorizations/${e}/consent`,{headers:this.headers,jwt:r.access_token,body:{action:`approve`},xform:e=>({data:e,error:null})});return a.data&&a.data.redirect_url&&V()&&!t?.skipBrowserRedirect&&window.location.assign(a.data.redirect_url),a})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async _denyAuthorization(e,t){try{return await this._useSession(async n=>{let{data:{session:r},error:i}=n;if(i)return this._returnResult({data:null,error:i});if(!r)return this._returnResult({data:null,error:new L});let a=await Y(this.fetch,`POST`,`${this.url}/oauth/authorizations/${e}/consent`,{headers:this.headers,jwt:r.access_token,body:{action:`deny`},xform:e=>({data:e,error:null})});return a.data&&a.data.redirect_url&&V()&&!t?.skipBrowserRedirect&&window.location.assign(a.data.redirect_url),a})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async _listOAuthGrants(){try{return await this._useSession(async e=>{let{data:{session:t},error:n}=e;return n?this._returnResult({data:null,error:n}):t?await Y(this.fetch,`GET`,`${this.url}/user/oauth/grants`,{headers:this.headers,jwt:t.access_token,xform:e=>({data:e,error:null})}):this._returnResult({data:null,error:new L})})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async _revokeOAuthGrant(e){try{return await this._useSession(async t=>{let{data:{session:n},error:r}=t;return r?this._returnResult({data:null,error:r}):n?(await Y(this.fetch,`DELETE`,`${this.url}/user/oauth/grants`,{headers:this.headers,jwt:n.access_token,query:{client_id:e.clientId},noResolveJson:!0}),{data:{},error:null}):this._returnResult({data:null,error:new L})})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async fetchJwk(e,t={keys:[]}){let n=t.keys.find(t=>t.kid===e);if(n)return n;let r=Date.now();if(n=this.jwks.keys.find(t=>t.kid===e),n&&this.jwks_cached_at+6e5>r)return n;let{data:i,error:a}=await Y(this.fetch,`GET`,`${this.url}/.well-known/jwks.json`,{headers:this.headers});if(a)throw a;return!i.keys||i.keys.length===0||(this.jwks=i,this.jwks_cached_at=r,n=i.keys.find(t=>t.kid===e),!n)?null:n}async getClaims(e,t={}){try{let n=e;if(!n){let{data:e,error:t}=await this.getSession();if(t||!e.session)return this._returnResult({data:null,error:t});n=e.session.access_token}let{header:r,payload:i,signature:a,raw:{header:o,payload:s}}=ur(n);if(!t?.allowExpired)try{br(i.exp)}catch(e){throw new Kn(e instanceof Error?e.message:`JWT validation failed`)}let c=!r.alg||r.alg.startsWith(`HS`)||!r.kid||!(`crypto`in globalThis&&`subtle`in globalThis.crypto)?null:await this.fetchJwk(r.kid,t?.keys?{keys:t.keys}:t?.jwks);if(!c){let{error:e}=await this.getUser(n);if(e)throw e;return{data:{claims:i,header:r,signature:a},error:null}}let l=xr(r.alg),u=await crypto.subtle.importKey(`jwk`,c,l,!0,[`verify`]);if(!await crypto.subtle.verify(l,u,a,nr(`${o}.${s}`)))throw new Kn(`Invalid JWT signature`);return{data:{claims:i,header:r,signature:a},error:null}}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async signInWithPasskey(e){q(this.experimental);try{if(!ii())return this._returnResult({data:null,error:new F(`Browser does not support WebAuthn`,null)});let{data:t,error:n}=await this._startPasskeyAuthentication({options:{captchaToken:e?.options?.captchaToken}});if(n||!t)return this._returnResult({data:null,error:n});let{data:r,error:i}=await oi({publicKey:ei(t.options),signal:e?.options?.signal??Qr.createNewAbortSignal()});if(i||!r)return this._returnResult({data:null,error:i??new F(`WebAuthn ceremony failed`,null)});let a=ni(r);return this._verifyPasskeyAuthentication({challengeId:t.challenge_id,credential:a})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async registerPasskey(e){q(this.experimental);try{if(!ii())return this._returnResult({data:null,error:new F(`Browser does not support WebAuthn`,null)});let{data:t,error:n}=await this._startPasskeyRegistration();if(n||!t)return this._returnResult({data:null,error:n});let{data:r,error:i}=await ai({publicKey:$r(t.options),signal:e?.options?.signal??Qr.createNewAbortSignal()});if(i||!r)return this._returnResult({data:null,error:i??new F(`WebAuthn ceremony failed`,null)});let a=ti(r);return this._verifyPasskeyRegistration({challengeId:t.challenge_id,credential:a})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async _startPasskeyRegistration(){q(this.experimental);try{return await this._useSession(async e=>{let{data:{session:t},error:n}=e;if(n)return this._returnResult({data:null,error:n});if(!t)return this._returnResult({data:null,error:new L});let{data:r,error:i}=await Y(this.fetch,`POST`,`${this.url}/passkeys/registration/options`,{headers:this.headers,jwt:t.access_token,body:{}});return i?this._returnResult({data:null,error:i}):this._returnResult({data:r,error:null})})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async _verifyPasskeyRegistration(e){q(this.experimental);try{return await this._useSession(async t=>{let{data:{session:n},error:r}=t;if(r)return this._returnResult({data:null,error:r});if(!n)return this._returnResult({data:null,error:new L});let{data:i,error:a}=await Y(this.fetch,`POST`,`${this.url}/passkeys/registration/verify`,{headers:this.headers,jwt:n.access_token,body:{challenge_id:e.challengeId,credential:e.credential}});return a?this._returnResult({data:null,error:a}):this._returnResult({data:i,error:null})})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async _startPasskeyAuthentication(e){q(this.experimental);try{let{data:t,error:n}=await Y(this.fetch,`POST`,`${this.url}/passkeys/authentication/options`,{headers:this.headers,body:{gotrue_meta_security:{captcha_token:e?.options?.captchaToken}}});return n?this._returnResult({data:null,error:n}):this._returnResult({data:t,error:null})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async _verifyPasskeyAuthentication(e){q(this.experimental);try{let{data:t,error:n}=await Y(this.fetch,`POST`,`${this.url}/passkeys/authentication/verify`,{headers:this.headers,body:{challenge_id:e.challengeId,credential:e.credential},xform:X});return n?this._returnResult({data:null,error:n}):(t.session&&(await this._saveSession(t.session),await this._notifyAllSubscribers(`SIGNED_IN`,t.session)),this._returnResult({data:t,error:null}))}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async _listPasskeys(){q(this.experimental);try{return await this._useSession(async e=>{let{data:{session:t},error:n}=e;if(n)return this._returnResult({data:null,error:n});if(!t)return this._returnResult({data:null,error:new L});let{data:r,error:i}=await Y(this.fetch,`GET`,`${this.url}/passkeys`,{headers:this.headers,jwt:t.access_token,xform:e=>({data:e,error:null})});return i?this._returnResult({data:null,error:i}):this._returnResult({data:r,error:null})})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async _updatePasskey(e){q(this.experimental);try{return await this._useSession(async t=>{let{data:{session:n},error:r}=t;if(r)return this._returnResult({data:null,error:r});if(!n)return this._returnResult({data:null,error:new L});let{data:i,error:a}=await Y(this.fetch,`PATCH`,`${this.url}/passkeys/${e.passkeyId}`,{headers:this.headers,jwt:n.access_token,body:{friendly_name:e.friendlyName}});return a?this._returnResult({data:null,error:a}):this._returnResult({data:i,error:null})})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}async _deletePasskey(e){q(this.experimental);try{return await this._useSession(async t=>{let{data:{session:n},error:r}=t;if(r)return this._returnResult({data:null,error:r});if(!n)return this._returnResult({data:null,error:new L});let{error:i}=await Y(this.fetch,`DELETE`,`${this.url}/passkeys/${e.passkeyId}`,{headers:this.headers,jwt:n.access_token,noResolveJson:!0});return i?this._returnResult({data:null,error:i}):this._returnResult({data:null,error:null})})}catch(e){if(P(e))return this._returnResult({data:null,error:e});throw e}}};hi.nextInstanceID={};var gi=hi,_i=Ir,vi=gi,yi=class extends vi{constructor(e){super(e)}},bi=class{constructor(e,t,n){this.supabaseUrl=e,this.supabaseKey=t;let r=wn(e);if(!t)throw Error(`supabaseKey is required.`);this.realtimeUrl=new URL(`realtime/v1`,r),this.realtimeUrl.protocol=this.realtimeUrl.protocol.replace(`http`,`ws`),this.authUrl=new URL(`auth/v1`,r),this.storageUrl=new URL(`storage/v1`,r),this.functionsUrl=new URL(`functions/v1`,r);let i=`sb-${r.hostname.split(`.`)[0]}-auth-token`,a={db:on,realtime:cn,auth:{...sn,storageKey:i},global:an,tracePropagation:ln},o=Cn(n??{},a);this.settings=o,this.storageKey=o.auth.storageKey??``,this.headers=o.global.headers??{},o.accessToken?(this.accessToken=o.accessToken,this.auth=new Proxy({},{get:(e,t)=>{throw Error(`@supabase/supabase-js: Supabase Client is configured with the accessToken option, accessing supabase.auth.${String(t)} is not possible`)}})):this.auth=this._initSupabaseAuthClient(o.auth??{},this.headers,o.global.fetch),this.fetch=yn(t,e,this._getAccessToken.bind(this),o.global.fetch,o.tracePropagation),this.realtime=this._initRealtimeClient({headers:this.headers,accessToken:this._getAccessToken.bind(this),fetch:this.fetch,...o.realtime}),this.accessToken&&Promise.resolve(this.accessToken()).then(e=>this.realtime.setAuth(e)).catch(e=>console.warn(`Failed to set initial Realtime auth token:`,e)),this.rest=new le(new URL(`rest/v1`,r).href,{headers:this.headers,schema:o.db.schema,fetch:this.fetch,timeout:o.db.timeout,urlLengthLimit:o.db.urlLengthLimit}),this.storage=new en(this.storageUrl.href,this.headers,this.fetch,n?.storage),o.accessToken||this._listenForAuthEvents()}get functions(){return new l(this.functionsUrl.href,{headers:this.headers,customFetch:this.fetch})}from(e){return this.rest.from(e)}schema(e){return this.rest.schema(e)}rpc(e,t={},n={head:!1,get:!1,count:void 0}){return this.rest.rpc(e,t,n)}channel(e,t={config:{}}){return this.realtime.channel(e,t)}getChannels(){return this.realtime.getChannels()}removeChannel(e){return this.realtime.removeChannel(e)}removeAllChannels(){return this.realtime.removeAllChannels()}async _getAccessToken(){if(this.accessToken)return await this.accessToken();let{data:e}=await this.auth.getSession();return e.session?.access_token??this.supabaseKey}_initSupabaseAuthClient({autoRefreshToken:e,persistSession:t,detectSessionInUrl:n,storage:r,userStorage:i,storageKey:a,flowType:o,lock:s,debug:c,throwOnError:l,experimental:u,lockAcquireTimeout:d,skipAutoInitialize:f},p,m){let h={Authorization:`Bearer ${this.supabaseKey}`,apikey:`${this.supabaseKey}`};return new yi({url:this.authUrl.href,headers:{...h,...p},storageKey:a,autoRefreshToken:e,persistSession:t,detectSessionInUrl:n,storage:r,userStorage:i,flowType:o,lock:s,debug:c,throwOnError:l,experimental:u,fetch:m,lockAcquireTimeout:d,skipAutoInitialize:f,hasCustomAuthorizationHeader:Object.keys(this.headers).some(e=>e.toLowerCase()===`authorization`)})}_initRealtimeClient(e){return new at(this.realtimeUrl.href,{...e,params:{apikey:this.supabaseKey,...e?.params}})}_listenForAuthEvents(){return this.auth.onAuthStateChange((e,t)=>{this._handleTokenChanged(e,`CLIENT`,t?.access_token)})}_handleTokenChanged(e,t,n){(e===`TOKEN_REFRESHED`||e===`SIGNED_IN`)&&this.changedAccessToken!==n?(this.changedAccessToken=n,this.realtime.setAuth(n)):e===`SIGNED_OUT`&&(this.realtime.setAuth(),t==`STORAGE`&&this.auth.signOut(),this.changedAccessToken=void 0)}};let xi=(e,t,n)=>new bi(e,t,n);function Si(){if(typeof window<`u`)return!1;let e=globalThis.process;if(!e)return!1;let t=e.version;if(t==null)return!1;let n=t.match(/^v(\d+)\./);return n?parseInt(n[1],10)<=18:!1}return Si()&&console.warn(`⚠️  Node.js 18 and below are deprecated and will no longer be supported in future versions of @supabase/supabase-js. Please upgrade to Node.js 20 or later. For more information, visit: https://github.com/orgs/supabase/discussions/37217`),e.AuthAdminApi=_i,e.AuthApiError=jn,e.AuthClient=vi,e.AuthError=N,e.AuthImplicitGrantRedirectError=Fn,e.AuthInvalidCredentialsError=Pn,e.AuthInvalidJwtError=Kn,e.AuthInvalidTokenResponseError=R,e.AuthPKCECodeVerifierMissingError=Rn,e.AuthPKCEGrantCodeExchangeError=Ln,e.AuthRefreshDiscardedError=Hn,e.AuthRetryableFetchError=Bn,e.AuthSessionMissingError=L,e.AuthUnknownError=F,e.AuthWeakPasswordError=Wn,e.CustomAuthError=I,Object.defineProperty(e,`FunctionRegion`,{enumerable:!0,get:function(){return c}}),e.FunctionsError=i,e.FunctionsFetchError=a,e.FunctionsHttpError=s,e.FunctionsRelayError=o,e.GoTrueAdminApi=Ir,e.GoTrueClient=gi,e.NavigatorLockAcquireTimeoutError=zr,e.PostgrestError=p,e.REALTIME_CHANNEL_STATES=Qe,Object.defineProperty(e,`REALTIME_LISTEN_TYPES`,{enumerable:!0,get:function(){return T}}),Object.defineProperty(e,`REALTIME_POSTGRES_CHANGES_LISTEN_EVENT`,{enumerable:!0,get:function(){return Ze}}),Object.defineProperty(e,`REALTIME_PRESENCE_LISTEN_EVENTS`,{enumerable:!0,get:function(){return Ke}}),Object.defineProperty(e,`REALTIME_SUBSCRIBE_STATES`,{enumerable:!0,get:function(){return E}}),e.RealtimeChannel=$e,e.RealtimeClient=at,e.RealtimePresence=qe,e.SIGN_OUT_SCOPES=Fr,e.StorageApiError=xt,e.SupabaseClient=bi,e.WebSocketFactory=ue,e.createClient=xi,e.isAuthApiError=Mn,e.isAuthError=P,e.isAuthImplicitGrantRedirectError=In,e.isAuthPKCECodeVerifierMissingError=zn,e.isAuthRefreshDiscardedError=Un,e.isAuthRetryableFetchError=Vn,e.isAuthSessionMissingError=Nn,e.isAuthWeakPasswordError=Gn,e.lockInternals=Q,e.navigatorLock=Vr,e.processLock=Ur,e})({});
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDACuLv4tD6pa96tlSnf-qHcgvFFLIAbkU&libraries=places"></script>
 </head>
 <body>
 
@@ -440,6 +525,7 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
     </div>
   </div>
   <div style="display:flex;gap:8px;">
+    <button class="btn btn-ghost btn-sm" onclick="openTeamModal()">👥 Ομάδα</button>
     <button class="btn btn-ghost btn-sm" onclick="exportProjectToICS()" title="Εξαγωγή σε Google Calendar">📅 Εξαγωγή .ics</button>
     <button class="btn btn-ghost btn-sm" onclick="openModal('add-entry')">+ Καταγραφή</button>
     <button class="btn btn-primary btn-sm" onclick="openModal('add-phase')">+ Φάση Gantt</button>
@@ -449,7 +535,7 @@ Resources:`;for(let t of c){if(!t||typeof t!=`string`)throw Error(`@supabase/aut
 <div id="alert-container"></div>
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
 <div class="layout">
-  <div class="sidebar" id="sidebar"></div>
+  <div class="sidebar" id="sidebar"><div style="padding:12px 16px;border-bottom:1px solid var(--border)"><button class="btn btn-primary btn-sm" style="width:100%" onclick="openNewProjectModal()">+ Νέο Έργο</button></div></div>
   <div class="main" id="main"></div>
 </div>
 
@@ -654,6 +740,7 @@ function setEngineer(name) {
 
 async function initApp() {
   try {
+    await loadProjects();
     await loadFromDB();
   } catch(err) {
     console.warn('DB offline, using local cache:', err);
@@ -678,9 +765,9 @@ function renderSidebar() {
       <div class="sidebar-label">${g}</div>`;
     projs.forEach(p => {
       const active = state.activeProject === p.id ? 'active' : '';
-      html += `<div class="site-item ${active}" onclick="selectProject('${p.id}')">
-        <div class="site-name">${p.name}</div>
-        <div class="site-client">${p.client}</div>
+      html += `<div class="site-item ${active}" onclick="selectProject('${p.id}')" style="display:flex;align-items:center;justify-content:space-between">
+        <div><div class="site-name">${p.name}</div><div class="site-client">${p.client}</div></div>
+        <button class="site-edit-btn" onclick="event.stopPropagation();openEditProjectModal('${p.id}')" title="Επεξεργασία">✏️</button>
       </div>`;
     });
     html += `</div>`;
@@ -714,7 +801,8 @@ function renderMain() {
       <div class="project-meta">${proj.client} &nbsp;·&nbsp; ${proj.group}</div>
     </div>
     <div class="header-actions">
-      <button class="btn btn-ghost btn-sm" onclick="openModalForProject('add-entry','${proj.id}')">+ Καταγραφή</button>
+      <button class="btn btn-ghost btn-sm" onclick="printWeeklyReport('${proj.id}')">📄 Αναφορά PDF</button>
+    <button class="btn btn-ghost btn-sm" onclick="openModalForProject('add-entry','${proj.id}')">+ Καταγραφή</button>
       <button class="btn btn-primary btn-sm" onclick="openModalForProject('add-phase','${proj.id}')">+ Φάση</button>
     </div>
   </div>
@@ -818,6 +906,9 @@ function renderMain() {
   }
 
   if (state.activeTab === 'contacts') html += renderContactsTab(proj.id);
+  if (state.activeTab === 'files') html += renderFilesTab(proj.id, proj);
+  if (state.activeTab === 'map') html += renderMapTab(proj);
+  if (state.activeTab === 'boq') html += renderBOQTab(proj.id);
   if (state.activeTab === 'orders') html += renderEntriesTab(orders, 'order');
   if (state.activeTab === 'purchases') html += renderEntriesTab(purchases, 'purchase');
   if (state.activeTab === 'snags') html += renderEntriesTab(snags, 'snag');
@@ -1457,6 +1548,534 @@ function openLightbox(url) {
 }
 function closeLightbox() { document.getElementById('lightbox').classList.add('hidden'); }
 
+
+// ─── BOQ ──────────────────────────────────────────────────────────────
+function loadBOQ(projectId) {
+  try {
+    const saved = localStorage.getItem('brb_boq_' + projectId);
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  // Default: use Hoffim Villa A data if projectId matches
+  if (projectId === 'hoffim_a') return [{"section": "EXTERIOR - POOL SIDE AREA", "description": "Reinforced Concrete Skeleton (pool & machine room) C20/25", "units": "m3", "real_cost": 57200.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Clearence Concrete C16/20", "units": "m3", "real_cost": 10000.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Swimming Pool  waterproofing  ( Beton walls, machine room, building walls attached)", "units": "overall", "real_cost": 5000.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "PENETRON SWIMMING POOLS", "units": "EXTRA", "real_cost": 3000.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Reinforced Plaster for s/pool  (walls & bottom)", "units": "overall", "real_cost": 6000.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Machine Room", "units": "overall", "real_cost": 5000.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Machine Room Hatch + tank cover", "units": "overall", "real_cost": 3200.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Septic Tank", "units": "overall", "real_cost": 2000.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Water Tank RC CONCRETE + PENETRON", "units": "m3", "real_cost": 8075.0, "progress": 1.0, "rcd": 8075.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Water Tank CLEARENCE CONCRETE", "units": "m3", "real_cost": 500.0, "progress": 1.0, "rcd": 500.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "WATER TANK EXTERIOR INTERIOR  WATERPROOFING", "units": "overall", "real_cost": 600.0, "progress": 1.0, "rcd": 600.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Excavations, Backfills and landscape development", "units": "overall", "real_cost": 20000.0, "progress": 0.3, "rcd": 6000.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Electricals and plumbing installations for BBQ and ext. Shower", "units": "overall", "real_cost": 6000.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Exterior area tiles", "units": "m2", "real_cost": 17920.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Special tile parts + steps", "units": "m2", "real_cost": 8000.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Swimming Pool tiles", "units": "m2", "real_cost": 14300.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Special pool side Tiles, overflow gutter grills", "units": "overall", "real_cost": 5000.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Solar powered boiler - Hot water", "units": "overall", "real_cost": 1600.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "exterior area surface Paintings", "units": "overall", "real_cost": 2500.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Exterior area plaster where needed", "units": "", "real_cost": 3000.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "SIDE SEPARATING STONE WALLS GROUND FLOOR LEVEL SINGLE FACED", "units": "m2", "real_cost": 33150.0, "progress": 1.0, "rcd": 33150.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "SIDE SEPARATING STONE WALLS GROUND FLOOR LEVEL SINGLE FACED ROBA", "units": "m2", "real_cost": 9750.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "Protection Glass Railings - Exterior area according to landscape plans", "units": "overall", "real_cost": 7000.0, "progress": 0.0, "rcd": 0.0}, {"section": "EXTERIOR - POOL SIDE AREA", "description": "METAL CONSTRUCTIONS- frame  infrastructure", "units": "overall", "real_cost": 17250.0, "progress": 0.5, "rcd": 8625.0}, {"section": "Building - Construction Cost Ground Floor", "description": "WALLS - PLASTERBOARD  - ONE SIDE TWO PANELS", "units": "m2", "real_cost": 1680.7, "progress": 1.0, "rcd": 1680.7}, {"section": "Building - Construction Cost Ground Floor", "description": "WALLS - PLASTERBOARD  - TWO SIDE WALL- TWO PANELS", "units": "m2", "real_cost": 5286.0, "progress": 1.0, "rcd": 5286.0}, {"section": "Building - Construction Cost Ground Floor", "description": "CEILINGS - PLASTERBOARD  - ONE SIDE ONE PANEL", "units": "m2", "real_cost": 2462.72, "progress": 0.7, "rcd": 1723.9039999999998}, {"section": "Building - Construction Cost Ground Floor", "description": "CEILINGS - PLASTERBOARD  - 2x CURTAIN NICHE +LED STRIP LIGHT +metal construction", "units": "m/m2", "real_cost": 613.8000000000001, "progress": 1.0, "rcd": 613.8000000000001}, {"section": "Building - Construction Cost Ground Floor", "description": "PAINTING WALLS /CEILINGS", "units": "m2", "real_cost": 6000.0, "progress": 0.0, "rcd": 0.0}, {"section": "Building - Construction Cost Ground Floor", "description": "Inner Doors", "units": "m2", "real_cost": 3000.0, "progress": 0.0, "rcd": 0.0}, {"section": "Building - Construction Cost Ground Floor", "description": "TILES WALLS", "units": "m2", "real_cost": 4314.0, "progress": 0.0, "rcd": 0.0}, {"section": "Building - Construction Cost Ground Floor", "description": "TILES FLOOR", "units": "m2", "real_cost": 4972.5, "progress": 0.0, "rcd": 0.0}, {"section": "Building - Construction Cost Ground Floor", "description": "BATHROOM INSULATIONS", "units": "overall", "real_cost": 1400.0, "progress": 0.0, "rcd": 0.0}, {"section": "Building - Construction Cost Ground Floor", "description": "TILE BANKS INNER DOORS", "units": "m2", "real_cost": 300.0, "progress": 0.0, "rcd": 0.0}, {"section": "Building - Construction Cost Ground Floor", "description": "Marble Banks (doors)", "units": "ITEM", "real_cost": 500.0, "progress": 0.0, "rcd": 0.0}, {"section": "Building - Construction Cost Ground Floor", "description": "INNER WALL STONE CLADDING (Staircase side wall)", "units": "m2", "real_cost": 3897.6, "progress": 1.0, "rcd": 3897.6}, {"section": "Building - Construction Cost Ground Floor", "description": "Internal stairs - WOODEN", "units": "ITEM", "real_cost": 5500.0, "progress": 0.0, "rcd": 0.0}, {"section": "Building - Construction Cost Ground Floor", "description": "Internal stairs -metal frame", "units": "ITEM", "real_cost": 3600.0, "progress": 0.5, "rcd": 1800.0}, {"section": "Building - Construction Cost Ground Floor", "description": "Internal stairs -RAILING GLASS", "units": "m2", "real_cost": 645.0, "progress": 0.0, "rcd": 0.0}, {"section": "Building - Construction Cost Ground Floor", "description": "STONE CLADDING FAÇADE", "units": "m2", "real_cost": 3299.4, "progress": 1.0, "rcd": 3299.4}, {"section": "Building - Construction Cost Ground Floor", "description": "Stone cladding interior staircase", "units": "m2", "real_cost": 2600.0, "progress": 1.0, "rcd": 2600.0}, {"section": "Building - Construction Cost Ground Floor", "description": "STONE CLADDING INTERIOR  ROBA", "units": "m2", "real_cost": 1000.0, "progress": 0.0, "rcd": 0.0}, {"section": "Building - Construction Cost Ground Floor", "description": "Stone cladding corners", "units": "Mm", "real_cost": 5500.0, "progress": 1.0, "rcd": 5500.0}, {"section": "Building - Construction Cost Ground Floor", "description": "STONE CLADDING FAÇADE  ROBA", "units": "m2", "real_cost": 1269.0, "progress": 0.0, "rcd": 0.0}, {"section": "Building - Construction Cost Ground Floor", "description": "Lights - Switches under discussion", "units": "ITEM", "real_cost": 4000.0, "progress": 0.0, "rcd": 0.0}, {"section": "Building - Construction Cost Ground Floor", "description": "Electrical Installation", "units": "overall", "real_cost": 9000.0, "progress": 0.7, "rcd": 6300.0}, {"section": "Building - Construction Cost Ground Floor", "description": "Plumbing", "units": "overall", "real_cost": 9000.0, "progress": 1.0, "rcd": 9000.0}, {"section": "Building - Construction Cost Ground Floor", "description": "Sanitary Installation", "units": "", "real_cost": 5700.0, "progress": 0.7, "rcd": 3989.9999999999995}, {"section": "Building - Construction Cost Ground Floor", "description": "Central Cooling system (TYPICAL FOR VILLAS A,B,&C)", "units": "overall", "real_cost": 20000.0, "progress": 0.75, "rcd": 15000.0}, {"section": "Building - Construction Cost Ground Floor", "description": "WiFi /", "units": "overall", "real_cost": 1500.0, "progress": 0.0, "rcd": 0.0}, {"section": "Building - Construction Cost FIRST FLOOR", "description": "WALLS - PLASTERBOARD  - ONE SIDE TWO PANELS", "units": "m2", "real_cost": 318.15, "progress": 0.7, "rcd": 222.70499999999998}, {"section": "Building - Construction Cost FIRST FLOOR", "description": "WALLS - PLASTERBOARD  - TWO SIDE WALL- TWO PANELS", "units": "m2", "real_cost": 512.0, "progress": 0.7, "rcd": 358.4}, {"section": "Building - Construction Cost FIRST FLOOR", "description": "WALLS - BRICKS", "units": "m2", "real_cost": 6200.0, "progress": 0.8, "rcd": 4960.0}, {"section": "Building - Construction Cost FIRST FLOOR", "description": "CEILINGS - PLASTERBOARD  - ONE SIDE ONE PANEL", "units": "m2", "real_cost": 1434.78, "progress": 0.0, "rcd": 0.0}, {"section": "Building - Construction Cost FIRST FLOOR", "description": "CEILINGS - PLASTERBOARD  - 2x CURTAIN NICHE +LED STRIP LIGHT", "units": "L/m", "real_cost": 1070.65, "progress": 0.0, "rcd": 0.0}, {"section": "Building - Construction Cost FIRST FLOOR", "description": "PAINTING WALLS /CEILINGS", "units": "m2", "real_cost": 2500.0, "progress": 0.0, "rcd": 0.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "GLASS WALL / TRANSPARENT BATHROOM /SUPPORT", "units": "m2", "real_cost": 1575.0, "progress": 0.0, "rcd": 0.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "Inner Doors", "units": "m2", "real_cost": 428.4, "progress": 0.0, "rcd": 0.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "TILES WALLS", "units": "m2", "real_cost": 542.4, "progress": 0.0, "rcd": 0.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "TILES FLOOR BATHROOM", "units": "m2", "real_cost": 268.45, "progress": 0.0, "rcd": 0.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "TILES FLOOR INTERIOR", "units": "m2", "real_cost": 4247.75, "progress": 0.0, "rcd": 0.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "TILES FLOOR EXTERIOR - BALCONY", "units": "m2", "real_cost": 1379.3, "progress": 0.0, "rcd": 0.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "BATHROOM INSULATIONS", "units": "overall", "real_cost": 800.0, "progress": 0.0, "rcd": 0.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "TILE BANKS INNER DOORS", "units": "m2", "real_cost": 100.0, "progress": 0.0, "rcd": 0.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "Marble Banks (doors)", "units": "L/m", "real_cost": 500.0, "progress": 0.0, "rcd": 0.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "REAR STONE WALL 2 FACED", "units": "m2", "real_cost": 7308.4, "progress": 0.0, "rcd": 0.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "REAR STONE WALL 2 FACED  ROBA", "units": "m2", "real_cost": 3322.0, "progress": 0.0, "rcd": 0.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "Electrical Installation", "units": "overall", "real_cost": 9000.0, "progress": 0.0, "rcd": 0.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "Plumbing", "units": "overall", "real_cost": 7000.0, "progress": 0.0, "rcd": 0.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "Sanitary Installation", "units": "", "real_cost": 1900.0, "progress": 0.7, "rcd": 1330.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "KITCHEN/ CABINETS", "units": "overall", "real_cost": 10000.0, "progress": 0.0, "rcd": 0.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "THERMAL INSULATION", "units": "overall", "real_cost": 1000.0, "progress": 0.0, "rcd": 0.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "METAL SKELETON", "units": "approx", "real_cost": 13500.0, "progress": 1.0, "rcd": 13500.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "METAL SKELETON SYMDECK METAL SHEETS", "units": "overall", "real_cost": 3400.0, "progress": 1.0, "rcd": 3400.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "METAL SKELETON TO FIX STAIRCAISE (BEAMS+SYMDECK)", "units": "overall", "real_cost": 800.0, "progress": 1.0, "rcd": 800.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "SIKAGROUTE FOOTING PLATES FILL + LABOUR", "units": "overall", "real_cost": 700.0, "progress": 1.0, "rcd": 700.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "LOW BRICK WALL ON THE ROOF TO ENCLOSE INSULATION", "units": "overall", "real_cost": 1000.0, "progress": 1.0, "rcd": 1000.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "WATER INSULATION CEILING", "units": "overall", "real_cost": 5000.0, "progress": 0.3, "rcd": 1500.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "CONCRETE SLAB", "units": "overall", "real_cost": 4500.0, "progress": 1.0, "rcd": 4500.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "WATER TRANSFERS + TANK REFILL+ GAS FOR GENERATOR UNTILL THIS DAY 22/03/2026", "units": "OVERALL", "real_cost": 2400.0, "progress": 1.0, "rcd": 2400.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "GENERAL WORKERS LABOUR", "units": "OVERALL", "real_cost": 1000.0, "progress": 1.0, "rcd": 1000.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "PLASTER BOARDS RELOCATE DOORS FIX DOOR HEIGHT, ARRANGE METAL STADS ACCORDING TO REGULATION", "units": "OVERALL", "real_cost": 2500.0, "progress": 0.4, "rcd": 1000.0}, {"section": "ALOUMINIUM FRAMES/ ENTRANCE DOOR SYSTEM", "description": "STONE WALL CORNER SHAPING*", "units": "M/M", "real_cost": 6600.0, "progress": 0.0, "rcd": 0.0}];
+  return [];
+}
+
+function saveBOQ(projectId, items) {
+  localStorage.setItem('brb_boq_' + projectId, JSON.stringify(items));
+}
+
+function renderBOQTab(projectId) {
+  const items = loadBOQ(projectId);
+  const totalBudget = items.reduce((s,i) => s + (i.real_cost||0), 0);
+  const totalRCD = items.reduce((s,i) => s + (i.rcd||0), 0);
+  const pct = totalBudget > 0 ? (totalRCD/totalBudget*100).toFixed(1) : 0;
+
+  let html = `<div class="section">
+    <div class="section-header">
+      <div class="section-title">📊 Bill of Quantities</div>
+      <label style="cursor:pointer">
+        <div class="btn btn-ghost btn-sm" style="display:inline-flex;align-items:center;gap:6px">📂 Εισαγωγή Excel</div>
+        <input type="file" accept=".xlsx,.xls" style="display:none" onchange="importBOQExcel(this,'${projectId}')">
+      </label>
+    </div>
+    <div class="boq-summary">
+      <div class="stat-card accent"><div class="stat-num">${fmtEur(totalBudget)}</div><div class="stat-label">Συνολικός Π/Υ</div></div>
+      <div class="stat-card warn"><div class="stat-num">${fmtEur(totalRCD)}</div><div class="stat-label">Πραγματικό Κόστος</div></div>
+      <div class="stat-card ${pct>=75?'danger':pct>=40?'warn':'success'}">
+        <div class="stat-num">${pct}%</div>
+        <div class="stat-label">Πρόοδος Εκτέλεσης</div>
+        <div class="boq-bar-wrap"><div class="boq-bar-fill" style="width:${pct}%"></div></div>
+      </div>
+    </div>`;
+
+  if (items.length === 0) {
+    html += `<div class="boq-upload-area" onclick="this.querySelector('input').click()">
+      <div style="font-size:32px;margin-bottom:8px">📂</div>
+      <div style="font-size:14px;font-weight:600">Εισαγωγή BOQ από Excel</div>
+      <div style="font-size:12px;margin-top:4px">Κλικ ή σύρε το Excel αρχείο εδώ</div>
+      <input type="file" accept=".xlsx" style="display:none" onchange="importBOQExcel(this,'${projectId}')">
+    </div>`;
+  } else {
+    // Group by section
+    const sections = [...new Set(items.map(i => i.section))];
+    sections.forEach(sec => {
+      const secItems = items.filter(i => i.section === sec);
+      const secBudget = secItems.reduce((s,i) => s + i.real_cost, 0);
+      const secRCD = secItems.reduce((s,i) => s + i.rcd, 0);
+      html += `<div class="boq-table-wrap">
+        <div class="boq-section-header">${sec||'Γενικά'} &nbsp;·&nbsp; Π/Υ: ${fmtEur(secBudget)} &nbsp;·&nbsp; Εκτελεσθέν: ${fmtEur(secRCD)}</div>
+        <div class="boq-row boq-header-row">
+          <span>Εργασία</span><span>Μον.</span><span>Π/Υ €</span><span>Εκτελ. €</span><span>Υπόλοιπο</span><span>Πρόοδος</span>
+        </div>`;
+      secItems.forEach((item, idx) => {
+        const globalIdx = items.indexOf(item);
+        const remaining = item.real_cost - item.rcd;
+        html += `<div class="boq-row">
+          <span style="font-size:11px">${item.description}</span>
+          <span style="color:var(--text2)">${item.units}</span>
+          <span>${fmtEur(item.real_cost)}</span>
+          <span style="color:var(--success)">${fmtEur(item.rcd)}</span>
+          <span style="${'color:'+(remaining>0?'#f59e0b':'#22c55e')}">${fmtEur(remaining)}</span>
+          <span>
+            <input type="range" min="0" max="1" step="0.05" value="${item.progress}"
+              style="width:60px;accent-color:var(--accent)"
+              onchange="updateBOQProgress('${projectId}',${globalIdx},this.value)"
+              title="${(item.progress*100).toFixed(0)}%">
+            <div style="font-size:9px;color:var(--text2);text-align:center">${(item.progress*100).toFixed(0)}%</div>
+          </span>
+        </div>`;
+      });
+      html += `</div>`;
+    });
+  }
+  html += `</div>`;
+  return html;
+}
+
+function fmtEur(n) {
+  if (!n) return '—';
+  return new Intl.NumberFormat('el-GR', {style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+}
+
+function updateBOQProgress(projectId, idx, value) {
+  const items = loadBOQ(projectId);
+  if (items[idx]) { items[idx].progress = parseFloat(value); saveBOQ(projectId, items); }
+}
+
+async function importBOQExcel(input, projectId) {
+  const file = input.files[0];
+  if (!file) return;
+  // Use SheetJS to read Excel
+  const script = document.createElement('script');
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+  script.onload = () => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const wb = XLSX.read(e.target.result, {type:'binary'});
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, {header:1});
+      const items = [];
+      let section = '';
+      rows.forEach(row => {
+        const desc = String(row[0]||'').trim();
+        const units = String(row[1]||'').trim();
+        const realCost = parseFloat(row[4]) || 0;
+        const progress = parseFloat(row[5]) || 0;
+        const rcd = parseFloat(row[6]) || 0;
+        if (!desc || desc==='nan') return;
+        if (desc.toUpperCase()===desc && realCost===0) { section=desc; return; }
+        if (desc.toUpperCase().includes('TOTAL') || desc.includes('VAT') || desc.includes('FEE')) return;
+        if (realCost > 0) items.push({section, description:desc.slice(0,100), units, real_cost:realCost, progress, rcd});
+      });
+      saveBOQ(projectId, items);
+      alert('Εισήχθησαν ' + items.length + ' εργασίες!');
+      renderMain();
+    };
+    reader.readAsBinaryString(file);
+  };
+  document.head.appendChild(script);
+}
+
+// ─── PDF WEEKLY REPORT ────────────────────────────────────────────────
+function printWeeklyReport(projectId) {
+  const proj = PROJECTS.find(p => p.id === projectId);
+  if (!proj) return;
+  const now = new Date();
+  const weekStart = new Date(now); weekStart.setDate(now.getDate() - now.getDay() + 1);
+  const weekEnd = new Date(weekStart); weekEnd.setDate(weekStart.getDate() + 6);
+  const fmt = d => d.toLocaleDateString('el-GR');
+
+  const allEntries = appData.entries.filter(e => e.project === projectId);
+  const weekEntries = allEntries.filter(e => {
+    const d = new Date(e.date);
+    return d >= weekStart && d <= weekEnd;
+  });
+
+  const engineers = [...new Set(allEntries.map(e => e.engineer).filter(Boolean))];
+  const boqItems = loadBOQ(projectId);
+  const totalBudget = boqItems.reduce((s,i) => s+i.real_cost, 0);
+  const totalRCD = boqItems.reduce((s,i) => s+i.rcd, 0);
+  const boqPct = totalBudget > 0 ? (totalRCD/totalBudget*100).toFixed(1) + '%' : '—';
+
+  const typeLabel = t => t==='order' ? '🔧 Εντολή' : t==='purchase' ? '🛒 Παραγγελία' : '⚠️ Έλλειψη';
+  const statusLabel = s => s==='done' ? '✅' : s==='urgent' ? '🚨' : s==='pending' ? '⏳' : '🔵';
+
+  let engRows = '';
+  engineers.forEach(eng => {
+    const engEntries = weekEntries.filter(e => e.engineer === eng);
+    if (!engEntries.length) return;
+    engRows += '<h3 style="margin:16px 0 8px;color:#e8a020;font-size:14px">👤 ' + eng + '</h3>';
+    engRows += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+    engRows += '<tr style="background:#f5f5f5"><th style="padding:6px 8px;text-align:left;border:1px solid #ddd">Τύπος</th><th style="padding:6px 8px;text-align:left;border:1px solid #ddd">Περιγραφή</th><th style="padding:6px 8px;text-align:left;border:1px solid #ddd">Υπεύθυνος</th><th style="padding:6px 8px;text-align:left;border:1px solid #ddd">Deadline</th><th style="padding:6px 8px;text-align:left;border:1px solid #ddd">Κατάσταση</th></tr>';
+    engEntries.forEach(e => {
+      engRows += '<tr>';
+      engRows += '<td style="padding:5px 8px;border:1px solid #ddd">' + typeLabel(e.type) + '</td>';
+      engRows += '<td style="padding:5px 8px;border:1px solid #ddd">' + e.desc + '</td>';
+      engRows += '<td style="padding:5px 8px;border:1px solid #ddd">' + (e.person||'—') + '</td>';
+      engRows += '<td style="padding:5px 8px;border:1px solid #ddd">' + (e.deadline ? new Date(e.deadline).toLocaleDateString('el-GR') : '—') + '</td>';
+      engRows += '<td style="padding:5px 8px;border:1px solid #ddd">' + statusLabel(e.status) + '</td>';
+      engRows += '</tr>';
+    });
+    engRows += '</table>';
+  });
+
+  const openSnags = appData.entries.filter(e => e.project === projectId && e.type === 'snag' && e.status !== 'done');
+  let snagRows = '';
+  if (openSnags.length > 0) {
+    snagRows = '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+    snagRows += '<tr style="background:#f5f5f5"><th style="padding:6px 8px;text-align:left;border:1px solid #ddd">Περιγραφή</th><th style="padding:6px 8px;text-align:left;border:1px solid #ddd">Κατηγορία</th><th style="padding:6px 8px;text-align:left;border:1px solid #ddd">Καταγράφηκε</th></tr>';
+    openSnags.forEach(e => {
+      snagRows += '<tr>';
+      snagRows += '<td style="padding:5px 8px;border:1px solid #ddd">' + e.desc + '</td>';
+      snagRows += '<td style="padding:5px 8px;border:1px solid #ddd">' + (e.sub||'—') + '</td>';
+      snagRows += '<td style="padding:5px 8px;border:1px solid #ddd">' + new Date(e.date).toLocaleDateString('el-GR') + '</td>';
+      snagRows += '</tr>';
+    });
+    snagRows += '</table>';
+  } else {
+    snagRows = '<p style="color:#888">Δεν υπάρχουν ανοιχτές ελλείψεις.</p>';
+  }
+
+  const html = '<!DOCTYPE html><html lang="el"><head><meta charset="UTF-8">'
+    + '<title>BRB - ' + proj.name + '</title>'
+    + '<style>body{font-family:Arial,sans-serif;max-width:900px;margin:0 auto;padding:20px;color:#1a1a1a}'
+    + '.hdr{display:flex;align-items:center;gap:16px;border-bottom:3px solid #e8a020;padding-bottom:16px;margin-bottom:20px}'
+    + '.logo{width:50px;height:50px;background:#1a1a2e;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#e8a020;font-weight:900;font-size:20px;flex-shrink:0}'
+    + 'h1{font-size:18px;margin:0}h2{font-size:15px;margin:16px 0 8px;border-bottom:1px solid #eee;padding-bottom:4px}'
+    + '.meta{font-size:12px;color:#666;margin-top:4px}'
+    + '.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}'
+    + '.sb{border:1px solid #ddd;border-radius:8px;padding:12px;text-align:center}'
+    + '.sn{font-size:20px;font-weight:700;color:#e8a020}.sl{font-size:11px;color:#666;margin-top:2px}'
+    + '@media print{button{display:none}}</style></head><body>'
+    + '<div class="hdr"><div class="logo">B</div><div>'
+    + '<h1>BRB Development — Εβδομαδιαία Αναφορά</h1>'
+    + '<div class="meta">Έργο: <strong>' + proj.name + '</strong> — ' + (proj.client||'') + ' | Εβδομάδα: ' + fmt(weekStart) + ' – ' + fmt(weekEnd) + '</div>'
+    + '<div class="meta">Ημερομηνία: ' + fmt(now) + '</div>'
+    + '</div></div>'
+    + '<div class="sg">'
+    + '<div class="sb"><div class="sn">' + weekEntries.length + '</div><div class="sl">Καταγραφές Εβδομάδας</div></div>'
+    + '<div class="sb"><div class="sn">' + allEntries.filter(e=>e.status!=='done').length + '</div><div class="sl">Συνολικές Εκκρεμότητες</div></div>'
+    + '<div class="sb"><div class="sn">' + boqPct + '</div><div class="sl">Πρόοδος BOQ</div></div>'
+    + '</div>'
+    + '<h2>📋 Καταγραφές Εβδομάδας ανά Μηχανικό</h2>'
+    + (weekEntries.length > 0 ? engRows : '<p style="color:#888">Δεν υπάρχουν καταγραφές αυτή την εβδομάδα.</p>')
+    + '<h2>⚠️ Ανοιχτές Ελλείψεις</h2>'
+    + snagRows
+    + '<div style="margin-top:32px;border-top:1px solid #eee;padding-top:12px;font-size:10px;color:#999;text-align:center">'
+    + 'BRB Development | ' + new Date().toLocaleString('el-GR') + '</div>'
+    + '<button onclick="window.print()" style="position:fixed;bottom:20px;right:20px;background:#e8a020;border:none;color:#0e0f13;padding:12px 20px;border-radius:8px;cursor:pointer;font-weight:700;font-size:14px">🖨️ Εκτύπωση / PDF</button>'
+    + '</body></html>';
+
+  const win = window.open('', '_blank');
+  win.document.write(html);
+  win.document.close();
+}
+
+
+// ─── TEAM COMMUNICATION ───────────────────────────────────────────────
+const TEAM = [
+  { name: 'Μίλτος Μπίρμπας', role: 'Πολ. Μηχανικός ΤΕ', phone: '6974103169' },
+  { name: 'Βαγγέλης Θέρμος', role: 'Contractor Lefkada', phone: '+306978516707' },
+  { name: 'Αντώνης Λαφαζάνης', role: 'Αρχιτέκτων', phone: '6974103169' },
+  { name: 'Δημήτρης Λογοθέτης', role: 'Μηχανικός', phone: '+306979909327' },
+];
+
+function openTeamModal() {
+  document.getElementById('modal-team').classList.remove('hidden');
+}
+
+function callMember(phone) {
+  let p = phone.replace(/[^0-9+]/g,'');
+  window.open('tel:' + p);
+}
+
+function waMember(phone) {
+  let p = phone.replace(/[^0-9]/g,'');
+  if (p.startsWith('6') || p.startsWith('2')) p = '30' + p;
+  window.open('https://wa.me/' + p, '_blank');
+}
+
+
+// ─── PROJECTS CRUD ────────────────────────────────────────────────────
+let projectsDB = []; // will be loaded from Supabase
+
+async function loadProjects() {
+  try {
+    const { data } = await sb.from('projects').select('*').order('created_at');
+    if (data && data.length > 0) {
+      projectsDB = data;
+      // Merge with hardcoded PROJECTS array
+      data.forEach(p => {
+        const existing = PROJECTS.find(x => x.id === p.id);
+        if (!existing) {
+          PROJECTS.push({
+            id: p.id, name: p.name, client: p.client||'',
+            group: p.grp||p.name, subs: p.subs||[],
+            owner: p.owner, location: p.location, type: p.type,
+            lat: p.lat, lng: p.lng, address: p.address
+          });
+        } else {
+          // Update with DB data
+          existing.owner = p.owner;
+          existing.location = p.location;
+          existing.type = p.type;
+          existing.lat = p.lat;
+          existing.lng = p.lng;
+          existing.address = p.address;
+        }
+      });
+    }
+  } catch(e) { console.warn('Projects load error:', e); }
+}
+
+let selectedLat = null, selectedLng = null, selectedAddress = '';
+let editingProjectId = null;
+let projectMap = null, projectMarker = null;
+
+function openNewProjectModal() {
+  editingProjectId = null;
+  selectedLat = null; selectedLng = null; selectedAddress = '';
+  document.getElementById('proj-modal-title').textContent = '➕ Νέο Έργο';
+  document.getElementById('proj-name').value = '';
+  document.getElementById('proj-client').value = '';
+  document.getElementById('proj-owner').value = '';
+  document.getElementById('proj-location').value = '';
+  document.getElementById('proj-address').value = '';
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('modal-project-edit').classList.remove('hidden');
+  setTimeout(() => initProjectMap(), 300);
+}
+
+function openEditProjectModal(projId) {
+  editingProjectId = projId;
+  const proj = PROJECTS.find(p => p.id === projId);
+  if (!proj) return;
+  document.getElementById('proj-modal-title').textContent = '✏️ Επεξεργασία Έργου';
+  document.getElementById('proj-name').value = proj.name || '';
+  document.getElementById('proj-client').value = proj.client || '';
+  document.getElementById('proj-owner').value = proj.owner || '';
+  document.getElementById('proj-location').value = proj.location || '';
+  document.getElementById('proj-address').value = proj.address || '';
+  selectedLat = proj.lat || null;
+  selectedLng = proj.lng || null;
+  selectedAddress = proj.address || '';
+  document.querySelectorAll('.type-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.type === proj.type);
+  });
+  document.getElementById('modal-project-edit').classList.remove('hidden');
+  setTimeout(() => initProjectMap(proj.lat, proj.lng), 300);
+}
+
+function selectProjectType(btn, type) {
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function initProjectMap(lat, lng) {
+  const center = lat && lng ? {lat: parseFloat(lat), lng: parseFloat(lng)} : {lat: 38.8, lng: 20.7};
+  const mapEl = document.getElementById('project-map');
+  if (!mapEl) return;
+  
+  projectMap = new google.maps.Map(mapEl, {
+    center, zoom: lat ? 14 : 10,
+    mapTypeId: 'satellite',
+    mapTypeControl: true,
+    streetViewControl: false,
+  });
+  
+  // Search box
+  const input = document.getElementById('map-search-input');
+  if (input) {
+    const searchBox = new google.maps.places.SearchBox(input);
+    projectMap.addListener('bounds_changed', () => searchBox.setBounds(projectMap.getBounds()));
+    searchBox.addListener('places_changed', () => {
+      const places = searchBox.getPlaces();
+      if (!places || places.length === 0) return;
+      const place = places[0];
+      if (!place.geometry) return;
+      projectMap.setCenter(place.geometry.location);
+      projectMap.setZoom(16);
+      placeMapMarker(place.geometry.location.lat(), place.geometry.location.lng());
+      selectedAddress = place.formatted_address || place.name || '';
+      document.getElementById('proj-address').value = selectedAddress;
+    });
+  }
+  
+  // Click to place marker
+  projectMap.addListener('click', e => {
+    placeMapMarker(e.latLng.lat(), e.latLng.lng());
+    // Reverse geocode
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({location: e.latLng}, (results, status) => {
+      if (status === 'OK' && results[0]) {
+        selectedAddress = results[0].formatted_address;
+        document.getElementById('proj-address').value = selectedAddress;
+      }
+    });
+  });
+  
+  if (lat && lng) placeMapMarker(parseFloat(lat), parseFloat(lng));
+}
+
+function placeMapMarker(lat, lng) {
+  selectedLat = lat; selectedLng = lng;
+  if (projectMarker) projectMarker.setMap(null);
+  projectMarker = new google.maps.Marker({
+    position: {lat, lng},
+    map: projectMap,
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 10,
+      fillColor: '#e8a020',
+      fillOpacity: 1,
+      strokeColor: '#fff',
+      strokeWeight: 2
+    },
+    animation: google.maps.Animation.DROP
+  });
+}
+
+async function saveProjectEdit() {
+  const name = document.getElementById('proj-name').value.trim();
+  const client = document.getElementById('proj-client').value.trim();
+  const owner = document.getElementById('proj-owner').value.trim();
+  const location = document.getElementById('proj-location').value.trim();
+  const address = document.getElementById('proj-address').value.trim();
+  const typeBtn = document.querySelector('.type-btn.active');
+  const type = typeBtn ? typeBtn.dataset.type : '';
+  
+  if (!name) { alert('Βάλε όνομα έργου.'); return; }
+  
+  const projData = {
+    name, client, owner, location, address, type,
+    grp: location || name,
+    lat: selectedLat, lng: selectedLng,
+    subs: ['Υπόγειο','Ισόγειο','Πισίνα','Περιβάλλων Χώρος']
+  };
+  
+  if (editingProjectId) {
+    // Update
+    await sb.from('projects').update(projData).eq('id', editingProjectId);
+    const idx = PROJECTS.findIndex(p => p.id === editingProjectId);
+    if (idx >= 0) PROJECTS[idx] = { ...PROJECTS[idx], ...projData };
+  } else {
+    // Insert
+    const id = 'proj_' + uid();
+    projData.id = id;
+    await sb.from('projects').insert(projData);
+    PROJECTS.push({ id, ...projData });
+  }
+  
+  closeModals();
+  renderSidebar();
+  renderMain();
+}
+
+// ─── FILES ────────────────────────────────────────────────────────────
+function renderFilesTab(projectId, proj) {
+  const files = JSON.parse(localStorage.getItem('brb_files_' + projectId) || '[]');
+  let html = `<div class="section">
+    <div class="section-header">
+      <div class="section-title">📁 Αρχεία Έργου</div>
+      <label style="cursor:pointer">
+        <div class="btn btn-primary btn-sm" style="display:inline-flex;align-items:center;gap:6px">+ Ανέβασε Αρχείο</div>
+        <input type="file" accept=".pdf,.dxf,.dwg,.xlsx,.docx,.jpg,.png" multiple style="display:none" onchange="uploadProjectFiles(this,'${projectId}')">
+      </label>
+    </div>`;
+  
+  if (files.length === 0) {
+    html += `<div class="empty"><div class="empty-icon">📁</div><p>Δεν υπάρχουν αρχεία ακόμα.<br>Ανέβασε PDF, DXF, DWG, Excel κλπ.</p></div>`;
+  } else {
+    files.forEach(f => {
+      const icon = f.name.endsWith('.pdf') ? '📄' : f.name.match(/\.dxf|\.dwg/i) ? '📐' : f.name.match(/\.xlsx|\.xls/i) ? '📊' : f.name.match(/\.jpg|\.png/i) ? '🖼️' : '📎';
+      html += `<div class="file-row">
+        <div class="file-icon">${icon}</div>
+        <div class="file-info">
+          <div class="file-name">${f.name}</div>
+          <div class="file-meta">${f.size} · ${f.uploaded} · ${f.engineer}</div>
+        </div>
+        <div class="file-actions">
+          <a href="${f.url}" target="_blank" class="btn btn-ghost btn-sm">👁️ Άνοιγμα</a>
+          <a href="${f.url}" download="${f.name}" class="btn btn-ghost btn-sm">⬇️</a>
+          <button class="btn btn-danger btn-sm" onclick="deleteProjectFile('${projectId}','${f.id}')">🗑</button>
+        </div>
+      </div>`;
+    });
+  }
+  html += `</div>`;
+  return html;
+}
+
+async function uploadProjectFiles(input, projectId) {
+  const files = Array.from(input.files);
+  if (!files.length) return;
+  
+  const btn = input.previousElementSibling;
+  if (btn) btn.textContent = '⬆️ Ανέβασμα...';
+  
+  const stored = JSON.parse(localStorage.getItem('brb_files_' + projectId) || '[]');
+  
+  for (const file of files) {
+    const path = projectId + '/files/' + Date.now() + '_' + file.name;
+    const { error } = await sb.storage.from('brb-files').upload(path, file, { upsert: false });
+    if (!error) {
+      const url = `https://tntjatgjwenvvqzlhlfi.supabase.co/storage/v1/object/public/brb-files/${path}`;
+      stored.push({
+        id: uid(), name: file.name,
+        size: (file.size/1024 > 1024 ? (file.size/1048576).toFixed(1)+'MB' : (file.size/1024).toFixed(0)+'KB'),
+        url, path, engineer: currentEngineer||'—',
+        uploaded: new Date().toLocaleDateString('el-GR')
+      });
+    }
+  }
+  localStorage.setItem('brb_files_' + projectId, JSON.stringify(stored));
+  renderMain();
+}
+
+async function deleteProjectFile(projectId, fileId) {
+  if (!confirm('Διαγραφή αρχείου;')) return;
+  let stored = JSON.parse(localStorage.getItem('brb_files_' + projectId) || '[]');
+  const file = stored.find(f => f.id === fileId);
+  if (file) await sb.storage.from('brb-files').remove([file.path]);
+  stored = stored.filter(f => f.id !== fileId);
+  localStorage.setItem('brb_files_' + projectId, JSON.stringify(stored));
+  renderMain();
+}
+
+// ─── MAP TAB ─────────────────────────────────────────────────────
+function renderMapTab(proj) {
+  const hasCoords = proj.lat && proj.lng;
+  let html = '<div class="section">';
+  html += '<div class="section-header"><div class="section-title">📍 Τοποθεσία Έργου</div>';
+  html += '<button class="btn btn-ghost btn-sm" onclick="openEditProjectModal(\''+proj.id+'\')">✏️ Επεξεργασία</button></div>';
+  if (proj.owner) html += '<div style="font-size:13px;color:var(--text2);margin-bottom:4px">👤 Ιδιοκτήτης: <strong style=\"color:var(--text)\">' + proj.owner + '</strong></div>';
+  if (proj.address) html += '<div style="font-size:13px;color:var(--text2);margin-bottom:12px">📌 ' + proj.address + '</div>';
+  if (proj.type) html += '<div style="font-size:13px;color:var(--text2);margin-bottom:12px">🏗️ ' + proj.type + '</div>';
+  if (hasCoords) {
+    html += '<div id="project-view-map" class="map-container"></div>';
+    window._pendingMapLat = parseFloat(proj.lat);
+    window._pendingMapLng = parseFloat(proj.lng);
+    window._pendingMapName = proj.name;
+    setTimeout(initViewMap, 250);
+  } else {
+    html += '<div class="empty"><div class="empty-icon">📍</div><p>Δεν έχει οριστεί τοποθεσία.<br>Πάτα "Επεξεργασία" για να προσθέσεις πινέζα.</p></div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function initViewMap() {
+  const el = document.getElementById('project-view-map');
+  if (!el || !window._pendingMapLat) return;
+  const pos = {lat: window._pendingMapLat, lng: window._pendingMapLng};
+  const m = new google.maps.Map(el, {center: pos, zoom: 15, mapTypeId: 'satellite'});
+  new google.maps.Marker({
+    position: pos, map: m, title: window._pendingMapName||'',
+    icon: {path: google.maps.SymbolPath.CIRCLE, scale: 10,
+      fillColor: '#e8a020', fillOpacity: 1, strokeColor: '#fff', strokeWeight: 2}
+  });
+}
+
 // ─── INIT ─────────────────────────────────────────────────────────────
 if (currentEngineer) {
   initApp();
@@ -1533,6 +2152,108 @@ if (currentEngineer) {
 <div class="lightbox hidden" id="lightbox" onclick="closeLightbox()">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
   <img id="lightbox-img" src="" alt="">
+</div>
+
+
+<!-- TEAM MODAL -->
+<div class="modal-overlay hidden" id="modal-team">
+  <div class="modal" style="max-width:440px">
+    <h3>👥 Ομάδα BRB Development</h3>
+    <div class="team-modal-inner">
+      <div class="team-card">
+        <div class="team-avatar">Μ</div>
+        <div class="team-name">Μίλτος Μπίρμπας</div>
+        <div style="font-size:11px;color:var(--text2);margin-bottom:10px">Πολ. Μηχανικός ΤΕ</div>
+        <div class="team-actions">
+          <button class="team-wa" onclick="waMember('6974103169')">📲 WA</button>
+          <button class="team-call" onclick="callMember('6974103169')">📞 Κλήση</button>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">Β</div>
+        <div class="team-name">Βαγγέλης Θέρμος</div>
+        <div style="font-size:11px;color:var(--text2);margin-bottom:10px">Contractor Lefkada</div>
+        <div class="team-actions">
+          <button class="team-wa" onclick="waMember('+306978516707')">📲 WA</button>
+          <button class="team-call" onclick="callMember('+306978516707')">📞 Κλήση</button>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">Α</div>
+        <div class="team-name">Αντώνης Λαφαζάνης</div>
+        <div style="font-size:11px;color:var(--text2);margin-bottom:10px">Αρχιτέκτων</div>
+        <div class="team-actions">
+          <button class="team-wa" onclick="waMember('6974103169')">📲 WA</button>
+          <button class="team-call" onclick="callMember('6974103169')">📞 Κλήση</button>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">Δ</div>
+        <div class="team-name">Δημήτρης Λογοθέτης</div>
+        <div style="font-size:11px;color:var(--text2);margin-bottom:10px">Μηχανικός</div>
+        <div class="team-actions">
+          <button class="team-wa" onclick="waMember('+306979909327')">📲 WA</button>
+          <button class="team-call" onclick="callMember('+306979909327')">📞 Κλήση</button>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:16px;text-align:right">
+      <button class="btn btn-ghost" onclick="closeModals()">Κλείσιμο</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- PROJECT EDIT MODAL -->
+<div class="modal-overlay hidden" id="modal-project-edit">
+  <div class="modal" style="max-width:560px;max-height:90vh;overflow-y:auto">
+    <h3 id="proj-modal-title">➕ Νέο Έργο</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="form-group">
+        <label class="form-label">Όνομα Έργου</label>
+        <input class="form-input" id="proj-name" placeholder="π.χ. Villa A">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Πελάτης</label>
+        <input class="form-input" id="proj-client" placeholder="π.χ. Hoffim">
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="form-group">
+        <label class="form-label">Ιδιοκτήτης</label>
+        <input class="form-input" id="proj-owner" placeholder="π.χ. David Hoffim">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Περιοχή</label>
+        <input class="form-input" id="proj-location" placeholder="π.χ. Δεσίμι Λευκάδα">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Είδος Έργου</label>
+      <div class="project-type-grid">
+        <div class="type-btn" data-type="villa" onclick="selectProjectType(this,'villa')"><span class="type-icon">🏠</span>Villa</div>
+        <div class="type-btn" data-type="apartment" onclick="selectProjectType(this,'apartment')"><span class="type-icon">🏢</span>Διαμέρισμα</div>
+        <div class="type-btn" data-type="complex" onclick="selectProjectType(this,'complex')"><span class="type-icon">🏗️</span>Συγκρότημα</div>
+        <div class="type-btn" data-type="commercial" onclick="selectProjectType(this,'commercial')"><span class="type-icon">🏪</span>Εμπορικό</div>
+        <div class="type-btn" data-type="renovation" onclick="selectProjectType(this,'renovation')"><span class="type-icon">🔨</span>Ανακαίνιση</div>
+        <div class="type-btn" data-type="other" onclick="selectProjectType(this,'other')"><span class="type-icon">📋</span>Άλλο</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">📍 Τοποθεσία στον Χάρτη</label>
+      <input class="form-input" id="map-search-input" placeholder="Αναζήτηση διεύθυνσης..." style="margin-bottom:8px">
+      <div id="project-map" class="map-container"></div>
+      <div style="font-size:11px;color:var(--text2);margin-top:4px">Πάτα στον χάρτη για να τοποθετήσεις πινέζα</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Διεύθυνση</label>
+      <input class="form-input" id="proj-address" placeholder="Συμπληρώνεται αυτόματα από τον χάρτη">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModals()">Ακύρωση</button>
+      <button class="btn btn-primary" onclick="saveProjectEdit()">Αποθήκευση</button>
+    </div>
+  </div>
 </div>
 
 </body>
