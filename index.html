@@ -334,7 +334,7 @@ tr:hover td { background: var(--surface2); }
     <div class="brand" onclick="window.open('https://www.birbas.gr','_blank')" style="cursor:pointer" title="birbas.gr">
       <div class="brand-name">HEXIS</div>
       <div class="brand-tag">your site management app</div>
-      <div class="brand-sub">powered by BRB Development MON IKE · v2.9.1</div>
+      <div class="brand-sub">powered by BRB Development MON IKE · v3.2</div>
     </div>
   </div>
   <div class="topbar-right">
@@ -367,7 +367,7 @@ tr:hover td { background: var(--surface2); }
 </div>
 
 <footer class="app-footer">
-  <div class="app-footer-brand">HEXIS · v2.9.1 — © 2026 BRB Development MON IKE. Με επιφύλαξη παντός δικαιώματος.</div>
+  <div class="app-footer-brand">HEXIS · v3.2 — © 2026 BRB Development MON IKE. Με επιφύλαξη παντός δικαιώματος.</div>
   <div class="app-footer-legal">Η εφαρμογή παρέχεται «ως έχει». Η εταιρία δεν φέρει καμία ευθύνη για τυχόν απώλεια δεδομένων, διακοπή λειτουργίας ή οποιαδήποτε ζημία προκύψει από τη χρήση της. Ο χρήστης οφείλει να τηρεί δικά του αντίγραφα ασφαλείας των κρίσιμων στοιχείων.</div>
 </footer>
 
@@ -493,6 +493,7 @@ tr:hover td { background: var(--surface2); }
     </div>
     <div class="form-group"><label class="form-label">Διεύθυνση</label><input class="form-input" id="proj-address"></div>
     <div class="modal-actions">
+      <button class="btn btn-ghost hidden" id="proj-del-btn" style="margin-right:auto;color:var(--danger)" onclick="deleteProject(editingProjId)">Διαγραφή έργου</button>
       <button class="btn btn-ghost" onclick="closeModal('modal-project')">Ακύρωση</button>
       <button class="btn btn-primary" onclick="saveProject()">Αποθήκευση</button>
     </div>
@@ -722,16 +723,16 @@ async function loadFromDB() {
     });
     // Hide projects deleted on ANY device (cloud-synced deletions)
     if (dlr && dlr.data) {
-      const localDel = JSON.parse(localStorage.getItem('hexis_deleted_projects') || '[]');
+      // Η ΒΑΣΗ είναι η πηγή αλήθειας — η τοπική λίστα ΑΝΤΙΚΑΘΙΣΤΑΤΑΙ (ώστε restore στη βάση = restore παντού)
       const dbIds = dlr.data.map(d=>d.id);
-      const merged = [...new Set([...localDel, ...dbIds])];
+      const pending = JSON.parse(localStorage.getItem('hexis_deleted_pending') || '[]');
+      const merged = [...new Set([...dbIds, ...pending])];
       localStorage.setItem('hexis_deleted_projects', JSON.stringify(merged));
-      // Upload locally-deleted projects missing from DB (deleted offline or pre-v2.2)
-      const missing = localDel.filter(id => !dbIds.includes(id));
-      if (missing.length) {
-        sb.from('deleted_projects').upsert(missing.map(id=>({id}))).then(r=>{
-          if (r.error) console.error('[PROJECT] deleted upload failed:', r.error);
-          else console.log('[PROJECT] uploaded ' + missing.length + ' local deletions to DB');
+      // Ανέβασμα μόνο των pending (offline διαγραφές που δεν πρόλαβαν να συγχρονιστούν)
+      if (pending.length) {
+        sb.from('deleted_projects').upsert(pending.map(id=>({id}))).then(r=>{
+          if (r.error) console.error('[PROJECT] pending upload failed:', r.error);
+          else localStorage.setItem('hexis_deleted_pending', '[]');
         });
       }
       for (let i = PROJECTS.length - 1; i >= 0; i--) {
@@ -888,10 +889,7 @@ function renderSidebar() {
       const editBtn = document.createElement('button');
       editBtn.className = 'sidebar-edit'; editBtn.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg>'; editBtn.title = 'Επεξεργασία';
       editBtn.onclick = ev => { ev.stopPropagation(); editProject(p.id); };
-      const delBtn = document.createElement('button');
-      delBtn.className = 'sidebar-del'; delBtn.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>'; delBtn.title = 'Διαγραφή έργου';
-      delBtn.onclick = ev => { ev.stopPropagation(); deleteProject(p.id); };
-      btnWrap.appendChild(editBtn); btnWrap.appendChild(delBtn);
+      btnWrap.appendChild(editBtn);
       item.appendChild(nameDiv); item.appendChild(btnWrap);
       item.onclick = () => selectProj(p.id);
       container.appendChild(item);
@@ -1479,19 +1477,120 @@ function addPhotos(input) {
   Array.from(input.files).forEach(file => {
     const reader = new FileReader();
     reader.onload = ev => {
-      pendingPhotos.push({file, preview:ev.target.result});
+      const item = {file, preview:ev.target.result};
+      pendingPhotos.push(item);
       const grid = document.getElementById('photo-preview');
       const wrap = document.createElement('div'); wrap.style.position='relative';
       const img = document.createElement('img'); img.src=ev.target.result; img.className='photo-thumb';
       const del = document.createElement('button');
-      del.textContent='✕'; del.style.cssText='position:absolute;top:-4px;right:-4px;background:#ef4444;border:none;color:#fff;border-radius:50%;width:18px;height:18px;cursor:pointer;font-size:10px';
-      const idx = pendingPhotos.length-1;
-      del.onclick = () => { pendingPhotos.splice(idx,1); wrap.remove(); };
-      wrap.appendChild(img); wrap.appendChild(del); grid.appendChild(wrap);
+      del.textContent='✕'; del.style.cssText='position:absolute;top:-4px;right:-4px;background:#ef4444;border:none;color:#fff;border-radius:50%;width:18px;height:18px;cursor:pointer;font-size:10px;z-index:2';
+      del.onclick = () => { const i = pendingPhotos.indexOf(item); if (i>=0) pendingPhotos.splice(i,1); wrap.remove(); };
+      const edit = document.createElement('button');
+      edit.textContent='✏️'; edit.title='Επεξεργασία (σχέδιο/κείμενο)';
+      edit.style.cssText='position:absolute;bottom:-4px;right:-4px;background:#c4622d;border:none;color:#fff;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:11px;z-index:2';
+      edit.onclick = () => openPhotoEditor(item, img);
+      wrap.appendChild(img); wrap.appendChild(del); wrap.appendChild(edit); grid.appendChild(wrap);
     };
     reader.readAsDataURL(file);
   });
 }
+
+// ── PHOTO EDITOR (σχέδιο + κείμενο πάνω σε φωτογραφία) ──
+let edItem=null, edImgEl=null, edCanvas=null, edCtx=null, edTool='draw', edColor='#ef4444', edUndo=[], edDrawing=false, edLast=null;
+function openPhotoEditor(item, imgEl) {
+  edItem = item; edImgEl = imgEl; edTool='draw'; edUndo=[];
+  document.getElementById('photo-editor').classList.remove('hidden');
+  edCanvas = document.getElementById('ped-canvas');
+  edCtx = edCanvas.getContext('2d');
+  const im = new Image();
+  im.onload = () => {
+    const maxW = 1800;
+    const scale = im.width > maxW ? maxW / im.width : 1;
+    edCanvas.width = Math.round(im.width * scale);
+    edCanvas.height = Math.round(im.height * scale);
+    edCtx.drawImage(im, 0, 0, edCanvas.width, edCanvas.height);
+    edSnapshot();
+  };
+  im.src = item.preview;
+  pedSetTool('draw'); pedSetColor('#ef4444');
+}
+function edSnapshot() { try { edUndo.push(edCanvas.toDataURL('image/jpeg', 0.92)); if (edUndo.length > 12) edUndo.shift(); } catch(e) {} }
+function pedUndo() {
+  if (edUndo.length < 2) return;
+  edUndo.pop();
+  const im = new Image();
+  im.onload = () => edCtx.drawImage(im, 0, 0, edCanvas.width, edCanvas.height);
+  im.src = edUndo[edUndo.length-1];
+}
+function pedClear() {
+  if (!edUndo.length) return;
+  const im = new Image();
+  im.onload = () => edCtx.drawImage(im, 0, 0, edCanvas.width, edCanvas.height);
+  im.src = edUndo[0];
+  edUndo = [edUndo[0]];
+}
+function pedSetTool(t) {
+  edTool = t;
+  document.querySelectorAll('.ped-tool').forEach(b => b.style.outline = b.dataset.tool===t ? '2px solid #fff' : 'none');
+}
+function pedSetColor(c) {
+  edColor = c;
+  document.querySelectorAll('.ped-color').forEach(b => b.style.outline = b.dataset.c===c ? '3px solid #fff' : 'none');
+}
+function pedPos(ev) {
+  const r = edCanvas.getBoundingClientRect();
+  const t = ev.touches ? ev.touches[0] : ev;
+  return { x: (t.clientX - r.left) * (edCanvas.width / r.width), y: (t.clientY - r.top) * (edCanvas.height / r.height) };
+}
+function pedDown(ev) {
+  ev.preventDefault();
+  const p = pedPos(ev);
+  if (edTool === 'text') { pedAddText(p); return; }
+  edDrawing = true; edLast = p;
+  edCtx.lineCap = 'round'; edCtx.lineJoin = 'round';
+  edCtx.strokeStyle = edColor;
+  edCtx.lineWidth = Math.max(5, edCanvas.width / 130);
+}
+function pedMove(ev) {
+  if (!edDrawing) return;
+  ev.preventDefault();
+  const p = pedPos(ev);
+  edCtx.beginPath(); edCtx.moveTo(edLast.x, edLast.y); edCtx.lineTo(p.x, p.y); edCtx.stroke();
+  edLast = p;
+}
+function pedUp() { if (edDrawing) { edDrawing = false; edSnapshot(); } }
+function pedAddText(p) {
+  const txt = prompt('Κείμενο (π.χ. 13.57):');
+  if (!txt) return;
+  const fs = Math.max(28, Math.round(edCanvas.width / 16));
+  edCtx.font = '700 ' + fs + 'px -apple-system, Roboto, sans-serif';
+  const w = edCtx.measureText(txt).width, pad = fs * 0.35;
+  edCtx.fillStyle = edColor === '#ffffff' ? 'rgba(0,0,0,0.55)' : hexToRgba(edColor, 0.78);
+  roundRect(edCtx, p.x - w/2 - pad, p.y - fs/2 - pad, w + pad*2, fs + pad*2, fs*0.25);
+  edCtx.fillStyle = '#ffffff';
+  edCtx.textBaseline = 'middle';
+  edCtx.fillText(txt, p.x - w/2, p.y + fs*0.05);
+  edSnapshot();
+}
+function hexToRgba(hex, a) {
+  const n = parseInt(hex.slice(1), 16);
+  return 'rgba(' + ((n>>16)&255) + ',' + ((n>>8)&255) + ',' + (n&255) + ',' + a + ')';
+}
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r, y); ctx.arcTo(x+w, y, x+w, y+h, r); ctx.arcTo(x+w, y+h, x, y+h, r);
+  ctx.arcTo(x, y+h, x, y, r); ctx.arcTo(x, y, x+w, y, r); ctx.closePath(); ctx.fill();
+}
+function pedSave() {
+  edCanvas.toBlob(blob => {
+    const name = (edItem.file && edItem.file.name ? edItem.file.name.replace(/\.[^.]+$/, '') : 'photo') + '_edited.jpg';
+    edItem.file = new File([blob], name, {type: 'image/jpeg'});
+    edItem.preview = edCanvas.toDataURL('image/jpeg', 0.9);
+    if (edImgEl) edImgEl.src = edItem.preview;
+    pedClose();
+  }, 'image/jpeg', 0.92);
+}
+function pedClose() { document.getElementById('photo-editor').classList.add('hidden'); edItem = null; edImgEl = null; }
 
 async function saveEntry() {
   if (!currentEngineer) { alert('Πρώτα επίλεξε ποιος είσαι (κουμπί πάνω δεξιά).'); showEngModal(); return; }
@@ -1670,6 +1769,7 @@ function showNewProjectModal() {
   editingProjId = null;
   selLat = null; selLng = null;
   document.getElementById('proj-modal-title').textContent = 'Νέο Project';
+  document.getElementById('proj-del-btn').classList.add('hidden');
   ['proj-name','proj-client','proj-owner','proj-location','proj-address','map-search'].forEach(id => {
     const el = document.getElementById(id); if(el) el.value='';
   });
@@ -1682,6 +1782,7 @@ function editProject(projId) {
   const p = getProj(projId); if (!p) return;
   editingProjId = projId;
   document.getElementById('proj-modal-title').textContent = 'Επεξεργασία Project';
+  document.getElementById('proj-del-btn').classList.toggle('hidden', isMobileDevice());
   document.getElementById('proj-name').value = p.name||'';
   document.getElementById('proj-client').value = p.client||'';
   document.getElementById('proj-owner').value = p.owner||'';
@@ -1767,32 +1868,35 @@ async function saveProject() {
   renderSidebar(); render();
 }
 
+const isMobileDevice = () => /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+
 function deleteProject(projId) {
+  if (isMobileDevice()) { alert('Η διαγραφή έργων επιτρέπεται μόνο από υπολογιστή (PC).'); return; }
   const p = getProj(projId);
   if (!p) return;
-  if (!confirm('Διαγραφή του έργου "' + p.name + '";\n\nΘα διαγραφούν και όλες οι καταγραφές/φάσεις του.')) return;
-  // Remove from PROJECTS
+  // ── ΔΙΠΛΗ ΕΠΙΒΕΒΑΙΩΣΗ ──
+  if (!confirm('Διαγραφή του έργου "' + p.name + '";\n\nΤο έργο θα κρυφτεί από όλες τις συσκευές.')) return;
+  const typed = prompt('Για επιβεβαίωση, πληκτρολόγησε το όνομα του έργου ακριβώς:\n\n' + p.name);
+  if (typed === null) return;
+  if (typed.trim() !== p.name.trim()) { alert('Το όνομα δεν ταιριάζει — η διαγραφή ακυρώθηκε.'); return; }
+  // ── SOFT DELETE: τα δεδομένα (καταγραφές/φάσεις/φωτό) ΜΕΝΟΥΝ στη βάση ──
   const idx = PROJECTS.findIndex(x => x.id === projId);
   if (idx >= 0) PROJECTS.splice(idx, 1);
-  // Remove local data
-  localStorage.removeItem('hexis_proj_' + projId);
-  localStorage.removeItem('hexis_boq_' + projId);
-  localStorage.removeItem('hexis_files_' + projId);
-  localStorage.removeItem('hexis_buildings_' + projId);
-  // Remove entries/phases locally
   appData.entries = appData.entries.filter(e => e.project !== projId);
   appData.phases = appData.phases.filter(ph => ph.project !== projId);
-  // Delete from DB (non-blocking)
-  sb.from('entries').delete().eq('project_id', projId).then(()=>{});
-  sb.from('phases').delete().eq('project_id', projId).then(()=>{});
-  sb.from('projects').delete().eq('id', projId).then(()=>{});
-  // Track deleted hardcoded projects so they don't reappear
+  // Τοπική λίστα + pending queue (για offline)
   const deleted = JSON.parse(localStorage.getItem('hexis_deleted_projects') || '[]');
   if (!deleted.includes(projId)) { deleted.push(projId); localStorage.setItem('hexis_deleted_projects', JSON.stringify(deleted)); }
-  // Sync deletion to cloud so other devices hide it too
-  sb.from('deleted_projects').upsert({id: projId}).then(r=>{ if(r.error) console.error('[PROJECT] deleted sync failed:', r.error); });
-  // Switch to first available project
+  const pending = JSON.parse(localStorage.getItem('hexis_deleted_pending') || '[]');
+  if (!pending.includes(projId)) { pending.push(projId); localStorage.setItem('hexis_deleted_pending', JSON.stringify(pending)); }
+  // Sync στο cloud — αν πετύχει, φεύγει από το pending
+  sb.from('deleted_projects').upsert({id: projId}).then(r=>{
+    if (r.error) { console.error('[PROJECT] deleted sync failed:', r.error); return; }
+    const pq = JSON.parse(localStorage.getItem('hexis_deleted_pending') || '[]');
+    localStorage.setItem('hexis_deleted_pending', JSON.stringify(pq.filter(x => x !== projId)));
+  });
   if (state.proj === projId) state.proj = null;
+  closeModal('modal-project');
   renderSidebar(); render();
 }
 
@@ -2794,5 +2898,25 @@ async function init() {
 
 init();
 </script>
+<div class="modal-overlay hidden" id="photo-editor" style="z-index:9999;background:rgba(0,0,0,0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px">
+  <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;justify-content:center;margin-bottom:8px">
+    <button class="ped-tool" data-tool="draw" onclick="pedSetTool('draw')" style="background:#333;color:#fff;border:none;border-radius:8px;padding:8px 12px;cursor:pointer">✏️ Σχέδιο</button>
+    <button class="ped-tool" data-tool="text" onclick="pedSetTool('text')" style="background:#333;color:#fff;border:none;border-radius:8px;padding:8px 12px;cursor:pointer">🅰️ Κείμενο</button>
+    <button class="ped-color" data-c="#ef4444" onclick="pedSetColor('#ef4444')" style="background:#ef4444;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer"></button>
+    <button class="ped-color" data-c="#eab308" onclick="pedSetColor('#eab308')" style="background:#eab308;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer"></button>
+    <button class="ped-color" data-c="#3b82f6" onclick="pedSetColor('#3b82f6')" style="background:#3b82f6;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer"></button>
+    <button class="ped-color" data-c="#22c55e" onclick="pedSetColor('#22c55e')" style="background:#22c55e;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer"></button>
+    <button class="ped-color" data-c="#ffffff" onclick="pedSetColor('#ffffff')" style="background:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer"></button>
+    <button onclick="pedUndo()" style="background:#333;color:#fff;border:none;border-radius:8px;padding:8px 12px;cursor:pointer">↩️ Αναίρεση</button>
+    <button onclick="pedClear()" style="background:#333;color:#fff;border:none;border-radius:8px;padding:8px 12px;cursor:pointer">🗑️ Καθαρισμός</button>
+  </div>
+  <canvas id="ped-canvas" style="max-width:96vw;max-height:74vh;border-radius:8px;touch-action:none;cursor:crosshair"
+    onmousedown="pedDown(event)" onmousemove="pedMove(event)" onmouseup="pedUp()" onmouseleave="pedUp()"
+    ontouchstart="pedDown(event)" ontouchmove="pedMove(event)" ontouchend="pedUp()"></canvas>
+  <div style="display:flex;gap:10px;margin-top:10px">
+    <button onclick="pedClose()" style="background:#444;color:#fff;border:none;border-radius:8px;padding:10px 20px;cursor:pointer;font-size:15px">✖ Άκυρο</button>
+    <button onclick="pedSave()" style="background:#22c55e;color:#fff;border:none;border-radius:8px;padding:10px 20px;cursor:pointer;font-size:15px;font-weight:700">✔ Αποθήκευση</button>
+  </div>
+</div>
 </body>
 </html>

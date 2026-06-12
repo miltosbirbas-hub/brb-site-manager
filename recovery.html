@@ -22,6 +22,7 @@ table { width:100%; border-collapse:collapse; font-size:12.5px; margin-top:8px; 
 th, td { text-align:left; padding:5px 6px; border-bottom:1px solid var(--border); vertical-align:top; }
 th { color:var(--text2); font-weight:600; }
 .thumb { width:46px; height:46px; object-fit:cover; border-radius:6px; margin:2px; }
+input[type=datetime-local] { background:var(--bg); color:var(--text); border:1px solid var(--border); border-radius:6px; padding:6px; font-size:13px; }
 select { background:var(--bg); color:var(--text); border:1px solid var(--border); border-radius:6px; padding:6px; font-size:13px; }
 .group { border:1px solid var(--border); border-radius:8px; padding:10px; margin:8px 0; }
 #log { font-family:monospace; font-size:11.5px; color:var(--text2); white-space:pre-wrap; max-height:160px; overflow:auto; margin-top:8px; }
@@ -33,6 +34,12 @@ select { background:var(--bg); color:var(--text); border:1px solid var(--border)
 <body>
 <h1>🛠️ BRB — Ανάκτηση Δεδομένων</h1>
 <div class="sub">Επαναφορά καταγραφών, φωτογραφιών και σχολίων. Άνοιξέ το σε <b>κάθε</b> συσκευή (PC, κινητά συνεργατών) — όποια έχει το πιο πρόσφατο τοπικό αντίγραφο, σώζει τα περισσότερα.</div>
+
+<div class="card">
+  <h2>Φίλτρο περιόδου</h2>
+  <div class="stat"><label><input type="checkbox" id="flt-on" checked> Μόνο καταγραφές/φωτογραφίες της περιόδου:</label></div>
+  <div class="stat">Από <input type="datetime-local" id="flt-from"> έως <input type="datetime-local" id="flt-to"></div>
+</div>
 
 <div class="card">
   <h2>Βήμα 1 — Σάρωση αυτής της συσκευής</h2>
@@ -62,6 +69,23 @@ const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replac
 
 let cachedEntries = [], missingEntries = [];
 
+// Φίλτρο περιόδου — προεπιλογή: σήμερα 00:00 έως 12:30
+(function initFilter(){
+  const d = new Date(); const pad = n => String(n).padStart(2,'0');
+  const day = d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate());
+  document.getElementById('flt-from').value = day + 'T00:00';
+  document.getElementById('flt-to').value = day + 'T12:30';
+})();
+function inRange(ts) {
+  if (!document.getElementById('flt-on').checked) return true;
+  if (!ts) return true; // χωρίς ημερομηνία → μην το κρύψεις
+  const t = new Date(ts).getTime();
+  const f = new Date(document.getElementById('flt-from').value).getTime();
+  const to = new Date(document.getElementById('flt-to').value).getTime();
+  if (isNaN(f) || isNaN(to)) return true;
+  return t >= f && t <= to;
+}
+
 // ───────────── ΒΗΜΑ 1: CACHE ─────────────
 async function scanCache() {
   const out = document.getElementById('cache-result');
@@ -79,7 +103,7 @@ async function scanCache() {
     log('Βάση: ' + dbIds.size + ' καταγραφές υπάρχουν ήδη');
   } catch(e) { out.innerHTML = '<div class="stat danger">Σφάλμα σύνδεσης με τη βάση: ' + esc(e.message) + '</div>'; return; }
 
-  missingEntries = cachedEntries.filter(e => e.id && !dbIds.has(e.id));
+  missingEntries = cachedEntries.filter(e => e.id && !dbIds.has(e.id) && inRange(e.date));
   const totPhotos = missingEntries.reduce((s,e)=>s+((e.photos||[]).length),0);
   const totComments = missingEntries.reduce((s,e)=>s+((e.comments||[]).length),0);
 
@@ -151,11 +175,15 @@ async function scanBucket() {
     if (!orphans.length) { out.innerHTML = '<div class="stat ok">✅ Όλες οι φωτογραφίες του cloud ανήκουν σε υπάρχουσες καταγραφές.</div>'; return; }
 
     let html = '<div class="stat">Βρέθηκαν <b class="danger">' + orphans.length + '</b> ομάδες ορφανών φωτογραφιών. Διάλεξε έργο και πάτα επαναφορά — θα δημιουργηθεί νέα καταγραφή με τις φωτογραφίες (η περιγραφή/σχόλια αυτών δεν ανακτώνται από εδώ).</div>';
-    for (const f of orphans.slice(0, 40)) {
+    let shown = 0;
+    for (const f of orphans) {
+      if (shown >= 40) break;
       let files = [];
       try { files = (await listBucket(f + '/')).filter(x => x.id); } catch(e) {}
       if (!files.length) continue;
       const ts = parseInt((files[0].name.match(/^(\d{13})/)||[])[1] || '0');
+      if (ts && !inRange(ts)) continue;
+      shown++;
       const dateStr = ts ? new Date(ts).toLocaleDateString('el-GR') : 'άγνωστη ημ/νία';
       html += '<div class="group" id="g-' + esc(f) + '">';
       html += '<div class="stat"><span class="badge b-miss">ορφανό</span> <b>' + files.length + ' φωτό</b> · ' + dateStr + ' · <span style="font-size:11px;color:var(--text2)">' + esc(f) + '</span></div><div>';
