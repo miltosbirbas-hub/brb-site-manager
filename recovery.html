@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRB — Ανάκτηση Δεδομένων</title>
+<style>
+:root { --bg:#1a1714; --card:#252019; --text:#e8e0d5; --text2:#a89d8d; --accent:#c4622d; --ok:#22c55e; --warn:#eab308; --danger:#ef4444; --border:#3a332a; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body { background:var(--bg); color:var(--text); font-family:-apple-system,'Segoe UI',Roboto,sans-serif; padding:16px; max-width:900px; margin:0 auto; }
+h1 { font-size:20px; margin-bottom:4px; }
+.sub { color:var(--text2); font-size:13px; margin-bottom:18px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:14px; }
+.card h2 { font-size:15px; margin-bottom:8px; }
+button { background:var(--accent); color:#fff; border:none; border-radius:8px; padding:10px 16px; font-size:14px; cursor:pointer; margin:4px 4px 4px 0; }
+button:disabled { opacity:.45; cursor:default; }
+button.ghost { background:transparent; border:1px solid var(--border); color:var(--text2); }
+.stat { font-size:13px; color:var(--text2); margin:6px 0; }
+.stat b { color:var(--text); }
+.ok { color:var(--ok); } .warn { color:var(--warn); } .danger { color:var(--danger); }
+table { width:100%; border-collapse:collapse; font-size:12.5px; margin-top:8px; }
+th, td { text-align:left; padding:5px 6px; border-bottom:1px solid var(--border); vertical-align:top; }
+th { color:var(--text2); font-weight:600; }
+.thumb { width:46px; height:46px; object-fit:cover; border-radius:6px; margin:2px; }
+select { background:var(--bg); color:var(--text); border:1px solid var(--border); border-radius:6px; padding:6px; font-size:13px; }
+.group { border:1px solid var(--border); border-radius:8px; padding:10px; margin:8px 0; }
+#log { font-family:monospace; font-size:11.5px; color:var(--text2); white-space:pre-wrap; max-height:160px; overflow:auto; margin-top:8px; }
+.badge { display:inline-block; padding:1px 7px; border-radius:10px; font-size:11px; }
+.b-miss { background:rgba(239,68,68,.18); color:var(--danger); }
+.b-ok { background:rgba(34,197,94,.15); color:var(--ok); }
+</style>
+</head>
+<body>
+<h1>🛠️ BRB — Ανάκτηση Δεδομένων</h1>
+<div class="sub">Επαναφορά καταγραφών, φωτογραφιών και σχολίων. Άνοιξέ το σε <b>κάθε</b> συσκευή (PC, κινητά συνεργατών) — όποια έχει το πιο πρόσφατο τοπικό αντίγραφο, σώζει τα περισσότερα.</div>
+
+<div class="card">
+  <h2>Βήμα 1 — Σάρωση αυτής της συσκευής</h2>
+  <div class="stat">Ψάχνει το τοπικό αντίγραφο καταγραφών (με φωτογραφίες & σχόλια) που κρατάει η εφαρμογή σε αυτή τη συσκευή και το συγκρίνει με τη βάση.</div>
+  <button onclick="scanCache()">🔍 Σάρωση συσκευής</button>
+  <div id="cache-result"></div>
+  <button id="restore-btn" style="display:none" onclick="restoreMissing()">♻️ Επαναφορά λειπόντων στη βάση</button>
+</div>
+
+<div class="card">
+  <h2>Βήμα 2 — Ορφανές φωτογραφίες (από το cloud)</h2>
+  <div class="stat">Οι φωτογραφίες δεν σβήνονται ποτέ από το cloud. Εδώ βρίσκει φωτογραφίες που δεν ανήκουν πια σε καμία καταγραφή και τις ξαναδένει σε νέες καταγραφές στο έργο που θα διαλέξεις.</div>
+  <button onclick="scanBucket()">📷 Σάρωση φωτογραφιών</button>
+  <div id="bucket-result"></div>
+</div>
+
+<div class="card"><h2>Αρχείο ενεργειών</h2><div id="log"></div></div>
+
+<script>
+const SB_URL = 'https://tntjatgjwenvvqzlhlfi.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRudGphdGdqd2VudnZxemxobGZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2NTk0NTAsImV4cCI6MjA5NjIzNTQ1MH0.5sVC-I1QrZsu6ZYjuqS_aPH4hgamU7Z4JD23uDnVfeg';
+const HDRS = { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' };
+const PROJECTS = [{id:"hoffim_a",name:"Villa A (Hoffim Δεσίμι)"},{id:"hoffim_b",name:"Villa B (Hoffim Δεσίμι)"},{id:"hoffim_c",name:"Villa C (Hoffim Δεσίμι)"},{id:"hoffim_d",name:"Villa D (Hoffim Δεσίμι)"},{id:"sivota",name:"Σύβοτα (Yovav Meydad)"},{id:"ammousos_adi1",name:"Villa 1 (Αμμούσω Adi Eyal)"},{id:"ammousos_adi2",name:"Villa 2 (Αμμούσω Adi Eyal)"},{id:"ammousos_adi3",name:"Villa 3 (Αμμούσω Adi Eyal)"},{id:"ammousos_ilan",name:"Αμμούσω (Ilan Ofer)"},{id:"afteli_erez",name:"Αφτέλι (Erez & Zina)"},{id:"afteli_haim_b1",name:"Κτίριο Β1 (Αφτέλι Haim)"},{id:"afteli_haim_b2",name:"Κτίριο Β2 (Αφτέλι Haim)"},{id:"paleros",name:"Πάλαιρος (Χρυσούλης)"}];
+const photoUrl = p => SB_URL + '/storage/v1/object/public/brb-photos/' + p;
+const log = m => { const el = document.getElementById('log'); el.textContent += m + '\n'; el.scrollTop = el.scrollHeight; };
+const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+
+let cachedEntries = [], missingEntries = [];
+
+// ───────────── ΒΗΜΑ 1: CACHE ─────────────
+async function scanCache() {
+  const out = document.getElementById('cache-result');
+  out.innerHTML = '';
+  let raw = localStorage.getItem('hexis_entries_cache');
+  if (!raw) { out.innerHTML = '<div class="stat warn">⚠️ Αυτή η συσκευή δεν έχει τοπικό αντίγραφο. Δοκίμασε από άλλη συσκευή (PC ή κινητό που χρησιμοποιούσε την εφαρμογή πριν τη διαγραφή).</div>'; log('Cache: κενό σε αυτή τη συσκευή'); return; }
+  try { cachedEntries = JSON.parse(raw) || []; } catch(e) { out.innerHTML = '<div class="stat danger">Σφάλμα ανάγνωσης cache</div>'; return; }
+  log('Cache: βρέθηκαν ' + cachedEntries.length + ' καταγραφές τοπικά');
+
+  // Φέρε τα ids που υπάρχουν ήδη στη βάση
+  let dbIds = new Set();
+  try {
+    const r = await fetch(SB_URL + '/rest/v1/entries?select=id', { headers: HDRS });
+    (await r.json()).forEach(x => dbIds.add(x.id));
+    log('Βάση: ' + dbIds.size + ' καταγραφές υπάρχουν ήδη');
+  } catch(e) { out.innerHTML = '<div class="stat danger">Σφάλμα σύνδεσης με τη βάση: ' + esc(e.message) + '</div>'; return; }
+
+  missingEntries = cachedEntries.filter(e => e.id && !dbIds.has(e.id));
+  const totPhotos = missingEntries.reduce((s,e)=>s+((e.photos||[]).length),0);
+  const totComments = missingEntries.reduce((s,e)=>s+((e.comments||[]).length),0);
+
+  let html = '<div class="stat">Τοπικό αντίγραφο: <b>' + cachedEntries.length + '</b> καταγραφές · Λείπουν από τη βάση: <b class="' + (missingEntries.length?'danger':'ok') + '">' + missingEntries.length + '</b> (με <b>' + totPhotos + '</b> φωτογραφίες και <b>' + totComments + '</b> σχόλια)</div>';
+  if (missingEntries.length) {
+    html += '<table><tr><th>Ημ/νία</th><th>Έργο</th><th>Περιγραφή</th><th>📷</th><th>💬</th></tr>';
+    missingEntries.slice(0,80).forEach(e => {
+      const p = PROJECTS.find(x=>x.id===e.project);
+      html += '<tr><td>' + (e.date ? new Date(e.date).toLocaleDateString('el-GR') : '—') + '</td><td>' + esc(p?p.name:e.project) + '</td><td>' + esc((e.desc||'').slice(0,60)) + '</td><td>' + (e.photos||[]).length + '</td><td>' + (e.comments||[]).length + '</td></tr>';
+    });
+    html += '</table>';
+    if (missingEntries.length > 80) html += '<div class="stat">…και άλλες ' + (missingEntries.length-80) + '</div>';
+    document.getElementById('restore-btn').style.display = 'inline-block';
+  } else {
+    html += '<div class="stat ok">✅ Όλες οι τοπικές καταγραφές υπάρχουν ήδη στη βάση — τίποτα προς επαναφορά από αυτή τη συσκευή.</div>';
+    document.getElementById('restore-btn').style.display = 'none';
+  }
+  out.innerHTML = html;
+}
+
+async function restoreMissing() {
+  if (!missingEntries.length) return;
+  if (!confirm('Επαναφορά ' + missingEntries.length + ' καταγραφών στη βάση;')) return;
+  const btn = document.getElementById('restore-btn'); btn.disabled = true; btn.textContent = '⏳ Επαναφορά...';
+  const rows = missingEntries.map(e => ({
+    id: e.id, type: e.type || 'order', project_id: e.project, sub: e.sub || '',
+    description: e.desc || '', person: e.person || '', deadline: e.deadline || null,
+    status: e.status || 'pending', engineer: e.engineer || '',
+    photos: e.photos || [], comments: e.comments || [], building: e.building || '',
+    created_at: e.date || new Date().toISOString()
+  }));
+  let ok = 0, fail = 0;
+  for (let i = 0; i < rows.length; i += 50) {
+    const batch = rows.slice(i, i+50);
+    try {
+      const r = await fetch(SB_URL + '/rest/v1/entries', { method:'POST', headers: {...HDRS, 'Prefer':'resolution=merge-duplicates'}, body: JSON.stringify(batch) });
+      if (r.ok) { ok += batch.length; log('✓ Επαναφέρθηκαν ' + batch.length + ' καταγραφές'); }
+      else { fail += batch.length; log('✗ Σφάλμα HTTP ' + r.status + ': ' + (await r.text()).slice(0,150)); }
+    } catch(e) { fail += batch.length; log('✗ ' + e.message); }
+  }
+  btn.textContent = '♻️ Επαναφορά λειπόντων στη βάση'; btn.disabled = false;
+  alert(ok + ' καταγραφές επαναφέρθηκαν' + (fail ? (', ' + fail + ' απέτυχαν') : '') + '.\nΆνοιξε την εφαρμογή και κάνε refresh για να τις δεις.');
+  scanCache();
+}
+
+// ───────────── ΒΗΜΑ 2: BUCKET ─────────────
+async function listBucket(prefix) {
+  const r = await fetch(SB_URL + '/storage/v1/object/list/brb-photos', {
+    method:'POST', headers: HDRS,
+    body: JSON.stringify({ prefix: prefix, limit: 1000, offset: 0, sortBy: {column:'name', order:'asc'} })
+  });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}
+
+async function scanBucket() {
+  const out = document.getElementById('bucket-result');
+  out.innerHTML = '<div class="stat">⏳ Σάρωση cloud...</div>';
+  try {
+    const root = await listBucket('');
+    const folders = root.filter(x => !x.id).map(x => x.name); // φάκελοι = entry ids
+    log('Bucket: ' + folders.length + ' φάκελοι φωτογραφιών συνολικά');
+
+    const r = await fetch(SB_URL + '/rest/v1/entries?select=id', { headers: HDRS });
+    const dbIds = new Set((await r.json()).map(x => x.id));
+    const orphans = folders.filter(f => !dbIds.has(f));
+    log('Ορφανοί φάκελοι (χωρίς καταγραφή): ' + orphans.length);
+
+    if (!orphans.length) { out.innerHTML = '<div class="stat ok">✅ Όλες οι φωτογραφίες του cloud ανήκουν σε υπάρχουσες καταγραφές.</div>'; return; }
+
+    let html = '<div class="stat">Βρέθηκαν <b class="danger">' + orphans.length + '</b> ομάδες ορφανών φωτογραφιών. Διάλεξε έργο και πάτα επαναφορά — θα δημιουργηθεί νέα καταγραφή με τις φωτογραφίες (η περιγραφή/σχόλια αυτών δεν ανακτώνται από εδώ).</div>';
+    for (const f of orphans.slice(0, 40)) {
+      let files = [];
+      try { files = (await listBucket(f + '/')).filter(x => x.id); } catch(e) {}
+      if (!files.length) continue;
+      const ts = parseInt((files[0].name.match(/^(\d{13})/)||[])[1] || '0');
+      const dateStr = ts ? new Date(ts).toLocaleDateString('el-GR') : 'άγνωστη ημ/νία';
+      html += '<div class="group" id="g-' + esc(f) + '">';
+      html += '<div class="stat"><span class="badge b-miss">ορφανό</span> <b>' + files.length + ' φωτό</b> · ' + dateStr + ' · <span style="font-size:11px;color:var(--text2)">' + esc(f) + '</span></div><div>';
+      files.slice(0,8).forEach(file => { html += '<a href="' + photoUrl(f + '/' + file.name) + '" target="_blank"><img class="thumb" src="' + photoUrl(f + '/' + file.name) + '"></a>'; });
+      html += '</div><div style="margin-top:6px"><select id="sel-' + esc(f) + '">' + PROJECTS.map(p=>'<option value="'+p.id+'">'+esc(p.name)+'</option>').join('') + '</select> ';
+      html += '<button onclick="restoreOrphan(\'' + esc(f) + '\',' + ts + ',' + JSON.stringify(files.map(x=>f+'/'+x.name)).replace(/"/g,'&quot;') + ')">♻️ Επαναφορά</button></div></div>';
+    }
+    out.innerHTML = html;
+  } catch(e) { out.innerHTML = '<div class="stat danger">Σφάλμα: ' + esc(e.message) + '</div>'; log('✗ bucket: ' + e.message); }
+}
+
+async function restoreOrphan(entryId, ts, paths) {
+  const proj = document.getElementById('sel-' + entryId).value;
+  const row = { id: entryId, type: 'order', project_id: proj, sub: '', description: 'Ανακτημένες φωτογραφίες', person: '', deadline: null, status: 'done', engineer: '', photos: paths, comments: [], building: '', created_at: ts ? new Date(ts).toISOString() : new Date().toISOString() };
+  try {
+    const r = await fetch(SB_URL + '/rest/v1/entries', { method:'POST', headers: {...HDRS, 'Prefer':'resolution=merge-duplicates'}, body: JSON.stringify([row]) });
+    if (r.ok) { log('✓ Ορφανό ' + entryId + ' → ' + proj + ' (' + paths.length + ' φωτό)'); document.getElementById('g-' + entryId).style.opacity = .35; }
+    else { log('✗ ' + entryId + ': HTTP ' + r.status); alert('Σφάλμα επαναφοράς'); }
+  } catch(e) { log('✗ ' + e.message); }
+}
+</script>
+</body>
+</html>
