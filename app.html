@@ -807,6 +807,39 @@ async function loadBuildings() {
 function buildingsFor(projId) {
   return BUILDINGS.filter(b => b.project_id === projId);
 }
+async function migrateBuildings() {
+  const statusEl = document.getElementById('migrate-status');
+  const setStatus = (msg) => { if (statusEl) statusEl.textContent = msg; };
+  // Μάζεψε όλα τα τοπικά κτίρια από το localStorage
+  const local = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (!k || k.indexOf('hexis_buildings_') !== 0) continue;
+    const projId = k.replace('hexis_buildings_', '');
+    let arr = [];
+    try { arr = JSON.parse(localStorage.getItem(k) || '[]'); } catch(e) {}
+    arr.forEach(b => local.push({
+      id: b.id || (crypto.randomUUID ? crypto.randomUUID() : 'b'+Date.now()+Math.random().toString(16).slice(2)),
+      project_id: projId,
+      name: b.name || 'Κτίριο',
+      floors: b.floors || '',
+      type: b.type || 'villa'
+    }));
+  }
+  if (!local.length) { setStatus('Δεν βρέθηκαν τοπικά κτίρια σε αυτή τη συσκευή.'); return; }
+  if (!confirm('Βρέθηκαν ' + local.length + ' κτίρια. Να ανέβουν στη βάση;')) return;
+  setStatus('Ανέβασμα ' + local.length + ' κτιρίων…');
+  let ok = 0, fail = 0;
+  for (const row of local) {
+    try {
+      const { error } = await sb.from('buildings').upsert(row);
+      if (error) { fail++; console.error('[migrate]', row.name, error.message); }
+      else { ok++; if (!BUILDINGS.find(x => x.id === row.id)) BUILDINGS.push(row); }
+    } catch(e) { fail++; console.error('[migrate ex]', e.message); }
+  }
+  setStatus('✓ Ανέβηκαν ' + ok + ' κτίρια' + (fail ? ' · ' + fail + ' αποτυχίες (δες console)' : ''));
+  render();
+}
 async function loadFromDB() {
   try {
     const [er, pr, pjr, dlr] = await Promise.all([
@@ -4152,6 +4185,10 @@ window.addEventListener('beforeinstallprompt', (e) => {
       <span class="qt-tool-ico">&#129521;</span>
       <span><b>Σκυρόδεμα &amp; Τοιχοποιία</b><br><small>Αναλογίες μπετόν C12/15–C40 · τούβλα · σενάζ</small></span>
     </a>
+    <div class="qt-tool-card" onclick="migrateBuildings()" style="cursor:pointer">
+      <span class="qt-tool-ico">&#11014;&#65039;</span>
+      <span><b>Μεταφορά κτιρίων στη βάση</b><br><small id="migrate-status">Ανέβασε τα τοπικά κτίρια ώστε να τα δουν οι συνεργάτες</small></span>
+    </div>
   </div>
 </div>
 <script>
